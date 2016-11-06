@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Universe
+Files</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Universe Files' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, universe, files" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Universe Files</h1>
+<p>It is probably worth recapping on a few points made when
+discussing UniVerse's general structure (see <span class="link"
+onclick="_goto('about.html')">The UniVerse Paradigm</span>
+above):</p>
+<h2>Recapping UniVerse Files</h2>
+<p>1. A UniVerse account is a collection of files, and a Universe
+file is a collection of records.</p>
+<p>2. Each record in a UniVerse file is simply a string of ASCII
+characters, divided into fields, values, and subvalues by field
+marks (character 254), value marks (character 253) and subvalue
+marks (character 252) respectively.</p>
+<p>3. Each record has a unique 'key', a string of characters which
+is associated with the record, and can be used to access it
+directly without reading through every record in the file.</p>
+<p>4. Everything in UniVerse is stored in files: each command in
+the command lanuage is a record in the special VOC file, and each
+Universe Basic program is a record in a programs file (often called
+BP for 'Basic Programs').</p>
+<p>5. Most files give specific meanings to each field number in
+their records: for instance, a <code>CUSTOMERS</code> file may use
+the first field of each record to store the company name, the
+second field of each record to store the company phone number, and
+so on. However, not all files work like this; program files, for
+instance, simply have one line of UniVerse Basic code on each
+field: not only don't such records give no positional meaning to
+their fields, they probably wont even have the same number of
+fields in each record.</p>
+<h2>File types</h2>
+<p>So much, then, is common to all UniVerse files: and for most
+purposes, UniVerse commands and UniVerse Basic statements can
+operate in the same way on any file, regardless of its
+contents.</p>
+<p>However, UniVerse files can be further divided into three types.
+This differenciation is chiefly for performance reasons: the
+different physical implementations of the three file types makes
+them suitable to do different jobs efficiently.</p>
+<p>The three types are 'directory' files, 'static' files, and
+'dynamic' files.</p>
+<p>The command to create a file is:</p>
+<p><code>CREATE.FILE filename filetype otherparameters</code></p>
+<p>Convention suggests that the <code>filename</code> should be
+uppercase, and words divided using dots, as in
+<code>CUSTOMER.INVOICES</code>.</p>
+<p>The <code>filetype</code> is a number, and for historical
+reasons the range of possible numbers is a little odd. 1 and 19
+produce the two slightly different forms of directory file, 2
+through 18 exclusively produce the 17 possible types of static
+file, and 30 produces a dynamic file.</p>
+<p>The <code>otherparameters</code> depend on the
+<code>filetype</code> selected, and are examined in more detail
+below.</p>
+
+</body>
+</html>

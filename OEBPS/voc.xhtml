@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: The VOC
+File</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: The VOC File' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, the, voc, file" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> The VOC File</h1>
+<p>The <code>VOC</code> file lies at the heart of each UniVerse
+account. 'VOC' is short for 'vocabulary', the idea being that every
+word in the UniVerse command language is stored in this file.</p>
+<p>By changing the <code>VOC</code> file, therefore, you can change
+the UniVerse command language itself within an account. This is an
+extremely useful but potentially risky process, and should be
+treated with some care.</p>
+<p>One interesting and simple feature of the <code>VOC</code> file,
+which demonstrates its role in defining the command language, is
+that by editing any <code>VOC</code> record and saving it under
+another key, you effectively create a synonym for the original key.
+For instance, by editing the <code>VOC</code> record
+<code>DISPLAY</code>, and saving it as <code>SHOW</code>, you have
+can use <code>SHOW</code> wherever you previously might have used
+<code>DISPLAY</code>. This applies to any <code>VOC</code> record:
+whether it is a command name, a keyword or parameter, or a file
+name. Indeed, if you delete the original keyword, your new synonym
+becomes the <em>only</em> way of accessing the command: but of
+course doing this will break any routine which used the command
+under its old name and is therefore not recommended.</p>
+<p>The previous sections describing the editor should have
+acclimatised you to editing <code>VOC</code> records. It described
+the process of creating a new <code>VOC</code> record, looking
+something like this:</p>
+<p><code>ED VOC FLUFFY<br />
+New record.<br />
+<br />
+----: I<br />
+0001= PA Rather silly example of a paragraph<br />
+0002= DISPLAY You have just entered the command 'FLUFFY'.<br />
+0003= DISPLAY This is not a terribly useful command.<br />
+0004= DISPLAY All it does is display this message.<br />
+0005=</code> (Hit ENTER) <code><br />
+----: FILE<br />
+"FLUFFY" filed in file "VOC".</code></p>
+<p>At the time, the main purpose was to explain the editor, so the
+notes merely touched on the meaning of these lines. In this
+section, they will be examined far more closely.</p>
+<p>The first line is particularly important. It determines what the
+'type' or purpose of each <code>VOC</code> record. In this case,
+the type is <code>PA</code>, short for 'paragraph'. Here, it is
+followed by a description or comment on the purpose of the
+<code>VOC</code> record. This too is common to the structure of all
+<code>VOC</code> records: after the type specifier on the first
+line, a comment or description may appear to document the
+<code>VOC</code> record for those who edit it in the future.</p>
+<p>The meaning of the lines beyond the first depends on the type of
+record specified by the characters at the beginning of the first.
+These types are now discussed in turn.</p>
+
+</body>
+</html>

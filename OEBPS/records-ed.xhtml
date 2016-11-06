@@ -1,0 +1,553 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: The Editor -
+ED</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: The Editor - ED' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, the, editor, -, ed" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> The Editor - ED</h1>
+<p>Enough theory: let's type. UniVerse has its own command line
+editor which allows you to view and change records. As everything
+in UniVerse takes the form of records in files (programs, commands
+and keywords from the UniVerse command language, field descriptions
+in dictionaries, and, of course, traditional data records), the
+editor has very wide application, allowing you to do everything
+from changing data to writing programs.</p>
+<h2>ED: Editing a record</h2>
+<p>To invoke the editor, the command is:</p>
+<p><code>ED filename recordkey</code></p>
+<p>(This, incidentally, is the form taken by many UniVerse
+commands, as most of them operate in various ways on records in
+files.)</p>
+<p>As mentioned above (see <span class="link" onclick=
+"_goto('about-unix.html')">Universe and UNIX</span>), each UniVerse
+command takes the form of a record in the VOC file. As we earlier
+entered the command <code>SH</code> to invoke a Unix shell, it
+follows that there must be a record corresponding to this command
+in the VOC. To find out, enter:</p>
+<p><code>ED VOC SH</code></p>
+<p>You should see the following message:</p>
+<p><code>4 lines long.</code></p>
+<p>And the UniVerse editor's prompt:</p>
+<p><code>----:</code></p>
+<h2>P: Displaying pages</h2>
+<p>Now enter the command P to display a 'pageful' of the
+record,:</p>
+<p><code>0001: V<br />
+0002: /bin/sh<br />
+0003: U<br />
+0004: TICRG<br />
+----:</code></p>
+<p>This record only has four fields, so no more can be displayed.
+However, if the record had many fields, <code>P</code> would only
+display as many as would fit on your display. By repeatedly enter
+<code>P</code> therefore, you can read your record a page at a
+time.</p>
+<p>Notice the message <code>4 lines long</code> which appeared when
+you edited this record. While the editor thinks in terms of
+'lines', each line is actually a field. That is to say, the editor
+shows one field on each line. What you are looking at here is, in a
+sense, 'raw' data. Using a SQL based database like Oracle, your
+only access to data in columns in via the SQL language, and you
+cannot change the values in columns in ways which are inconsistent
+with the column definitions. UniVerse, on the other hand, allows
+you to look at and even change the raw data, not constrained by the
+field definitions, or, indeed, anything.</p>
+<h2>Q: Quitting a record</h2>
+<p>Depending on the nature of the change, changing this record
+would probably have the effective of disabling the SH command, and
+so we shan't do it. Instead, enter the <code>Q</code> command to
+exit the record. If you had changed the record before exiting, you
+would see the prompt:</p>
+<p><code>***** Record changed. OK to quit (Y) ?</code></p>
+<p>You would then have to enter a <code>Y</code> before you were
+returned to the UniVerse prompt.</p>
+<h2>Creating a new record</h2>
+<p>When back at the UniVerse prompt, enter the command:</p>
+<p><code>&gt;ED VOC FLUFFY</code></p>
+<p>You will be amazed to discover that there is no UniVerse
+<code>FLUFFY</code> command or keyword, so there is no record on
+the VOC file corresponding to this key. Instead you will see:</p>
+<p><code>New Record.<br />
+<br />
+----:</code></p>
+<h2>I: Inserting Lines</h2>
+<p>The command to put the editor into 'insert mode' is
+<code>I</code>. Enter it and you will see:</p>
+<p><code>0001=</code></p>
+<p>This prompt is telling you that whatever you type in will become
+line 1 (and thus field 1) of the new record 'FLUFFY'. In the case
+of <code>VOC</code> records, every record represents a command or
+other keyword in the UniVerse command language, and field 1 of each
+record determines whether the keyword in question is a command, a
+filename, a command parameter, or has some other meaning. We shall
+set up a 'paragraph' (a little like a Unix command script) to be
+run whenever someone enters the command 'FLUFFY', so enter
+<code>PA</code>. Your record will now look like this:</p>
+<p><code>0001= PA<br />
+0002=</code></p>
+<p>You are now being invited to enter a value for the second field
+of the record <code>FLUFFY</code>. Each line after the first in a
+UniVerse paragraph is a command, so try the following:</p>
+<p><code>0001= PA<br />
+0002= DISPLAY You have just entered the command 'FLUFFY'.<br />
+0003= DISPLAY This is not a terribly useful command.<br />
+0004= DISPLAY All it does is display this message.<br />
+0005=</code></p>
+<p>(Do not be concerned if you have made any mistakes in entering
+these lines: we shall be looking at the commands you'll need to
+change things, and so correct any mistakes, below.)</p>
+<p>To indicate that you do not wish to enter any more fields,
+simply hit ENTER instead of entering another field. You will be
+returned from the <code>=</code> 'input' prompt to the
+<code>:</code> 'command' prompt:</p>
+<p><code>0005=</code> (press ENTER)<br />
+<code>----:</code></p>
+<h2>n, +n, -n, T and B: Moving between lines</h2>
+<p>At any given time your record will have a 'current line'. This
+is the line which will be changed by any commands you might enter.
+You can make any line current just by typing in its number. Enter
+<code>2</code> to make line 2 active:</p>
+<p><code>----: 2<br />
+0002: DISPLAY You have just entered the command 'FLUFFY'.<br />
+----:</code></p>
+<p>You can also move a certain number of lines <em>relative</em> to
+your current line by entering <code>+n</code> or <code>-n</code>
+where <code>n</code> is the number of lines you want to move. For
+instance:</p>
+<p><code>----: +1<br />
+0003: DISPLAY This is not a terribly useful command.<br />
+----: -2<br />
+0001: PA<br />
+----:</code></p>
+<p>Just hitting ENTER on its own is the equivalent of entering
+<code>+1</code> to move to the next line:</p>
+<p><code>----:</code> (press ENTER)<br />
+<code>0002: DISPLAY You have just entered the command
+'FLUFFY'.<br />
+----:</code></p>
+<p>You can jump straight to the 'top' of your record with the
+command <code>T</code>, or straight to the bottom with
+<code>B</code>, like this:</p>
+<p><code>----: T<br />
+Top.<br />
+----: B<br />
+0004: DISPLAY All it does is display this message.<br />
+Bottom at line 4.<br />
+----:</code></p>
+<p>A subtlety here is that the top of the record is not line 1, but
+line 0. This is because (a) new records and completely empty
+records (which UniVerse allows) don't have a line 1, and (b) by
+going to line 0 and using the <code>I</code> command, you can
+insert lines <em>before</em> line 1 of your current record.</p>
+<h2>C: Changing lines</h2>
+<p>Let us now assume that you wanted to replace the word
+<code>entered</code> with the word <code>typed</code>. To do this,
+you would use the <code>C</code> or 'change' command thus:</p>
+<p><code>----: 2<br />
+0002: DISPLAY You have just entered the command 'FLUFFY'.<br />
+----: C/entered/typed<br />
+0002: DISPLAY You have just typed the command 'FLUFFY'.<br />
+----:</code></p>
+<p>(In fact, the character you used to separate
+<code>entered</code> and <code>typed</code> need not be
+<code>/</code>: it could be any of the following:
+<code>!"#$%&amp;()*+,-.:=@[\]_`{|}</code> or <code>'</code>. This
+is useful when the thing you want to change, or the thing you want
+to change it <em>to</em>, actually contains a <code>/</code>.)</p>
+<p>You can also use the <code>C</code> command to change
+<em>every</em> occurence of one string to another by adding a
+<code>/G</code> parameter. The <code>G</code> stands for 'global'.
+For instance, to change every space to an asterisk on this line,
+try:</p>
+<p><code>----: C/ /*/G<br />
+0002: DISPLAY*You*have*just*typed*the*command*'FLUFFY'.<br />
+----:</code></p>
+<p>Our command now looks a little odd. To change it back:</p>
+<p><code>----: C/*/ /G<br />
+0002: DISPLAY You have just typed the command 'FLUFFY'.<br />
+----:</code></p>
+<p>To apply the same change to more than one line, simply add the
+number of lines you wish to change to the end of the command. For
+instance, to change the word <code>DISPLAY</code> to
+<code>IGNORE</code> on the current line and the one after it (two
+lines altogether), add <code>/2</code>:</p>
+<p><code>----: C/DISPLAY/IGNORE/2<br />
+0002: IGNORE You have just typed the command 'FLUFFY'.<br />
+0003: IGNORE This is not a terribly useful command.<br />
+At line 3<br />
+----:</code></p>
+<p>The editor will display any lines which are actually changed.
+Note the <code>At line 3</code> message at the end of the change.
+If you change more than one line in this way, the editor will make
+the last line examined the current line: even if the string you
+wanted to change did not appear in it and the line was therefore
+not changed. For instance, if you had entered the command
+<code>C/typed/used/2</code>, then lines 2 and 3 would have been
+searched for the string <code>typed</code>. Only line 2 contains
+it, so only line 2 would have been changed, but line 3 was the last
+line examined, and so line 3 becomes your current line. The message
+is just a reminder of this.</p>
+<p>You can even apply a 'global' change across more than one line,
+by adding <code>/Gn</code> to you command where n is the number of
+lines you wish to change. One of the most common used of
+<code>C</code> is to do a complete search and replace by first
+entering the command <code>1</code> to move to the first line, and
+then entering the command <code>C/something/something
+else/G99999</code>. <code>C</code> doesn't get upset if you try to
+change more lines than there are in the file: it'll just change as
+many lines as it can find, and leave the last line as the current
+line.</p>
+<h2>OOPS: Undoing changes</h2>
+<p>Changing <code>DISPLAY</code> to <code>IGNORE</code> has left
+our paragraph looking a little odd. To reverse (or in Windows
+parlance 'undo') a change, you can use the quaint command
+<code>OOPS</code>:</p>
+<p><code>----: OOPS<br />
+Record restored to condition prior to command
+"C/DISPLAY/IGNORE/2".<br />
+0002: DISPLAY You have just typed the command 'FLUFFY'.<br />
+----:</code></p>
+<p>Note that note only have the lines been put back the way they
+were before the <code>C</code> command, but even your current line
+has been set back to 2: where you were before you made your
+change.</p>
+<p><code>OOPS</code> only reverses commands which change the
+content of the record. For instance, if you enter
+<code>C/A/B</code> to change an 'A' to a 'B', you can reverse the
+change with <code>OOPS</code>, however: if you enter the command
+<code>+2</code> to move your current line 2 lines down,
+<code>OOPS</code> will ignore this. Neither can <code>OOPS</code>
+reverse any changes before the last.</p>
+<h2>A: Adding to a line</h2>
+<p>While you can make almost any change to a line using
+<code>C</code>, some changes are so common that they have commands
+of their own. For instance, to add or 'append' something to a line,
+enter the command <code>A newbit</code>, where <code>newbit</code>
+is the bit you want to add. For instance:</p>
+<p><code>0002: DISPLAY You have just typed the command
+'FLUFFY'.<br />
+----: A That's silly.<br />
+0002: DISPLAY You have just typed the command 'FLUFFY'.That's
+silly.</code></p>
+<p>Note that there is no space between the full stop at the end of
+the original line and the word 'That'. To append a space, you must
+remember to leave <em>two</em> spaces between the <code>A</code>
+and the <code>newbit</code>.</p>
+<p>If you've made this change, <code>OOPS</code> it back.</p>
+<h2>B: Breaking a line</h2>
+<p>You can break a line into two using the command <code>B
+endofline1</code>, where <code>endofline1</code> is the sequence of
+characters you want at the end of the first line. Everything after
+these characters is broken into a new line underneath. This sounds
+worse than it is: and an example is clearer:</p>
+<p><code>0002: DISPLAY You have just typed the command
+'FLUFFY'.<br />
+----: B typed<br />
+0002: DISPLAY You have just typed<br />
+----: +1<br />
+0003: the command 'FLUFFY'<br />
+----:</code></p>
+<p>Note that while <code>B</code> broke the line in two, it didn't
+change the current line. You had to type <code>+1</code> (or you
+could just have pressed ENTER) to move the current line down one
+and see the new line created.</p>
+<p>If you haven't made this change, do, because it's handy to
+demonstrate the next editor command, which is:</p>
+<h2>CAT: Concatentating two lines</h2>
+<p>To join your current line to the one below it, enter the command
+<code>CAT</code>. To repair the break you inserted above,
+therefore:</p>
+<p><code>----: 2<br />
+0002: DISPLAY You have just typed<br />
+----: CAT<br />
+0002: DISPLAY You have just typed the command 'FLUFFY'.<br />
+----:</code></p>
+<h2>D: Deleting lines</h2>
+<p>To delete a line, enter the command <code>D</code>. To delete
+<code>n</code> lines, enter the command <code>Dn</code>. This is
+simply enough: the only bewildering thing is that unlike most
+commands, <code>D</code> does not redisplay the (new) current line
+once it has finished. For instance, if you are only line 2 and
+enter the command <code>D</code>, line 2 disappears, and line 3
+becomes the new line 2, (and line 4 the new line 3, and so on).
+However, the editor does not display the new line 2 to let you know
+where you are. To get round this, a trick is to enter the command
+<code>+0</code>, which moves your current line zero lines down (ie.
+not at all) and forces the redisplay of your current line:</p>
+<p><code>----: 2<br />
+0002: DISPLAY You have just typed the command 'FLUFFY'.<br />
+----: D<br />
+----: +0<br />
+0002: DISPLAY This is not a terribly useful command.<br />
+----:</code></p>
+<p>Try this, but then <code>OOPS</code> the deleted line back.</p>
+<h2>DUP: Duplicating a line</h2>
+<p>To duplicate the current line, use <code>DUP</code>:</p>
+<p><code>----: 2<br />
+0002: DISPLAY You have just typed the command 'FLUFFY'.<br />
+----: DUP<br />
+0003: DISPLAY This is not a terribly useful command.<br />
+----:</code></p>
+<p>Note that a copy of line 2 now appears on line 3, and line 3 is
+now the current line. Enter <code>OOPS</code> to reverse this.</p>
+<h2>L and F: Locating and Finding</h2>
+<p>To locate or search for something, enter <code>L
+something</code>:</p>
+<p><code>----: T<br />
+Top.<br />
+----: L sef<br />
+0003: DISPLAY This is not a terribly useful command<br />
+----:</code></p>
+<p>Though it may not be immediately obvious, the string
+<code>sef</code> appears in the word <code>useful</code>. As you
+see, <code>L</code> will find your string wherever it appears, and
+whether it appears as a separate word or within a string.</p>
+<p>The <code>F</code> or 'find' command is slightly different.
+<code>F something</code> will only find lines which <em>begin
+with</em> <code>something</code>. This is in fact a particular case
+of a more general form of the command: where <code>Fn
+something</code> will find the first line in which
+<code>something</code> appears in column position <code>n</code>.
+The plan <code>F something</code> command is therefore equivalent
+to <code>F1 something</code>. This is, as it seems, a very specific
+command, and perhaps not as well used as <code>L</code>: but when
+it is useful, it is <em>very</em> useful. Any kind of positionally
+formatted text, such as the fixed width columns in a report saved
+to disk, or even the indented statements of a UniVerse Basic
+program, are easier to manage using this command.</p>
+<p>The commands <code>L</code> and <code>F</code> on their own (ie.
+without a <code>something</code> to search for) will simply repeat
+the last locate or the last find respectively.</p>
+<h2>&lt;, &gt;, MOVE, COPY, DROP and BLOCK: Block Editing</h2>
+<p>To define a block, first go to the first line of the block and
+enter the command <code>&lt;</code>, then go to the last line and
+enter <code>&gt;</code>:</p>
+<p><code>----: 2<br />
+0002: DISPLAY You have just typed the command 'FLUFFY'.<br />
+----: &lt;<br />
+Block FROM set to line 4.<br />
+----: 3<br />
+0003: DISPLAY This is not a terribly useful command.<br />
+----: &gt;<br />
+Block THROUGH set to line 4.</code></p>
+<p>If you want to define just one line as a block, you can enter
+the command <code>&lt;&gt;</code></p>
+<p>Having defined your block, you can <code>COPY</code> it,
+<code>MOVE</code> it, or <code>DROP</code> (delete) it. To copy or
+move it, simply go it the location you would like the block to be
+inserted, and enter the appropriate command:</p>
+<p><code>----: T<br />
+Top.<br />
+----: COPY<br />
+BLOCK from 4 through 4. OK (Y) Y<br />
+0001: DISPLAY You have just typed the command 'FLUFFY'.<br />
+----:</code></p>
+<p><code>COPY</code> will make a copy of the lines in the new
+location (leaving the original lines alone). <code>MOVE</code> will
+delete the original lines. <code>DROP</code> will simply delete the
+original lines.</p>
+<p>Note that before the <code>COPY</code> was allowed, a
+'confirmation' message appeared, and you had to enter a 'Y' to
+proceed. You can toggle these confirmation messages on and off
+using the <code>BLOCK</code> command:</p>
+<p><code>----: BLOCK<br />
+BLOCK operation verification = disabled.<br />
+----: BLOCK<br />
+BLOCK operation verification = enabled.</code></p>
+<p>You can go to the beginning of your block using the command
+<code>G&lt;</code>, and then end with <code>G&gt;</code>, and you
+can 'clear' your block (which is to say remove the block
+definition, without deleting any lines) by using the &lt;, &gt; or
+&lt;&gt; commands on line 0. Use the <code>T</code> (top) command
+to get to line 0.</p>
+<p>A number of the commands already explained above can be combined
+with blocks. For instance:</p>
+<p><code>C/oldstring/newstring/B</code> applies the change command
+to every line in the block,</p>
+<p><code>C/oldstring/newstring/GB</code> applies the change command
+globally to every line in the block,</p>
+<p><code>PB</code> displays the contents of the block a page at a
+time.</p>
+<h2>XEQ: Execute an operating system command</h2>
+<p>You may enter a UniVerse command without leaving the editor by
+using the <code>PERFORM</code> command:</p>
+<p><code>----: XEQ DISPLAY Do something!<br />
+Do something!<br />
+<br />
+<br />
+----------------- Returned to the EDITOR from the XEQ
+command.</code></p>
+<p>This command can be tremendously useful, as it allows you to
+consult UniVerse for information without leaving the record you are
+editing. For instance, if you are editing a UniVerse Basic program
+and you need to consult one of your earlier programs to see how you
+achieved a particular end, you can use XEQ to invoke the editor
+from within the editor and look at your other program. The record
+you were editing originally is not saved, but not lost, merely
+'suspended' until you return to it.</p>
+<h2>FILE and SAVE: Writing your edited record back into its
+file</h2>
+<p>The commands <code>FILE</code> and <code>SAVE</code> will both
+write your record back to its file, complete with any changes you
+have made to it. The only difference between them is that
+<code>SAVE</code> will allow you to carry on editing (and so is
+most useful for making periodic 'safe copies' of your work - a very
+good idea incidentally), while <code>FILE</code> leaves the editor
+and returns you to the UniVerse prompt (and so you would generally
+used once you had finished editing your record: for the time being
+at least),</p>
+<p>You can optionally specify a new record key, or even a new
+filename and record key, by entering <code>SAVE/FILE newkey</code>
+or <code>SAVE/FILE filename newkey</code>. In this way, you can
+edit a record, and then leave it unchanged while creating or
+overwriting another record - possibly in another file.</p>
+<p>Bear in mind that UniVerse is a multiuser system and operates a
+system of 'record locks' to prevent two or more users
+simultaneously modifying a record and thus nullifying each others
+work. While you are editing a record, your editor will apply a lock
+to it, and noone else will be able to access it: through the editor
+or through any application. If you enter the command
+<code>RELEASE</code>, you can release this lock and continue
+editing the record: though naturally you risk either overwriting
+someone elses work, or allowing them to overwrite your work, by
+doing so.</p>
+<h2>.L, .X, etc</h2>
+<p>The UniVerse editor supports a command history and command stack
+almost identical to that available from the UniVerse command
+prompt. <code>.L</code> can be used to list commands,
+<code>.X</code> to reexecute them, and so on. Rather than describe
+these stack commands in full here, I would refer the reader back to
+<span class="link" onclick="_goto('prompt-stack.html')">The Command
+Stack</span> above.</p>
+<h2>HELP: On-line documentation</h2>
+<p>The commands I have listed above are only a subset of those
+available within the UniVerse editor, and even some of those I have
+listed are capable of greater refinement than I've described here.
+While the information on this page should be sufficient to get you
+started, as you become more fluent you will doubtless wish to learn
+more about the editor's command set. UniVerse's own manual is very
+thorough, but perhaps the best source of information is the
+editor's own <code>HELP</code> command:</p>
+<p><code>----: HELP<br />
+You may type one character, a keyword, or just &lt;RETURN&gt; for
+more information.</code></p>
+<p>If you press ENTER, you will be shown a list of all the editor
+commands. By entering a single letter, you can reduce this list to
+those commands which begin with your chosen letter. For instance,
+if you enter <code>B</code> you will see:</p>
+<pre>
+B            - Set the current line pointer to the BOTTOM line.
+B any        - BREAK the current line after 'any' into two lines.
+BLOCK        - Toggle BLOCK operation verification between ON and OFF.
+</pre>
+<p>If you enter a 'keyword', which can be any word or phrase longer
+than a single letter, you will see a list of all the editor
+commands which mention that keyword in their help listing. For
+instance, entering the keyword <code>BLOCK</code> shows you all the
+editor commands which are somehow block related:</p>
+<pre>
+BLOCK        - Toggle BLOCK operation verification between ON and OFF.
+C///         - CHANGE one or more lines.  formats permitted are:
+                C/from/to     C/from/to/#
+                C/from/to/G   C/from/to/#G   C/from/to/G#
+                C/from/to/B   C/from/to/BG   C/from/to/GB
+   where      / - is any delimiter character.
+           from - is the character string to be replaced.
+             to - is the character string to substitute.
+              # - is the number of lines to CHANGE.  (The default is one)
+              G - is the  letter 'G' (global)  CHANGE  all instances  in  line.
+              B - is the letter 'B',  CHANGE  all lines in the  defined  BLOCK.
+COPY         - COPY a BLOCK (see '&lt;' and '&gt;' ), source block is unchanged.
+DROP         - DROP (DELETE) all lines in the defined BLOCK (see '&lt;' and '&gt;' ).
+G&lt;           - GO TO line defined by the beginning of the current BLOCK.
+G&gt;           - GO TO line defined by the end of the current BLOCK.
+MOVE         - MOVE a BLOCK (see '&lt;' and '&gt;' ); source block is deleted.
+PB           - PRINT on CRT all lines in the defined  BLOCK (see '&lt;' and '&gt;' ).
+SEQ///       - Generate SEQUENTIAL numbers. Formats permitted are:
+                SEQ/from/start/#   SEQ/from/start/#/inc
+   where      / - is any delimiter character.
+           from - is the optional character string to replace.
+          start - is the starting sequential number.
+</pre>
+<h2>ED and UV.VI</h2>
+<p><code>ED</code> is the standard editor for PICK derived systems.
+It would be familiar to a user of Prime INFORMATION, COSMOS
+Revelation, or VMark UniVerse.</p>
+<p>The other editor supported by UniVerse is <code>UV.VI</code>,
+which is simply a link to the famous UNIX editor <code>vi</code>.
+This is unique to UniVerse, simply because UniVerse is the only
+PICK derived system to run over UNIX.</p>
+<p>If you are familiar with <code>vi</code>, it is possible to go
+through life without ever learning <code>ED</code>: and if you are
+coming to UniVerse from UNIX you may be tempted to do this.</p>
+<p>The choice of editor is, in many ways, somewhat personal, and
+people are often quite partisan in singing the praises of their
+favourite editor. A direct comparison of <code>ED</code> and
+<code>vi</code> would therefore be contentious and unlikely to be
+useful. To a greater extent than perhaps we realise, we all tend to
+rationalise a defence of that which we are used to: and to believe
+that an editor feels natural because of the intuitiveness of its
+design, when in fact it feels natural through long habit and
+acclimatisation.</p>
+<p>I would, however, recommend that any UniVerse developer becomes
+familiar with <code>ED</code>, even if it is not his first choice
+for his day to day work. The reasons follow:</p>
+<p>1. <code>ED</code> is available on all PICK derived platforms.
+Many UniVerse systems must be ported from or communicate with other
+PICK systems on other platforms: these all provide <code>ED</code>
+but not <code>vi</code>.</p>
+<p>2. Most UniVerse records attach particular meanings to
+particular field numbers: <code>ED</code> numbers the lines it is
+editing in recognition of this. The <code>UV.VI</code> interface to
+<code>vi</code> switches <code>vi</code>'s line numbering on, but
+it is clumsier than <code>ED</code>'s, and most <code>vi</code>
+programmers are not used to it, as <code>vi</code> is primarily a
+code and script editor, not a data editor.</p>
+<p>3. <code>ED</code> provides ready access to the UniVerse command
+language through the <code>XEQ</code> command.</p>
+<p>4. The command stack in <code>ED</code> is similar to that
+available from the main UniVerse command prompt: its use promotes
+consistency and fluency. Furthermore, the 'stack commands' used to
+manipulate commands both in <code>ED</code> and from the UniVerse
+command prompt are based on the commands used to change text in the
+editor itself.</p>
+<p>5. As explained earlier in this course, UNIX does not understand
+UniVerse file internals. In order for <code>UV.VI</code> to work,
+therefore, a special linking program must first make a copy of a
+record's contents as a UNIX temporary file for <code>vi</code> to
+work on, and copy this back to the UniVerse file once
+<code>vi</code> has finished. This is clearly less efficient and
+elegant than <code>ED</code>, which is written in UniVerse Basic
+and can thus access the records directly. Furthermore, the name of
+the temporary file created to allow <code>vi</code> to work is
+unrelated to the name and location of the original record, and can
+thus be misleading.</p>
+<p>6. <code>ED</code> understands UniVerse Basic, which will be
+covered later in this course. It can therefore automatically indent
+it to show it's structure: and this is a tremendously useful
+facility.</p>
+<p>In short, <code>ED</code> was designed for use with UniVerse,
+and <code>vi</code> wasn't. I doubt I will have reached the
+die-hard <code>vi</code> enthusiast, but I hope I will have
+encouraged others to at least become familiar with UniVerse's own
+editor.</p>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookID" version="2.0" >
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+    <dc:title>Life, The UniVerse, and Everything</dc:title>
+    <dc:creator opf:role="aut">Manny Neira</dc:creator>
+    <dc:language>en-US</dc:language>
+    <dc:rights>All rights reserved</dc:rights>
+    <dc:publisher>mannyneira.com</dc:publisher>
+    <dc:identifier id="BookID" opf:scheme="UUID">www.mannyneira.com/universe/index.html</dc:identifier>
+  </metadata>
+  <manifest>
+    <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
+    <item id="introduction" href="introduction.xhtml" media-type="application/xhtml+xml" />
+    <item id="introduction-acknowledgements" href="introduction-acknowledgements.xhtml" media-type="application/xhtml+xml" />
+    <item id="about" href="about.xhtml" media-type="application/xhtml+xml" />
+    <item id="about-unix" href="about-unix.xhtml" media-type="application/xhtml+xml" />
+    <item id="about-paradigm" href="about-paradigm.xhtml" media-type="application/xhtml+xml" />
+    <item id="prompt" href="prompt.xhtml" media-type="application/xhtml+xml" />
+    <item id="prompt-stack" href="prompt-stack.xhtml" media-type="application/xhtml+xml" />
+    <item id="files" href="files.xhtml" media-type="application/xhtml+xml" />
+    <item id="files-directory" href="files-directory.xhtml" media-type="application/xhtml+xml" />
+    <item id="files-static" href="files-static.xhtml" media-type="application/xhtml+xml" />
+    <item id="files-dynamic" href="files-dynamic.xhtml" media-type="application/xhtml+xml" />
+    <item id="records" href="records.xhtml" media-type="application/xhtml+xml" />
+    <item id="records-ed" href="records-ed.xhtml" media-type="application/xhtml+xml" />
+    <item id="records-macros" href="records-macros.xhtml" media-type="application/xhtml+xml" />
+    <item id="voc" href="voc.xhtml" media-type="application/xhtml+xml" />
+    <item id="voc-verbs" href="voc-verbs.xhtml" media-type="application/xhtml+xml" />
+    <item id="voc-keywords" href="voc-keywords.xhtml" media-type="application/xhtml+xml" />
+    <item id="voc-paragraphs" href="voc-paragraphs.xhtml" media-type="application/xhtml+xml" />
+    <item id="voc-sentences" href="voc-sentences.xhtml" media-type="application/xhtml+xml" />
+    <item id="voc-files" href="voc-files.xhtml" media-type="application/xhtml+xml" />
+    <item id="voc-qpointers" href="voc-qpointers.xhtml" media-type="application/xhtml+xml" />
+    <item id="voc-remotes" href="voc-remotes.xhtml" media-type="application/xhtml+xml" />
+    <item id="voc-others" href="voc-others.xhtml" media-type="application/xhtml+xml" />
+    <item id="voc-login" href="voc-login.xhtml" media-type="application/xhtml+xml" />
+    <item id="dictionaries" href="dictionaries.xhtml" media-type="application/xhtml+xml" />
+    <item id="dictionaries-data" href="dictionaries-data.xhtml" media-type="application/xhtml+xml" />
+    <item id="dictionaries-imaginaries" href="dictionaries-imaginaries.xhtml" media-type="application/xhtml+xml" />
+    <item id="dictionaries-phrases" href="dictionaries-phrases.xhtml" media-type="application/xhtml+xml" />
+    <item id="dictionaries-others" href="dictionaries-others.xhtml" media-type="application/xhtml+xml" />
+    <item id="dictionaries-dictdict" href="dictionaries-dictdict.xhtml" media-type="application/xhtml+xml" />
+    <item id="dictionaries-revise" href="dictionaries-revise.xhtml" media-type="application/xhtml+xml" />
+    <item id="dictionaries-indexing" href="dictionaries-indexing.xhtml" media-type="application/xhtml+xml" />
+    <item id="retrieve" href="retrieve.xhtml" media-type="application/xhtml+xml" />
+    <item id="retrieve-sql" href="retrieve-sql.xhtml" media-type="application/xhtml+xml" />
+    <item id="retrieve-list" href="retrieve-list.xhtml" media-type="application/xhtml+xml" />
+    <item id="retrieve-override" href="retrieve-override.xhtml" media-type="application/xhtml+xml" />
+    <item id="retrieve-select" href="retrieve-select.xhtml" media-type="application/xhtml+xml" />
+    <item id="tcl" href="tcl.xhtml" media-type="application/xhtml+xml" />
+    <item id="tcl-record" href="tcl-record.xhtml" media-type="application/xhtml+xml" />
+    <item id="tcl-terminal" href="tcl-terminal.xhtml" media-type="application/xhtml+xml" />
+    <item id="tcl-printer" href="tcl-printer.xhtml" media-type="application/xhtml+xml" />
+    <item id="tcl-menus" href="tcl-menus.xhtml" media-type="application/xhtml+xml" />
+    <item id="basic" href="basic.xhtml" media-type="application/xhtml+xml" />
+    <item id="basic-build" href="basic-build.xhtml" media-type="application/xhtml+xml" />
+    <item id="basic-syntax" href="basic-syntax.xhtml" media-type="application/xhtml+xml" />
+    <item id="basic-types" href="basic-types.xhtml" media-type="application/xhtml+xml" />
+    <item id="basic-operators" href="basic-operators.xhtml" media-type="application/xhtml+xml" />
+    <item id="basic-arrays" href="basic-arrays.xhtml" media-type="application/xhtml+xml" />
+    <item id="basic-terminal" href="basic-terminal.xhtml" media-type="application/xhtml+xml" />
+    <item id="basic-conditions" href="basic-conditions.xhtml" media-type="application/xhtml+xml" />
+    <item id="basic-loops" href="basic-loops.xhtml" media-type="application/xhtml+xml" />
+    <item id="basic-flow" href="basic-flow.xhtml" media-type="application/xhtml+xml" />
+    <item id="basic-file" href="basic-file.xhtml" media-type="application/xhtml+xml" />
+    <item id="basic-subroutines" href="basic-subroutines.xhtml" media-type="application/xhtml+xml" />
+    <item id="basic-practice" href="basic-practice.xhtml" media-type="application/xhtml+xml" />
+  </manifest>
+  <spine toc="ncx">
+    <itemref idref="introduction" />
+    <itemref idref="introduction-acknowledgements" />
+    <itemref idref="about" />
+    <itemref idref="about-unix" />
+    <itemref idref="about-paradigm" />
+    <itemref idref="prompt" />
+    <itemref idref="prompt-stack" />
+    <itemref idref="files" />
+    <itemref idref="files-directory" />
+    <itemref idref="files-static" />
+    <itemref idref="files-dynamic" />
+    <itemref idref="records" />
+    <itemref idref="records-ed" />
+    <itemref idref="records-macros" />
+    <itemref idref="voc" />
+    <itemref idref="voc-verbs" />
+    <itemref idref="voc-keywords" />
+    <itemref idref="voc-paragraphs" />
+    <itemref idref="voc-sentences" />
+    <itemref idref="voc-files" />
+    <itemref idref="voc-qpointers" />
+    <itemref idref="voc-remotes" />
+    <itemref idref="voc-others" />
+    <itemref idref="voc-login" />
+    <itemref idref="dictionaries" />
+    <itemref idref="dictionaries-data" />
+    <itemref idref="dictionaries-imaginaries" />
+    <itemref idref="dictionaries-phrases" />
+    <itemref idref="dictionaries-others" />
+    <itemref idref="dictionaries-dictdict" />
+    <itemref idref="dictionaries-revise" />
+    <itemref idref="dictionaries-indexing" />
+    <itemref idref="retrieve" />
+    <itemref idref="retrieve-sql" />
+    <itemref idref="retrieve-list" />
+    <itemref idref="retrieve-override" />
+    <itemref idref="retrieve-select" />
+    <itemref idref="tcl" />
+    <itemref idref="tcl-record" />
+    <itemref idref="tcl-terminal" />
+    <itemref idref="tcl-printer" />
+    <itemref idref="tcl-menus" />
+    <itemref idref="basic" />
+    <itemref idref="basic-build" />
+    <itemref idref="basic-syntax" />
+    <itemref idref="basic-types" />
+    <itemref idref="basic-operators" />
+    <itemref idref="basic-arrays" />
+    <itemref idref="basic-terminal" />
+    <itemref idref="basic-conditions" />
+    <itemref idref="basic-loops" />
+    <itemref idref="basic-flow" />
+    <itemref idref="basic-file" />
+    <itemref idref="basic-subroutines" />
+    <itemref idref="basic-practice" />
+  </spine>
+</package>

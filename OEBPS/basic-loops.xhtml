@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Basic Loops</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Basic Loops' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, basic, loops" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Basic Loops</h1>
+<p>UniVerse Basic supports two forms of loop.</p>
+<h2>Fixed iteration loop: FOR/NEXT</h2>
+<p>The first made its first appearance in traditional Dartmouth
+Basic: the <code>FOR</code>/<code>NEXT</code> loop:</p>
+<pre>
+FOR COUNTER = 10 TO 1 STEP -1
+   PRINT COUNTER
+NEXT COUNTER
+PRINT "Lift off!"
+</pre>
+<p><code>FOR</code> begins by setting the counter variable,
+imaginatively called <code>COUNTER</code>, to the starting value of
+10. The value is checked against the terminating <code>TO</code>
+value of 1, and (as the <code>STEP</code> to be added each time is
+negative) decides that the loop is not complete. Execution then
+passes to the next statement, which prints that value on the
+screen. The <code>NEXT</code> statement simply returns execution to
+the head of the loop.</p>
+<p><code>FOR</code> now adds the <code>STEP</code> value to
+<code>COUNTER</code>. In this case, the <code>STEP</code> is -1,
+and so <code>COUNTER</code> becomes 9. Again, it is compared to the
+<code>TO</code> value, and again the loop continues.</p>
+<p>This process repeats until <code>COUNTER</code> reaches 1.
+<code>FOR</code> compares the counter to the terminating value, and
+because it has not yet <em>passed</em> this value, the loop
+continues, and 1 is printed. <code>NEXT</code> then returns
+execution to the <code>FOR</code> statement. <code>COUNTER</code>
+is incremented and reaches 0: this passes the terminating value,
+and so <code>FOR</code> transfers control to the statement
+following the <code>NEXT</code>, which in this case prints
+<code>Lift off!</code>.</p>
+<h2>Loop terminated by condition: LOOP/REPEAT</h2>
+<p>If you do not know how many times your loop will repeat, or it
+would require extra processing effort to find out the number of
+loops required in advance, you may be better off using a
+<code>LOOP</code>/<code>REPEAT</code> loop. A perpetual loop can be
+set up as follows:</p>
+<pre>
+LOOP
+   PRINT 'Still looping...'
+REPEAT
+</pre>
+<p>This loop is perfectly legal, but will run for ever, which is
+not usually helpful. Usually you will want to specify some
+condition which will eventually terminate the loop. You can do this
+by using the <code>UNTIL</code> statement:</p>
+<pre>
+COUNTER = 10
+LOOP
+   PRINT COUNTER
+UNTIL COUNTER = 1
+   COUNTER -= 1
+REPEAT
+</pre>
+<p>Note that the <code>UNTIL</code> can appear anywhere: not
+necessarily at the top or the bottom of the loop. This makes
+<code>LOOP</code>/<code>REPEAT</code> far more flexible than the
+choice of top-terminating or bottom-terminating loops offered by
+most other languages: though by making <code>UNTIL</code> the first
+or last statement inside the loop you can emulate either.</p>
+<p>You can use a <code>WHILE</code> clause in place of an
+<code>UNTIL</code> clause if you wish: <code>WHILE</code> will
+continue the loop as long as the condition following it is true,
+whereas <code>UNTIL</code> will continue as long as it is false. If
+follows that <code>UNTIL condition</code> is logically identical to
+<code>WHILE NOT(condition)</code>, and vice versa.</p>
+<p>Choose the one which makes your condition read the most
+naturally. For instance, the the examples below, <code>EOF</code>
+is an 'end of file' variable, while <code>MORE.RECORDS</code> is a
+flag which indicates whether there are still records to
+process:</p>
+<pre>
+LOOP
+   * Read from the file
+UNTIL EOF
+   * Process the information read
+REPEAT
+
+LOOP
+   * Read from the file
+WHILE MORE.RECORDS
+   * Process the information read
+REPEAT
+</pre>
+
+</body>
+</html>

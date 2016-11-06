@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Basic
+Syntax</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Basic Syntax' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, basic, syntax" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Basic Syntax</h1>
+<h2>About Basic Syntax</h2>
+<p>What follows is not a mathematically rigorous description of
+UniVerse Basic syntax, which I was interested to discover cannot be
+found even in the VMark's documentation. Such descriptions are
+useful and even necessary in the punctuation-ridden world of
+<em>C</em> and <em>Pascal</em>, but would be overkill here. This
+more informal list of rules, though, should get you through most
+programs.</p>
+<h2>Programs</h2>
+<p>Your program must end with an <code>END</code> statement.
+<code>END</code> is also used to close blocks of code (more of this
+later), so if the compiler message <code>Final END statment
+missing</code> appears, while it is possible that you have
+forgotten this, it is much more likely that you've failed to close
+a block of code within the program, and so the final
+<code>END</code> statement is being pressed into service closing a
+block which should have been closed earlier in the code.</p>
+<p>Example: <code>END</code></p>
+<h2>Statements</h2>
+<p>UniVerse Basic statements must be written in upper case.</p>
+<p>Example:<br />
+<code>STOP</code></p>
+<p>The three statements <code>REM</code> (short for 'remark'),
+<code>*</code> and <code>!</code>, are all comment statements, and
+anything following them on the same line is ignored by the
+compiler.</p>
+<p>Example:<br />
+<code>* This is a comment</code></p>
+<p>Sadly, Basic statements may not span more than one line: not
+even comments. You can, though, put more than one statement on a
+line by separating them with semi-colons: though I would only
+recommend this for 'end of line' comments.</p>
+<p>Example:<br />
+<code>STOP ; * Stop here</code></p>
+<p>A semi colon appearing after a comment statment is considered
+part of that comment, not a statement separator.</p>
+<p>Example:<br />
+<code>* This line doesn't print anything&nbsp;;&nbsp;PRINT
+'Hello'</code></p>
+<h2>Variables</h2>
+<p>While variable names may be written in either case, and are not
+case sensitive, I strongly recommend you follow the almost
+universal (no pun intended) practice of writing them in upper case,
+and separating the words they contain with dots. Lower case
+variable names may even be mistaken for a comment or literal
+string, these being the only places lower case normally appears in
+UniVerse Basic.</p>
+<p>Example:<br />
+<code>PRINT INVOICE.VALUE</code></p>
+<h2>Constants</h2>
+<p>You must enclose string constants between a pair of single
+quotes, double quotes, or (unusually but sometimes usefully)
+backslashes. My own policy is to use single quotes by default,
+double quotes where the string to enclose contains single quotes,
+and backslashes where it contains single and double quotes.</p>
+<p>Examples:<br />
+<code>PRINT 'The Gazette'<br />
+PRINT "The Angler's Gazette"<br />
+PRINT \The "Angler's Gazette" magazine\</code></p>
+<p>Numbers may be written without quotes. Positive numbers may have
+or omit a leading <code>+</code> (I would recommend you omit it
+lest someone thinks you omitted an operand in what was meant to be
+an addition, so odd does it look), but negative numbers must
+naturally carry a leading <code>-</code>. Decimal points may be
+used as usual.</p>
+<p>Examples:<br />
+<code>PRINT 123.45<br />
+PRINT +123.45 ; * (looks odd, huh?)<br />
+PRINT -123.45</code></p>
+<p>Very big and very small numbers may be easier to represent in
+<em>scientific notiation</em>. Write a number greater than or equal
+to 1 and less than 10, and follow it by an <code>E</code> followed
+by the number places to shift the decimal point (negative numbers
+shift it to the left, making the number smaller than 1).</p>
+<p>Examples:<br />
+<code>PRINT 2E5 ; * Prints 200000<br />
+<code>PRINT 2E-3 ; * Prints 0.003</code></code></p>
+
+</body>
+</html>

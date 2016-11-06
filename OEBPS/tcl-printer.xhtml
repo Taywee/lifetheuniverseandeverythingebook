@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Printer
+Commands</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Printer Commands' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, printer, commands" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Printer Commands</h1>
+<h2>SETPTR</h2>
+<p><strong>Syntax: SETPTR
+channel,width,length,top,bottom,mode,options</strong></p>
+<p>UniVerse uses numbered 'printer channels' to route information
+to printers. When you use an <code>LPTR</code> keyword to send your
+enquiry to a printer (see <span class="link" onclick=
+"_goto('retrieve-list.html')">Listing Records</span>) or a
+<code>CP</code> command to print a single record (see <span class=
+"link" onclick="_goto('tcl-record.html')">Record Commands</span>),
+your output goes to the default channel: channel 0. Some commands
+and keywords, though (like <code>LPTR</code>) can be followed by a
+channel number, allowing you to print to any printer attached to a
+channel.</p>
+<p>To link a printer to a channel, use the <code>SETPTR</code>
+command. In turn, the parameters are:</p>
+<p><code>channel</code>: a channel number between 0 and 255. 0 is
+the default channel.<br />
+<code>width</code>: the width of the paper on the printer (in
+characters)<br />
+<code>length</code>: the length of the paper on the printer (in
+lines)<br />
+<code>top,bottom</code>: the margins to allow at the top and bottom
+of the page (in lines)<br />
+<code>mode</code>: 1=output to printer, 3=output to record in
+<code>&amp;HOLD&amp;</code>file, (2=output to 'assigned device',
+see UniVerse documentation)<br />
+<code>options</code>: most important being <code>AT
+unixprinterdevice</code> (in mode 1) and <code>AS filename</code>
+(in mode 3), others can be found in the UniVerse documentation.</p>
+<p>An example may help. The command...</p>
+<p><code>SETPTR 0,80,66,3,2,1,AT laser001</code></p>
+<p>...sets the default print channel to route output to the unix
+printer device <code>laser001</code>, formatted for pages of 66
+lines of 80 characters each, and leaving 3 lines at the top and 2
+at the bottom blank.</p>
+<p>To 'print to disk' try something like:</p>
+<p><code>SETPTR 0,80,66,3,2,3,AS MYOUTPUT</code></p>
+<p>This formats the output the same way, but directs it into a
+record called <code>MYOUTPUT</code> in <code>&amp;HOLD&amp;</code>
+instead of to the printer.</p>
+<h2>SPOOL</h2>
+<p><strong>Syntax: SPOOL -LIST <em>or</em> SPOOL -CANCEL
+jobnumber</strong></p>
+<p>To see the jobs currently waiting in the spool queue, enter the
+command <code>SPOOL -LIST</code>. To remove one from the queue, use
+<code>SPOOL -LIST</code> to find its job number, and then enter
+<code>SPOOL -CANCEL jobnumber</code>.</p>
+
+</body>
+</html>

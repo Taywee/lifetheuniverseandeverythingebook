@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Paragraphs</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Paragraphs' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, paragraphs" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Paragraphs</h1>
+<p>We have already encountered <strong>paragraphs</strong> during
+our discussion of the UniVerse editor. The <code>FLUFFY</code>
+record was a paragraph, if not a very useful one.</p>
+<p>A paragraph is UniVerse's equivalent to an MS-DOS 'batch file'
+or UNIX 'script'. MS-DOS batch files are rarely more than lists of
+commands to be executed in a certain order. UNIX scripts, on the
+other hand, are often intelligent routines, containing their own
+variables, decision making and looping structures. UniVerse
+paragraphs lie somewhere between the two, but are rather nearer the
+MS-DOS end of the spectrum than the UNIX end. Complex processing is
+almost exclusively done in UniVerse Basic.</p>
+<h2>In-line prompts... &lt;&lt;...&gt;&gt;</h2>
+<p>At its simplest, then, a UniVerse paragraph is simply a list of
+UniVerse commands, written exactly as they would be typed at the
+UniVerse command prompt, such as FLUFFY. However, there are a few
+ways in which they can be made more flexible and useful. For
+example:</p>
+<p><code>ED VOC RECLAIM<br />
+2 lines long.<br />
+<br />
+----: P<br />
+0001: PA<br />
+0002: RESIZE &lt;&lt;I2,Enter filename to RECLAIM&gt;&gt; * * *
+CONCURRENT<br />
+Bottom at line 2.<br />
+----: Q</code></p>
+<p>This paragraph illustrates a device called an <strong>in-line
+prompt</strong>. In-line prompts make paragraphs more useful by
+allowing you to prompt for details of the commands be executed at
+run time. In the example above, the standard UniVerse command
+<code>RECLAIM</code> simply uses <code>RESIZE</code> to resize a
+file without changing its type, modulo or separation: hence the
+<code>* * *</code> parameters (for details of the
+<code>RESIZE</code> command, see <span class="link" onclick=
+"_goto('files-static.html')">Static Files</span> above). As was
+mentioned during the discussion of the <code>RESIZE</code> command,
+this has the effect of reorganising the file internally and
+reclaiming pockets of unused space created during the addition and
+deletion of records into groups.</p>
+<p>The interesting thing here, of course, is that the creator of
+the paragraph could not know in advance <em>which</em> file the
+user would wish to reclaim. Instead of specifying a file name,
+therefore, he used the <code>&lt;&lt;...&gt;&gt;</code> syntax to
+create an in-line prompt.</p>
+<p>The <code>I2</code> before the comma in the inland prompt stands
+for <strong>Input word 2</strong>. It means that if the user enters
+the command <code>RECLAIM CUSTOMERS</code>, the second word
+(<code>CUSTOMERS</code>) will be substituted into the command,
+making the overall command <code>RESIZE CUSTOMERS * * *
+CONCURRENT</code>. On the other hand, if the user simply enters
+<code>RECLAIM</code>, the paragraph will display the following
+prompt:</p>
+<p><code>RECLAIM<br />
+Enter file name to RECLAIM=</code></p>
+<p>At this prompt, the user could enter <code>CUSTOMERS</code> to
+reclaim the customers file.</p>
+<p>Try it: make up a fictional file name if you don't want to sit
+and wait for <code>RESIZE</code> to do its stuff. You'll get an
+error message reporting that your file name is invalid, but this
+will illustrate the principle just as well.</p>
+<p>There are many different flavours of in-line prompt. The
+simplest form is just <code>&lt;&lt;promptstring&gt;&gt;</code>.
+This ignores any parameters which may have been typed in on the
+command line and simply displays the prompt
+<code>promptstring</code> to request a value from the user. Note
+that if more than one in-line prompt with the prompt
+<code>promptstring</code> appears in your paragraph, the prompt
+<code>promptstring</code> will only be displayed once, and the
+value entered will be used for them all.</p>
+<p>This is usually helpful, but if you want to force a fresh prompt
+even if you are using the same prompt string, you can use the
+<code>A,</code> prefix thus:
+<code>&lt;&lt;A,promptstring&gt;&gt;</code>.</p>
+<p>A variation on the <code>In</code> prefix used by
+<code>RECLAIM</code> (which you'll recall used the <code>n</code>th
+word from the command line if it was there, but prompted for it if
+it wasn't) is the <code>Cn</code> prefix. This also uses the
+<code>n</code>th word from the command line, but evaluates to
+nothing (ie. an empty string) if it isn't. <code>Sn</code> is
+subtely different again, using parameters not taken from the
+command line used to run the paragraph, but rather from the command
+line originally entered by the user. These are different when, say,
+the user enters the command <code>PARA1 A B C</code>, and one of
+the lines in <code>PARA1</code> is <code>PARA2 X Y Z</code>. In
+this case, <code>C3</code> evaluates to <code>Y</code>, but
+<code>S3</code> to <code>B</code>.</p>
+<p>If you need to substitute more than one value into your command,
+use <code>R,</code>. This will prompt repeatedly until the user
+enters an empty value by hitting return. The list of values entered
+is then inserted into the command separated by spaces. This sounds
+worse than it is: an example should make it clear:</p>
+<p><code>ED VOC ENTER.WORDS<br />
+New record.<br />
+<br />
+----: I<br />
+0001= PA<br />
+0002= DISPLAY You entered "&lt;&lt;R,Enter words&gt;&gt;"<br />
+0003=</code> Press RETURN <code><br />
+Bottom at line 3.<br />
+----: FI<br />
+"ENTER.WORDS" filed in file "VOC".</code></p>
+<p>The paragraph runs like this:</p>
+<p><code>ENTER.WORDS<br />
+Enter words=AREN'T<br />
+Enter words=IN-LINE PROMPTS<br />
+Enter words=WONDERFUL<br />
+Enter words=</code> Press Return <code><br />
+You entered "AREN'T IN-LINE PROMPTS WONDERFUL"</code></p>
+<p>If you wish to separate the words entered using an
+<code>R</code> type in-line prompt with something other than a
+space, specify <code>R(c)</code> where <code>c</code> is the
+character you like to see between each entry. For instance, the
+result the paragraph above would have given if written with an
+<code>R(*)</code> in place of the <code>R</code> would have
+been:</p>
+<p><code>You entered "AREN'T*IN-LINE PROMPTS*WONDERFUL"</code></p>
+<p>Note that the space between the words <code>IN-LINE</code> and
+<code>PROMPTS</code> remains: this is because it was actually
+entered as part of the string, and not automatically added by the
+in-line prompt in response to RETURN.</p>
+<p>You can jazz up your prompts using <code>@(CLR)</code> to clear
+the screen before the prompt appears, <code>@(BELL)</code> to sound
+the terminal bell when the prompt is displays, and
+<code>@(col,row)</code> to position the prompt at column
+<code>col</code>, row <code>row</code>. You can use these in
+combination with each other, or the options above. For instance,
+try just typing in the following at the UniVerse command
+prompt:</p>
+<p><code>DISPLAY You entered "&lt;&lt;@(CLR),@(BELL),R(*),Enter
+words&gt;&gt;"</code></p>
+<p>This will clear the screen and beep, before repeatedly prompting
+<code>Enter words=</code> until you press RETURN to enter an empty
+string, and finally display the words you entered separated by
+asterisks.</p>
+<p>This last example illustrates an interesting point: in-line
+prompts are not restricted to use in paragraphs, but are actually
+features of the command language itself, and you can, in principle,
+use them in any command. It is unusual to use them in a directly
+entered command, but not unheard of. For instance, if you had to
+compile a large number of different records in the <code>BP</code>
+file, you might enter the command:</p>
+<p><code>BASIC BP &lt;&lt;Enter BP record key&gt;&gt;<br />
+Enter BP record key=PROGRAM1<br />
+Compiling: Source = 'BP/PROGRAM1', Object = 'BP.O/PROGRAM1'<br />
+*****************<br />
+<br />
+Compilation Complete.</code></p>
+<p>Why? Well, when you come to compile the next program, you can
+just...</p>
+<p><code>.X<br />
+Enter BP record key=PROGRAM2<br />
+Compiling: Source = 'BP/PROGRAM1', Object = 'BP.O/PROGRAM1'<br />
+**********************************<br />
+<br />
+Compilation Complete.</code></p>
+<p>So in this case, the in-line prompts are stored as part of the
+stack, and when the command is re-executed, the in-line prompt is
+again used to find out which program you wish to compile. Neat,
+huh?</p>
+<p>By typing in <code>HELP</code> and using the cursor to select
+the <code>&lt;&lt;...&gt;&gt;</code> topic, you can see the on-line
+documentation describing the use of in-line prompts, and learn a
+few other tricks not described here: but these are the most
+commonly used features.</p>
+<h2>Logic and flow control in paragraphs... IF/THEN, GO, LOOP and
+REPEAT</h2>
+<p>You can add conditional logic to your paragraph using the
+<code>IF</code> command. For instance:</p>
+<p><code>ED VOC TEST.PARAGRAPH<br />
+New record.<br />
+<br />
+----: I<br />
+0001= PA<br />
+0002= IF &lt;&lt;Display something?&gt;&gt; = 'Y' THEN DISPLAY Ok,
+"something".<br />
+0003=</code> Press RETURN<br />
+<code>Bottom at line 2.<br />
+----: FI<br />
+"TEST.PARAGRAPH" filed in file "VOC".</code></p>
+<p>Try running this command twice, entering a <code>Y</code> the
+first time...</p>
+<p><code>TEST.PARAGRAPH<br />
+Display something?=Y<br />
+Ok, "something".</code></p>
+<p>...and <code>N</code> the second time...</p>
+<p><code>TEST.PARAGRAPH<br />
+Display something?=N</code></p>
+<p>While you can make a single line conditional in this way,
+<code>IF</code> is more commonly used in conjunction with another
+command, <code>GO</code>, which can cause the flow of execution to
+jump to another line of your paragraph.</p>
+<p>The following example is typical:</p>
+<p><code>ED VOC TEST.PARAGRAPH.2<br />
+New record.<br />
+<br />
+----: I<br />
+0001= PA<br />
+0002= IF &lt;&lt;(E)nglish or/o e(S)pa&ntilde;ol?&gt;&gt; = 'E'
+THEN GO ENGLISH.MESSAGE<br />
+0003= IF &lt;&lt;(E)nglish or/o e(S)pa&ntilde;ol?&gt;&gt; = 'S'
+THEN GO SPANISH.MESSAGE<br />
+0004= DISPLAY E or S only please/E o S solomente por favor<br />
+0005= GO END<br />
+0006= ENGLISH.MESSAGE:<br />
+0007= DISPLAY Hello!<br />
+0008= DISPLAY How are you?<br />
+0009= GO END<br />
+0010= SPANISH.MESSAGE:<br />
+0011= DISPLAY &iexcl;Ola!<br />
+0012= DISPLAY &iquest;Como esta usted?<br />
+0013= END:</code></p>
+<p>This paragraph prompts the user with a choice of language, and
+displays messages an appropriate message. It works well enough: but
+the problem is that if the user enters something other than an 'E'
+or an 'S', he is given no chance to correct his mistake: the
+paragraph displays an error message and terminates.</p>
+<p>In attempting to solve this problem, you might be tempted to
+edit the paragraph until it looked like this:</p>
+<p><code>0001: PA<br />
+0002: <strong>GET.LANGUAGE:</strong><br />
+0003: IF &lt;&lt;<strong>A,</strong>(E)nglish or/o
+e(S)pa&ntilde;ol?&gt;&gt; = 'E' THEN GO ENGLISH.MESSAGE<br />
+0004: IF &lt;&lt;(E)nglish or/o e(S)pa&ntilde;ol?&gt;&gt; = 'S'
+THEN GO SPANISH.MESSAGE<br />
+0005: DISPLAY E or S only please/E o S solomente por favor<br />
+0006: <strong>GO GET.LANGUAGE</strong><br />
+0007: ENGLISH.MESSAGE:<br />
+0008: DISPLAY Hello!<br />
+0009= DISPLAY How are you?<br />
+0010= GO END<br />
+0011= SPANISH.MESSAGE:<br />
+0012= DISPLAY &iexcl;Ola!<br />
+0013= DISPLAY &iquest;Como esta usted?<br />
+0014= END:</code></p>
+<p>Note the highlighted changes. First, a new prompt has been
+inserted above the language prompt. Secondly, an <code>A,</code>
+has been added to the first in-line prompt, so that if it must be
+used again, the paragraph will force it to be displayed even though
+it has an existing value. Lastly, a <code>GO</code> has been added
+to return the user to the prompt should the value he enters be
+invalid.</p>
+<p>It all looks good. You can enter it and try it... or you can
+save yourself the trouble and read on, because it won't work. The
+problem is that <code>GO</code> statements cause the UniVerse
+command processor to search <em>down</em> the paragraph for the
+appropriate label: if the label is <em>above</em> the
+<code>GO</code>, it will not be found.</p>
+<p>To allow you to repeat a section of a paragraph in the way being
+attempted here, you must use the <code>LOOP</code> and
+<code>REPEAT</code> commands: the former marking the beginning of
+the section you wish to repeat, and the latter marking the end.
+Rewriting the paragraph above using these new commands gives
+you:</p>
+<p><code>0001: PA<br />
+0002: <strong>LOOP</strong><br />
+0003: IF &lt;&lt;<strong>A,</strong>(E)nglish or/o
+e(S)pa&ntilde;ol?&gt;&gt; = 'E' THEN GO ENGLISH.MESSAGE<br />
+0004: IF &lt;&lt;(E)nglish or/o e(S)pa&ntilde;ol?&gt;&gt; = 'S'
+THEN GO SPANISH.MESSAGE<br />
+0005: DISPLAY E or S only please/E o S solomente por favor<br />
+0006: <strong>REPEAT</strong><br />
+0007: ENGLISH.MESSAGE:<br />
+0008: DISPLAY Hello!<br />
+0009= DISPLAY How are you?<br />
+0010= GO END<br />
+0011= SPANISH.MESSAGE:<br />
+0012= DISPLAY &iexcl;Ola!<br />
+0013= DISPLAY &iquest;Como esta usted?<br />
+0014= END:</code></p>
+<p>The label and <code>GO</code> which were used to try and create
+a loop in the previous paragraph are here replaced by
+<code>LOOP</code> and <code>REPEAT</code>. This paragraph will now
+work as expected.</p>
+<p>Most languages which provide statements like <code>LOOP</code>
+and <code>REPEAT</code> also provide some kind of
+<code>WHILE</code> or <code>UNTIL</code> condition which tells the
+program when to exit the loop: UniVerse Basic, for instance, does.
+However, the UniVerse command language does not:
+<code>LOOP</code>/<code>REPEAT</code> loops will loop forever, or
+until you <code>GO</code> to a label outside the loop: so be
+warned.</p>
+
+</body>
+</html>

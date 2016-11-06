@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: The Command
+Prompt</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: The Command Prompt' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, the, command, prompt" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> The Command Prompt</h1>
+<p>If you have not yet created a Universe account, do: see
+<span class="link" onclick="_goto('about-unix.html')">Universe and
+UNIX</span> above.</p>
+<p>If you have, <code>cd</code> to the directory housing the
+account, and start Universe.</p>
+<p>The command to start Universe account is <code>uv</code>. The
+UniVerse <code>bin</code> directory contains this executable: if it
+is not on your path, you will have to enter the full path: it will
+be something like <code>/universe/bin/uv.</code></p>
+<p>This will bring you to the Universe prompt:</p>
+<p><code>&gt;</code></p>
+<p>At this prompt, you can enter commands. The following commands
+are worth learning first:</p>
+<p><code>QUIT</code></p>
+<p>Before you learn anything else, learn how to get back to UNIX
+from UniVerse: simply enter <code>QUIT</code>. Some people find
+themselves logged off their server on entering <code>QUIT</code>,
+but this is not because the command itself logs you off. It only
+happens where a friendly system administrator has devised a command
+file which first invokes UniVerse and then logs out. It means that
+while you are in UniVerse, the UNIX command file is still running:
+and as soon as you return to UNIX it completes by logging you
+off.</p>
+<p><code>LO</code></p>
+<p>Unless you are using a system which logs you out when you type
+<code>QUIT</code> (see above), <code>QUIT</code> will only return
+you to UNIX. If you plan to log off the system entirely, you can do
+so directly from UniVerse by entering <code>LO</code>.</p>
+<p><code>SH</code></p>
+<p>This command has already been mentioned (see <span class="link"
+onclick="_goto('about-unix.html')">UniVerse and Unix</span> above).
+It merely suspends UniVerse and opens a UNIX shell. It is bad
+practise to log out of this shell, as it doesn't give UniVerse a
+chance to 'shut down' tidily (releasing locks, clearing file I/O
+buffers and so on): always <code>exit</code> back to UniVerse
+first. Within the shell, you can carry out most UNIX functions,
+though you should not recursively start UniVerse again, and you
+should bear in mind that even if you use <code>cd</code> to move to
+a different directory, on leaving the shell you will be returned to
+your original UNIX directory and your original UniVerse
+account.</p>
+<p><code>LOGTO</code></p>
+<p><code>LOGTO</code> takes the place of UNIX's <code>cd</code>
+command in that it moves you from one UniVerse account to another,
+in much the way that <code>cd</code> moves you from one UNIX
+directory to another.</p>
+<p>However, it works slightly differently in that it doesn't accept
+pathnames to indicate your destination: the syntax is simply
+<code>LOGTO accountname</code>. This is because, as was explained
+during the description of UniVerse's heirarchical structure (see
+<span class="link" onclick="_goto('about-paradigm.html')">The
+UniVerse Paradigm</span> above), UniVerse accounts are not
+recursive: that is to say, as far as UniVerse is concerned, no
+account contains another account. UniVerse keeps a single central
+list of all the accounts on a system, and when you specify the
+account name you wish to go to, it finds the UNIX path from this
+list. Even if one UniVerse account has been created in a
+subdirectory of another (note: not good practice), UniVerse does
+not recognise any relationship between them, merely two accounts at
+different paths.</p>
+<p>Here lies one of the examples of something I mentioned earlier:
+the risks of applying UNIX commands to UniVerse structures (see
+<span class="link" onclick="_goto('about-unix.html')">UniVerse and
+UNIX</span> above). If you move a directory containing a UniVerse
+account using the UNIX <code>mv</code> command, all may seem well.
+If you <code>cd</code> to the new pathname and invoke UniVerse, it
+will work. However, if you try to <code>LOGTO</code> the account
+you moved from UniVerse, the command will fail. This is because
+UNIX is not aware of UniVerse's internal controls, and will not
+update it's internal list of account locations. This, you must do
+yourself using the UNIX Administrator's menu, which is
+unfortunately outside the scope of this document. Refer to the
+UniVerse documentation for more information on this point.</p>
+<p><code>SET.TERM.TYPE</code></p>
+<p>Each different kind of dumb terminal has it's own instruction
+set for doing things like displaying text at particular screen
+locations, or displaying text in bold, and so on. In order to cope
+with these, UniVerse must know which kind of terminal you are
+using. If, as is now increasingly likely, you are using a PC based
+terminal emulator, it must know which kind of terminal it is
+emulating.</p>
+<p>To set the terminal type, you can enter
+<code>SET.TERM.TYPE</code>, and enter a <code>?</code> when asked
+for your terminal type. UniVerse will then display a list of those
+it supports. Select your terminal from this list.</p>
+<p>It would be a good idea to do this before trying any of the
+examples in the remainder of this course: they all assume that your
+terminal type has been set up correctly. This terminal type
+definition lasts until you leave UniVerse: when you return to
+UniVerse you will have to use this command again, though there are
+ways to automate 'start up' commands of this kind, as you will
+learn later.</p>
+<p><code>HELP</code></p>
+<p>UniVerse boasts an extremely comprehensive on-line help system,
+similar to the UNIX <code>man</code> facility. To get information
+about a command, enter <code>HELP commandname</code>. For instance,
+you could enter <code>HELP LOGTO</code> to read about the
+<code>LOGTO</code> command, or even the rather desperate sounding
+<code>HELP HELP</code> to learn about the help system itself. This
+on-line manual also covers the statements in the UniVerse Basic
+programming language: a point we shall return to when the language
+is discussed later.</p>
+<p><code>DISPLAY</code></p>
+<p>To display something on the screen, enter the command
+<code>DISPLAY string</code>, as in <code>DISPLAY Hello Mum!</code>.
+This a useful enough command, but not tremendously important: I
+explain it because I will be asking you to enter it later as part
+of some worked examples on other subjects.</p>
+
+</body>
+</html>

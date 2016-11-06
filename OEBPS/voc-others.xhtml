@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Other VOC
+Records</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Other VOC Records' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, other, voc, records" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Other VOC Records</h1>
+<p>In addition to the types of VOC record we have discussed, you
+will come across a number of others, which I will list briefly here
+chiefly for the sake of completeness.</p>
+<h2>Menu pointers: M</h2>
+<p>VOC records with <code>M</code> as the first character of their
+first fields are <em>menu pointers</em>, used to invoke UniVerse
+menus. To see them explained, turn to <span class="link" onclick=
+"_goto('tcl-menus.html')">Menus of Commands</span>.</p>
+<h2>'Global' dictionary records: D, I, PH, etc.</h2>
+<p>As has been briefly mentioned, records in the dictionary of a
+UniVerse file are used to describe the contents or layout of the
+main or data records. Their main use is to name and describe the
+fields available via the Retrieve query language. For instance, the
+record <code>CUSTOMER.NUMBER</code> in the dictionary of an
+<code>INVOICES</code> file allows the term
+<code>CUSTOMER.NUMBER</code> to appear in Retrieve enquiries based
+on that file. Some dictionary records, though, could apply to many
+files: for instance, a dictionary item called
+<code>RECORD.LENGTH</code> reporting the length of a record in
+bytes could be useful, and no matter what fields are stored in a
+record, every record has a particular length. To avoid having to
+set up dictionary items such as <code>RECORD.LENGTH</code> in every
+dictionary, you can save them instead in the VOC file, where
+Retrieve will be able to use them regardless of the file you are
+enquiring about. For more information about dictionary records,
+turn to <span class="link" onclick=
+"_goto('dictionaries.html')">Dictionaries</span>.</p>
+<h2>'Data' records: 'X'</h2>
+<p>A few VOC records exist simply to store information or
+configuration details, rather than to support the UniVerse command
+language. These have an <code>X</code> at their beginning of their
+first field. One example, which you will find in every UniVerse
+account, is:</p>
+<p><code>&gt;<strong>ED VOC RELLEVEL</strong><br />
+4 lines long.<br />
+<br />
+----: <strong>P</strong><br />
+0001: X<br />
+0002: 9.4.1.1<br />
+0003: INFORMATION<br />
+0004: INFORMATION.FORMAT<br />
+Bottom at line 4.<br />
+----: <strong>Q</strong><br />
+&gt;</code></p>
+<p>Field 2 stores the release of UniVerse, and fields 3 and 4
+define the 'flavour' of the UniVerse account (see <span class=
+"link" onclick="_goto('about.html')">UniVerse and PICK</span>
+above),</p>
+<p><code>X</code> type VOC records should be used sparingly, or
+(preferably) not at all. The VOC file is central to the function
+and performance of the UniVerse account. Every additional
+<code>X</code> type makes the file larger and possibly slower to
+access, and removes a 'word' which would otherwise have been
+available to the UniVerse command language. If you find yourself
+planning many <code>X</code> type records, consider setting up a
+separate UniVerse file to store them, rather than littering the VOC
+with them.</p>
+
+</body>
+</html>

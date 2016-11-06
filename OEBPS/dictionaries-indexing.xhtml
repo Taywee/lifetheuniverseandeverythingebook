@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Indexing
+Fields</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Indexing Fields' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, indexing, fields" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Indexing Fields</h1>
+<p>So far in this course, the enquiries you have been running have
+been extremely simple. They haven't applied any <em>criteria</em>
+to reduce the number of records displayed: you have been displaying
+all the records in each file you've enquired on.</p>
+<p>Later, you will discover how to list only records which match
+certain criteria: such as (for example) all the
+<code>CUSTOMER.INVOICES</code> made out to a particular client, or
+for over a certain amount. If you apply such a condition to your
+enquiry, UniVerse simply reads all the records on the file, and
+includes only those which are appropriate. But what if your file
+contained 20,000 records and you were only expecting 3 or 4 to be
+displayed? You'd be waiting a long time for a very short enquiry:
+long enough for UniVerse to read 20,000 records, and decide that
+19,997 of them aren't needed.</p>
+<p>This is a problem common to all databases, of course. To get
+round it, most databases allow you to create <em>indexes</em> (or,
+as some people have it, '<em>indices</em>'), Roughly speaking, an
+index is a file turned upside down: you use the value of a chosen
+data field as the key, and then read the keys corresponding to that
+value as data. For instance, an index on the
+<code>CUSTOMER.NAME</code> would allow you to use the name 'United
+Boxgirders' as the key, and read all the
+<code>CUSTOMER.INVOICE</code> keys which carry this company
+name.</p>
+<p>UniVerse supports a rather nice indexing system: reasonably
+efficient, and (compared to some) very simple to use.</p>
+<p>First, we need a file to play with. We'll create a copy of the
+<code>VOC</code> file to experiment with:</p>
+<p><code>&gt;<strong>CREATE.FILE COPY.OF.VOC</strong><br />
+Creating file "COPY.OF.VOC" as Type 30.<br />
+Creating file "D_COPY.OF.VOC" as Type 3, Modulo 1, Separation
+2.<br />
+Added "@ID", the default record for RetrieVe, to
+"D_COPY.OF.VOC".<br />
+&gt;</code></p>
+<p>Then we need to load it with records. We can make copies of all
+the records in the <code>VOC</code> file using the
+<code>COPY</code> command. Though we wont be covering this in
+detail until later, its format is fairly transparent:</p>
+<p><code>&gt;<strong>COPY FROM VOC TO COPY.OF.VOC
+ALL</strong><br />
+<br />
+825 records copied.</code></p>
+<p>(The number of records in your <code>VOC</code> file may be
+different, of course).</p>
+<p>As all the records in the <code>COPY.OF.VOC</code> file are the
+same as those in the <code>VOC</code> file, they must have the same
+overall structure. If they have the structure, they can use the
+same dictionary. You can therefore copy all the records from the
+<code>VOC</code> dictionary to the <code>COPY.OF.VOC</code>
+dictionary to. You must add the keyword <code>OVERWRITING</code>
+though, because there is already an <code>@ID</code> record on the
+dictionary of <code>COPY.OF.VOC</code> which was added
+automatically during the <code>CREATE.FILE</code> (see above), and
+you want this overwritten, not preserved.</p>
+<p><code>&gt;<strong>COPY FROM DICT VOC TO DICT COPY.OF.VOC ALL
+OVERWRITING</strong><br />
+<br />
+19 records copied.</code></p>
+<p>You now have a <code>COPY.OF.VOC</code> file that is almost
+identical to the original <code>VOC</code> the only differences
+being between their names (of course), and their file types: as the
+<code>VOC</code> is static, while <code>COPY.OF.VOC</code> is
+dynamic.</p>
+<p>Imagined that you wished to list only the menu pointers, or 'M'
+type records, in your <code>COPY.OF.VOC</code> file (see
+<span class="link" onclick="_goto('voc-others.html')">Other VOC
+Records</span>). You can do this by adding a <code>WITH</code>
+clause to your <code>LIST</code> command. (<code>WITH</code> hasn't
+been explained yet, but it is not difficult to see the basic idea
+here: it is described in more detail later in the course).</p>
+<p><code>&gt;<strong>LIST COPY.OF.VOC WITH TYPE =
+'M'</strong><br />
+LIST COPY.OF.VOC WITH TYPE = "M" 15:47:52 08-18-99 PAGE 1<br />
+NAME.......... TYPE DESC..........................<br />
+<br />
+CONV.ACCT.MENU M Menu - UniVerse Account<br />
+Importation<br />
+PRINT.ADMIN.ME M Menu - UniVerse Spooler<br />
+NU Administration<br />
+BASIC.CONT M Menu<br />
+SP.JOB M Menu<br />
+CONSYS.MENU M M<br />
+SP.MOD M Menu<br />
+ACCT.CONV M Menu<br />
+SP.STATUS M Menu<br />
+MENUS M MENU selector - Invoke the<br />
+MENU maintenance menu<br />
+<br />
+9 records listed.<br />
+&gt;</code></p>
+<p>In order to display these results, <code>LIST</code> had to read
+every record in the <code>VOC</code> file: all 800 or so of them,
+simply to reject 791 as irrelevant. On most systems, the delay
+while this happened would have been imperceptible, but if you are
+running on modest hardware you may have noticed a pause before the
+enquiry finished. But no matter how powerful your computer, by the
+time this file reached 80,000 or even 800,000 records in size,
+you'd have noticed the delay. If the number of M type
+<code>COPY.OF.VOC</code> records remained in ration, you'd now be
+reading 800,000 records and rejecting 791,000 of them.</p>
+<p>To avoid this, you can create an index. The command to do so is
+extremely simple:</p>
+<p><code>&gt;<strong>CREATE.INDEX COPY.OF.VOC TYPE</strong><br />
+&gt;</code></p>
+<p>The command is extremely quiet: you are simply returned to the
+<code>&gt;</code> prompt once it has done its thing. You have
+created the index, but it is initially empty. To bring the index up
+to date:</p>
+<p><code>&gt;<strong>BUILD.INDEX COPY.OF.VOC TYPE</strong><br />
+<br />
+Locking 'COPY.OF.VOC' file for exclusive use.<br />
+Starting SSELECT for file 'COPY.OF.VOC index TYPE'.<br />
+Compiling "@Ak.0".<br />
+IF F1 [ 1 , 1 ] = P THEN F1 [ 1 , 2 ] ELSE F1 [ 1 , 1 ]<br />
+Compiling "@INDEX.TYPE".<br />
+IF F1 [ 1 , 1 ] = P THEN F1 [ 1 , 2 ] ELSE F1 [ 1 , 1 ] ; @1 : (
+char ( 251 ) ) : @Ak.ID<br />
+<br />
+825 record(s) selected to SELECT list #0.<br />
+<br />
+Clearing Index File INDEX.000<br />
+<br />
+Starting DATA processing for index 'TYPE'!<br />
+*********************************<br />
+825 total processed.<br />
+<br />
+Updating INDEX.MAP flags...<br />
+<br />
+<br />
+Index build of TYPE complete.<br />
+<br />
+File 'COPY.OF.VOC' Unlocked.<br />
+<br />
+<br />
+&gt;</code></p>
+<p>As you can see, by contrast <code>BUILD.INDEX</code> is rather
+noisy. Thankfully, though, you can ignore it's rather cryptic
+output. The index has now been brought up to date.</p>
+<p>But the best has yet to come. From now on, this index will be
+updated automatically whenever a record in <code>COPY.OF.VOC</code>
+is added, changed, or deleted. You need make no changes to your
+application: even UniVerse Basic programs which update
+<code>COPY.OF.VOC</code> written before the index was created will
+automatically update the index whenever they write to
+<code>COPY.OF.VOC</code>. In fact, these indexes require so little
+effort that its easy to forget that they are there, which is
+sometimes a problem, as old, little used, or obsolecent indexes are
+not always removed, but (like all indexes) still require disk space
+to store and CPU and I/O time to keep up to date.</p>
+<p>It's a good idea to periodically check the indexes on a file:
+particularly if you are about to add a new index to it. You can do
+so using <code>LIST.INDEX</code>:</p>
+<p><code>&gt;<strong>LIST.INDEX COPY.OF.VOC ALL</strong><br />
+Alternate Key Index Summary for file COPY.OF.VOC<br />
+File........... COPY.OF.VOC<br />
+Indices........ 1 (0 A-type, 0 C-type, 0 D-type, 1 I-type, 0 SQL, 0
+S-type)<br />
+Index Updates.. Enabled, No updates pending<br />
+<br />
+Index name Type Build Nulls In DICT S/M Just Unique Field
+num/I-type<br />
+TYPE I Not Reqd Yes Yes S L N IF F1[1,1]='P' T<br />
+HEN F1[1,2] ELSE<br />
+F1[1,1]<br />
+<br />
+&gt;</code></p>
+<p>Finally, if you do need to remove an index, the syntax runs:</p>
+<p><code>&gt;<strong>DELETE.INDEX COPY.OF.VOC TYPE</strong><br />
+Removing index file TYPE.<br />
+&gt;</code></p>
+<p>So how do you take advantage of your index? In most cases, you
+need do nothing. An enquiry like the one you used above, <code>LIST
+COPY.OF.VOC WITH TYPE = 'M'</code>, will automatically consult the
+<code>TYPE</code> index if there is one. This also means that any
+existing application code does not usually have to be modified to
+take advantage of the new indexes: it will use them if it finds
+them and gain the performance improvements automatically.</p>
+<p>I say 'usually' because there are a few UniVerse Basic
+statements which are designed to consult indexes directly, and will
+only work if they are there: you will learn about these later. But
+these are purely optional: any existing query, whether executed
+from UniVerse Basic or from the command line, will automatically
+use indexes if they will help.</p>
+<p>Given that they are so easy to create and maintain, why not just
+index everything and have consistently speedy enquiries? Indexes do
+carry two costs:</p>
+<p>1. Updating an index takes a certain amount of CPU and I/O time.
+Each index you add increases the amount of work your system has to
+do when it writes a record.</p>
+<p>2. Indices occupy disk space: a file with many indices may grow
+to several times its original size, and similarly multiply all its
+costs of storage, maintenance and backup.</p>
+
+</body>
+</html>

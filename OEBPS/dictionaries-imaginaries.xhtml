@@ -1,0 +1,414 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Imaginary
+Fields</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Imaginary Fields' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, imaginary, fields" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Imaginary Fields</h1>
+<p>One obvious omission from our <code>CUSTOMER.INVOICES</code>
+file layout is a field to hold the value of each invoice. It will
+be apparent, though, that the file holds enough information to
+<em>calculate</em> the value of the invoice without such a field:
+so it could be argued that to actually store it is redundant,
+wasting disk storage when the value, when required, could be
+derived by taking the product of the <code>UNIT.PRICE</code> and
+<code>QUANTITY</code> fields at any time.</p>
+<p>This approach is fine in UniVerse Basic programs, but what if
+you wanted (as you surely would) to show the value of each invoice
+in an enquiry? Without a dictionary record, the word
+<code>VALUE</code> could not be used in an enquiry.</p>
+<p>UniVerse provides a type of dictionary record which allows you
+to reference a field like <code>VALUE</code> which is not
+physically stored in a record, but can be derived by applying a
+formula to other fields which are. It is called an
+<em>imaginary</em> dictionary record, I-type dictionary record, or
+simply an I-descriptor.</p>
+<p>Create a <code>VALUE</code> I-descriptor like this:</p>
+<p><code>&gt;<strong>ED DICT CUSTOMER.INVOICES VALUE</strong><br />
+New record.<br />
+<br />
+----: <strong>I</strong><br />
+0001= <strong>I Value of invoice</strong><br />
+0002= <strong>UNIT.PRICE * QUANTITY</strong><br />
+0003= <strong>(Enter a space and press ENTER)</strong><br />
+0004= <strong>Value</strong><br />
+0005= <strong>10R</strong><br />
+0006= <strong>S</strong><br />
+0007= <strong>(Press ENTER)</strong><br />
+----: <strong>FI</strong><br />
+"VALUE" saved in file "DICT CUSTOMER.INVOICES".<br />
+&gt;</code></p>
+<p>You may find this record familiar, as it is very similar to the
+dictionary records we created for <code>PRODUCT</code>,
+<code>UNIT.PRICE</code> and <code>QUANITY</code> in the last
+section (see <span class="link" onclick=
+"_goto('dictionaries-data.html')">Data fields</span>). In fact,
+only the second line of an I-descriptor is significantly different.
+The first, as do all first lines of dictionary records, consists of
+the type (an <code>I</code>) followed optionally by a description.
+The third, fourth, fifth and sixth lines are all as described
+before.</p>
+<p>In a D type dictionary record, however, the second line contains
+the number of the field being referenced. For instance, the
+dictionary record <code>UNIT.PRICE</code> contains a <code>3</code>
+on its second line, as it can be found on the third field of every
+<code>CUSTOMER.INVOICES</code> record. As the <code>VALUE</code> of
+an invoices does not appear in a <code>CUSTOMER.INVOICES</code>
+record, such a number cannot be used in an I-descriptor.</p>
+<p>In it's place is a UniVerse Basic expression which evaluates to
+the desired value. In this case, as the invoice value can be
+calculated by multiplying the unit price of the product by the
+quantity bought, it is <code>UNIT.PRICE * QUANTITY</code>
+(<code>*</code> being the UniVerse Basic multiplication
+operator).</p>
+<p>To gain full advantage from I-descriptors, it is therefore
+necessary to understand UniVerse Basic, which is covered at length
+near the end of this course. However, must I-descriptors are
+relatively simple, and the most common types are explained
+below:</p>
+<h2>Constant I-descriptors</h2>
+<p>You can create an I-descriptor which always returns the same
+value, regardless of the record it is evaluated with. For instance,
+perhaps the simplest I-descriptor formula of all, <code>1</code>,
+can be usefully totalled within UniVerse enquiries to provide
+record counts: as it returns one for each record listed by the
+enquiry.</p>
+<h2>Synonym I-descriptors</h2>
+<p>I argued in the previous section (see <span class="link"
+onclick="_goto('dictionaries-data.html')">Data fields</span> above)
+that is was good practise to maintain only <em>one</em> D type
+dictionary record for each field in the data file, thus giving each
+field a unique and consistent name. If you wish to set up a synonym
+of the <code>CUSTOMER.NAME</code> field, giving the customer name a
+wider column to live in, create an I-descriptor called
+<code>WIDE.CUSTOMER.NAME</code> with a formula of
+<code>CUSTOMER.NAME</code>. One advantage of this tidy approach is
+quickly apparent: should the file ever be redesigned, pushing the
+customer's name onto the second field, editing the
+<code>CUSTOMER.NAME</code> field is sufficient to accomodate the
+cange. If <code>CUSTOMER.NAME</code> and
+<code>WIDE.CUSTOMER.NAME</code> were both D types, they would both
+have to be modified.</p>
+<h2>Arithmetic I-descriptors</h2>
+<p>I-descriptors often apply arithmetic operators to other fields
+in order to derive new values. <code>VALUE</code> is one such. The
+UniVerse Basic arithmetic operators are:</p>
+<table>
+<tr>
+<td>
+<p>*</p>
+</td>
+<td>
+<p>Multiplication</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>/</p>
+</td>
+<td>
+<p>Division</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>+</p>
+</td>
+<td>
+<p>Addition</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>-</p>
+</td>
+<td>
+<p>Subtraction</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>^</p>
+</td>
+<td>
+<p>Exponentiation</p>
+</td>
+</tr>
+</table>
+<h2>String manipulating I-descriptors</h2>
+<p>Many I-descriptors operate by adding strings together, taking
+subsections of strings, or otherwise operating on them. UniVerse
+Basic is extremely strong at string manipulation, as is appropriate
+to a database management system that stores all data as strings.
+You will learn more about its features later, but for now the most
+commonly used string manipulations in I-descriptors are:</p>
+<table>
+<tr>
+<td>
+<p>Operation</p>
+</td>
+<td>
+<p>Example formula</p>
+</td>
+<td>
+<p>Result when applied to <code>CUSTOMER.NAME</code> of <code>ACME
+Widgets Limited</code> and <code>PRODUCT</code> of
+<code>Castellated Grommets</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Slicing relative to the beginning of a string</p>
+</td>
+<td>
+<p><code>CUSTOMER.NAME[1, 3]</code></p>
+</td>
+<td>
+<p><code>ACM</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Slicing relative to the end of a string</p>
+</td>
+<td>
+<p><code>CUSTOMER.NAME[3]</code></p>
+</td>
+<td>
+<p><code>ted</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Concatenating strings</p>
+</td>
+<td>
+<p><code>CUSTOMER.NAME : ' buy ' : PRODICT</code></p>
+</td>
+<td>
+<p><code>ACME Widgets Limited buy Castellated Gromets</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Delimiting a string by a chosen character, and extracting a
+section</p>
+</td>
+<td>
+<p><code>FIELD(CUSTOMER.NAME, ' ', 1, bits_menu, computers_menu,
+universe_menu)</code></p>
+</td>
+<td>
+<p><code>Widgets</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Converting strings to upper case</p>
+</td>
+<td>
+<p><code>UPCASE(CUSTOMER.NAME)</code></p>
+</td>
+<td>
+<p><code>ACME WIDGETS LIMITED</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Converting strings to lower case</p>
+</td>
+<td>
+<p><code>DOWNCASE(CUSTOMER.NAME)</code></p>
+</td>
+<td>
+<p><code>acme widgets limited</code></p>
+</td>
+</tr>
+</table>
+<h2>Translation I-descriptors</h2>
+<p>A common requirement is to create a value which reports a value
+from another UniVerse file. For instance, you might decide to run
+discount schemes for favoured clients: scheme 'A' for the most
+lucrative, 'B' for the fairly lucrative, and 'C' for anyone else.
+You could then add a <code>DISCOUNT.CODE</code> field to your
+<code>CUSTOMER.INVOICES</code> file, showing which discount you
+have decided to apply to each invoice. This code would be a key to
+another file, called <code>DISCOUNT.SCHEMES</code>, which in turn
+would have a field called <code>PERCENTAGE.DISCOUNT</code>.</p>
+<p>To show the <code>DISCOUNT.CODE</code> for each invoice is
+simple: you can just enter the command <code>LIST CUSTOMER.INVOICES
+DISCOUNT.CODE</code>. But what if you wanted to show the actual
+percentage discount? You can't say <code>LIST CUSTOMER.INVOICES
+PERCENTAGE.DISCOUNT</code> because the dictionary record
+<code>PERCENTAGE.DISCOUNT</code> is on the dictionary of
+<code>DISCOUNT.SCHEMES</code>, not the dictionary of
+<code>CUSTOMER.INVOICES</code>. But you can create an I-descriptor
+which 'translates' the percentage discount from the
+<code>DISCOUNT.SCHEMES</code> file.</p>
+<p>To do this, you use a UniVerse Basic function called
+<code>TRANS()</code>. This function is an ordinary part of UniVerse
+Basic, but is so useful for I-descriptors that you'll rarely find
+it anywhere else. In the example above, you could create an
+I-descriptor called <code>DS.PERCENTAGE.DISCOUNT</code> on the
+dictionary of <code>CUSTOMER.INVOICES</code>. The <code>DS.</code>
+at the beginning of the name is a reminder to anyone using the
+field that the data associated with it is actually being obtained
+from <code>DISCOUNT.SCHEMES</code>. Such prefixes for translation
+I-descriptors are entirely optional, but useful and very
+common.</p>
+<p>The formula on line 2 of the <code>DS.PERCENTAGE.DISCOUNT</code>
+I-descriptor would look like this:</p>
+<p><code>TRANS('DISCOUNT.SCHEMES', DISCOUNT.CODE,
+'PERCENTAGE.DISCOUNT', 'X')</code></p>
+<p>Taking the four parameters in turn:</p>
+<p>1. <code>'DISCOUNT.SCHEMES'</code> is the name of the file which
+contains the information you want to translate.</p>
+<p>2. <code>DISCOUNT.CODE</code> yields the key to
+<code>DISCOUNT.SCHEMES</code>. Note that it is not in quotes: this
+is because it is not the string <code>'DISCOUNT.CODE'</code> itself
+which is the key, but the <code>'A'</code>, <code>'B'</code>, or
+<code>'C'</code> contained in the field. Remember that field names
+in the formulas of I-descriptors are replaced with their values: a
+little like variables in a program.</p>
+<p>3. <code>'PERCENTAGE.DISCOUNT'</code> is the name of the
+<code>DISCOUNT.SCHEMES</code> field which contains the value you
+want to retrieve.</p>
+<p>4. <code>'X'</code> is a special code which means 'if the record
+can't be found, return an empty string'. The three other possible
+codes are <code>'V'</code>, which does the same as <code>'X'</code>
+but displays an error message to highlight the failure,
+<code>'C'</code> which returns the key to the record which couldn't
+be found, and <code>'N'</code> which returns the key to the record
+if the value found is an empty string.</p>
+<h2>Conditional I-descriptors</h2>
+<p>A common requirement is to take a simple coded field, such as a
+<code>GENDER</code> field on a <code>PERSONNEL</code> file, and
+provide a friendlier description of the code for a report: so
+instead of showing <code>M</code> for male and <code>F</code> for
+female, you can show the full words <code>Male</code> and
+<code>Female</code> in your enquiry. The UniVerse Basic expression
+to achieve this is quite intuitive:</p>
+<p><code>IF GENDER = 'F' THEN 'Female' ELSE 'Male'</code></p>
+<p>(C programmers may notice the similarity to their beloved
+<code>condition ? trueresult : falseresult</code> syntax).</p>
+<p>In fact, this formula is a bit dodgy. What if the
+<code>GENDER</code> field was empty, or someone updated it
+incorrectly, entering a <code>W</code> for 'woman' instead of an
+<code>F</code> for 'female'? In both these cases the formula would
+yield <code>Male</code>. Fortunately, you can nest
+<code>IF</code>s:</p>
+<p><code>IF GENDER = 'F' THEN 'Female' ELSE IF GENDER = 'M' THEN
+'Male' ELSE 'Unknown'</code></p>
+<p>You now need only to decide if a woman is more likely to be
+offended by being called 'Male' than by being classified as 'gender
+unknown'.</p>
+<h2>Subroutine I-descriptors</h2>
+<p>It's possible that your I-descriptor may be very complicated.
+For instance, you might wish to put I-descriptors on the dictionary
+of your <code>CUSTOMER.INVOICES</code> file showing the value of
+the invoice in different currencies. You may recall the original
+figures were in &euro;uros, so you might call your I-descriptors
+<code>DOLLAR.VALUE</code>, <code>YEN.VALUE</code>,
+<code>STERLING.VALUE</code> and <code>RAND.VALUE</code>. The
+calculations might be quite complicated: they would have to access
+some kind of <code>CURRENCY.RATES</code> file to find today's
+exchange rate, apply charges for currency conversions, and so on.
+It is unlikely that such a computation could be expressed neatly,
+if indeed at all, in a single UniVerse Basic expression.</p>
+<p>In such situations, you can use an extremely hand function
+called <code>SUBR()</code>. Like <code>TRANS()</code> (see above),
+this is a standard UniVerse Basic function, but is not terribly
+useful outside I-descriptor formulae: within them, however, it is
+wonderful.</p>
+<p><code>SUBR()</code> call a UniVerse Basic subroutine of your
+choice. Subroutines can take a number of 'parameters', similar to
+parameters in most programming languages (C, Pascal, PL/SQL and so
+on) and used both to pass values values <em>into</em> the
+subroutine, and to get values <em>back</em>. All the information
+you need to create subroutines will be provided later, in the
+section on UniVerse Basic, but for now it is useful to now that the
+first line of each subroutine states the subroutine name and the
+parameters it takes. For instance, a subroutine to convert a Euro
+value to another currency might look like this:</p>
+<p><code>SUBROUTINE GET.CURRENCY.VALUE(CURRENCY.VALUE, EURO.VALUE,
+CURRENCY.CODE)</code></p>
+<p>Returning to the formula of your I-descriptor, the
+<code>SUBR()</code> function takes the same number of parameters as
+the subroutine you wish to call. The first parameter is the name of
+the subroutine, and the others provide values to pass into the 2nd
+parameter in the subroutine onwards. The subroutine must return its
+result through its first parameter. This is one of those things
+that is difficult to describe, but simple once you've grasped it.
+The following implementations of the foreign currency I-desciptors
+mentioned above may help.</p>
+<table>
+<tr>
+<td>
+<p>I-descriptor</p>
+</td>
+<td>
+<p>Formula</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>DOLLAR.VALUE</code></p>
+</td>
+<td>
+<p><code>SUBR('GET.CURRENCY.VALUE', VALUE, 'USDOLLAR')</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>YEN.VALUE</code></p>
+</td>
+<td>
+<p><code>SUBR('GET.CURRENCY.VALUE', VALUE, 'JAPYEN')</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>STERLING.VALUE</code></p>
+</td>
+<td>
+<p><code>SUBR('GET.CURRENCY.VALUE', VALUE, 'UKPOUND')</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>RAND.VALUE</code></p>
+</td>
+<td>
+<p><code>SUBR('GET.CURRENCY.VALUE', VALUE, 'SARAND')</code></p>
+</td>
+</tr>
+</table>
+<p>As you can see, the formula is the same in each case, with only
+the currency codes varying. The same subroutine is being called in
+each case, receiving the &euro;uro value and currency codes in the
+second and third parameters respectively, and returning the result
+via the first.</p>
+<p>A final note: you may have noticed that the I-descriptor
+<code>VALUE</code> appears in the formula for the I-descriptor
+<code>DOLLAR.VALUE</code>. In fact, I-descriptors can refer to
+I-descriptors just as easily as D type data fields.</p>
+
+</body>
+</html>

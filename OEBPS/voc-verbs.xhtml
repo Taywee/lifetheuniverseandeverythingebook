@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Verbs</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Verbs' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, verbs" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Verbs</h1>
+<p><strong>Verbs</strong>are all command words. Enter a verb at the
+UniVerse prompt, and something will happen: even if it is only the
+display of a message telling you that the verb requires more
+parameters than you have supplied.</p>
+<p>Several of the commands you have used in previous sections are
+verbs. They include:</p>
+<p><code>SH</code>: The UNIX shell command.</p>
+<p><code>HELP</code> The on-line manual command.</p>
+<p><code>ED</code>: The editor command itself.</p>
+<p>Let's examine the SH command in more depth:</p>
+<p><code>ED VOC SH<br />
+4 lines long.<br />
+<br />
+----: P<br />
+0001: V<br />
+0002: /bin/sh<br />
+0003: U<br />
+0004: TICRG<br />
+Bottom at line 4.<br />
+----:</code></p>
+<p>The <code>V</code> on the first line indicates that this is a
+verb. Like any VOC item, a verb can store a description after the
+word V.</p>
+<p>Verbs work by running programs, and the name of the program they
+run appears on the second line. Here, it is the UNIX shell program
+<code>/bin/sh</code>.</p>
+<p>The third line of the verb indicates what kind of program is
+being run. It can take any of the following values:</p>
+<table>
+<tr>
+<td>
+<p>Letter</p>
+</td>
+<td>
+<p>Program Language</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>B</p>
+</td>
+<td>
+<p>UniVerse Basic</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>C</p>
+</td>
+<td>
+<p>C shell script</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>D</p>
+</td>
+<td>
+<p>DOS batch file</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>E</p>
+</td>
+<td>
+<p>'External'</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>I</p>
+</td>
+<td>
+<p>'Internal'</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>P</p>
+</td>
+<td>
+<p>'Primitive'</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Q</p>
+</td>
+<td>
+<p>Query command</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>S</p>
+</td>
+<td>
+<p>Bourne shell script</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>U</p>
+</td>
+<td>
+<p>Operating System command</p>
+</td>
+</tr>
+</table>
+<p>I provide the complete list for reference, but in most cases you
+will only need two understand two of these. <code>B</code> links a
+verb to a UniVerse Basic program. When you cover UniVerse Basic
+programming a little later, it is worth bearing in mind that you
+can create a new UniVerse verb by linking a <code>V</code> type VOC
+record to a UniVerse Basic program. <code>U</code> links a verb to
+an Operating System command. In the main, you can use verbs with a
+<code>U</code> on their third line to provide UniVerse versions of
+your favourite UNIX commands: but test these carefully. While most
+such links are well-behaved, some UNIX processes resent being
+invoked from inside UniVerse, and thus behave a little oddly.</p>
+<p>Finally, the fourth line contains a series of one-letter codes
+which determine the kind of environment or setup required by the
+verb. These are all rather technical, and beyond the scope of this
+document. They are not always necessary, and for now you may simply
+leave this line clear and consult the UniVerse documentation only
+if your new verb behaves oddly.</p>
+
+</body>
+</html>

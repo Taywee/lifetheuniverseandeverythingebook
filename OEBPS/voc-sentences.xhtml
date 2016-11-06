@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Sentences</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Sentences' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, sentences" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Sentences</h1>
+<p>A sentence is basically just a paragraph (see <span class="link"
+onclick="_goto('voc-paragraphs.html')">Paragraphs</span> above)
+with only one command.</p>
+<p>Compare...</p>
+<p><code>&gt;ED VOC TEST.PA<br />
+New Record.<br />
+<br />
+----: I<br />
+0001= PA<br />
+0002= DISPLAY Hello mum!<br />
+0003=<br />
+Bottom at line 2.<br />
+----: FI<br />
+"TEST.PA" filed in file "VOC".<br />
+&gt;TEST.PA<br />
+Hello mum!</code></p>
+<p>...with...</p>
+<p><code>&gt;ED VOC TEST.S<br />
+New Record.<br />
+<br />
+----: I<br />
+0001= S<br />
+0002= DISPLAY Hello mum!<br />
+0003=<br />
+Bottom at line 2.<br />
+----: FI<br />
+"TEST.S" filed in file "VOC".<br />
+&gt;TEST.S<br />
+Hello mum!</code></p>
+<p>The results are identical. In fact, there are only two
+differences between sentences and paragraphs:</p>
+<p>1. Any parameters entered after the sentence name on the
+UniVerse command line are automatically added to the end of the
+command in the sentence before it is executed.</p>
+<p>Using the paragraph and sentence created above, compare the
+command...</p>
+<p><code>TEST.PA ...and dad!<br />
+Hello mum!</code></p>
+<p>...with...</p>
+<p><code>TEST.S ...and dad!<br />
+Hello mum! ...and dad!</code></p>
+<p>The sentence automatically appended the parameters <code>...and
+dad!</code> to its <code>DISPLAY</code> command before executing.
+To read the command parameters in the paragraph, you would have had
+to use in-line prompts (see <span class="link" onclick=
+"_goto('voc-paragraphs.html')">Paragraphs</span> above).</p>
+<p><strong>2. Sentences simply ignore all commands after the
+first.</strong></p>
+<p>Compare...</p>
+<p><code>&gt;ED VOC TEST.PA.2<br />
+New Record.<br />
+<br />
+----: I<br />
+0001= PA<br />
+0002= DISPLAY Hello mum!<br />
+0003= DISPLAY Hello dad!<br />
+0004=<br />
+Bottom at line 3.<br />
+----: FI<br />
+"TEST.PA.2" filed in file "VOC".<br />
+&gt;TEST.PA.2<br />
+Hello mum!<br />
+Hello dad!</code></p>
+<p>...with...</p>
+<p><code>&gt;ED VOC TEST.S.2<br />
+New Record.<br />
+<br />
+----: I<br />
+0001= S<br />
+0002= DISPLAY Hello mum!<br />
+0003= DISPLAY Hello dad!<br />
+0004=<br />
+Bottom at line 3.<br />
+----: FI<br />
+"TEST.S.2" filed in file "VOC&amp;quot.<br />
+&gt;TEST.S.2<br />
+Hello mum!</code></p>
+<p>Note that while the paragraph displayed both messages, the
+sentence only displayed the first.</p>
+
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: The Build
+Cycle</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: The Build Cycle' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, the, build, cycle" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> The Build Cycle</h1>
+<h2>What is a build cycle?</h2>
+<p>If you have only used interpreted languages, you may be
+unfamiliar with the idea of a build cycle. It is simply the series
+of steps you must take from writing your program to running it.</p>
+<p>On the other hand, if your background is in a programming
+language like <em>C</em> you may be used to a very complex build
+cycle which involves editing, compiling, linking, make files, and
+so forth. The UniVerse Basic build cycle is, thankfully, far
+simpler than this.</p>
+<p>Essentially there are three stages:</p>
+<p>1. Editing your program.<br />
+2. Compiling your program.<br />
+3. Running your program.</p>
+<p>These three stages are described below, and are followed by a
+few tricks to take the drudgery out of this routine.</p>
+<p>If you are writing a 'shared' subroutine, to be called by other
+programs, there is a fourth stage known as 'cataloging' your
+program. This is described in the section on <span class="link"
+onclick="_goto('basic-subroutines.html')">Basic External
+Routines</span> below.</p>
+<h2>Creating a file to store programs</h2>
+<p>Each program you write will take the form of a record in a file:
+and it follows that you need to create a file to store your
+programs. Bear the following in mind:</p>
+<p>1. Your program file must be a <em>directory file</em> (see
+<span class="link" onclick=
+"_goto('files-directory.html')">Directory Files</span>): UniVerse
+will refuse to compile records in any hashed file. A directory file
+is so called because it is implemented as a directory under Unix:
+and each record in it becomes a simple Unix text file. Type 19
+files uses the record keys as Unix file names. Type 1 files build
+impromptu subdirectory structures designed to ensure that a
+filename is never over a certain length. Unless you have a good
+reason to use a type 1 file, therefore, I recommended the
+simplicity of a type 19 file. There are advantages to a simple Unix
+implementation, especially if you are using a Unix based source
+control system such as <em>RCS</em>.</p>
+<p>2. If you are planning a large suite of programs, you may want
+to consider creating more than one program file and dividing your
+programs by function. There is no limit to the number of program
+files you can put in an account, though you need to strike a
+balance between functional separation and simplicity.</p>
+<p>3. There is a well established convention amongst UniVerse
+developers that program files are either called <code>BP</code> or
+suffixed <code>.BP</code>. It's not a convention I'm crazy about,
+as I believe unnecessary abbreviations detract from readability,
+but on the other hand there's no doubting that most UniVerse
+programmers will instantly recognise the initials <em>BP</em> as
+standing for <em>Basic Programs</em>, so it is perhaps as well to
+do the same.</p>
+<p>During this section, we will be creating onlya few programs, so
+a single file will suffice. Create your program file with the
+command:</p>
+<p><code>&gt;<strong>CREATE.FILE BP 19</strong><br />
+??FB??</code></p>
+<h2>Writing your program</h2>
+<p>You have, by now, created dozens of records using the UniVerse
+editor, so you may be glad to hear that program records are created
+using the same tool. Incidentally, refer back to <span class="link"
+onclick="_goto('records-ed.html')">The Editor - ED</span> if you
+are not throroughly familiar with the editor, as it will be used
+extensively in this section. If you have been using <code>vi</code>
+you will be unable to implement the useful macros at the end of
+this section, or to use the vital editor command
+<code>FORMAT</code>, which idents your code to show its structure.
+Yes, you could indent your code yourself, but (a) it takes time and
+(b) it would only reflect the structure you <em>thought</em> your
+code had, not the structure it <em>really</em> had if you had, say,
+forgotten to close your <code>ELSE</code> BLOCK with an
+<code>END</code>: more of this later.</p>
+<p>For now, I shall follow the time honoured convention of making
+your first UniVerse program display the words <code>Hello
+world!</code> on the screen. The <code>PRINT</code> statement does
+the work, the <code>END</code> marks the end of the program. All
+UniVerse Basic programs end in <code>END</code>:</p>
+<p><code>&gt;<strong>ED BP HELLO.WORLD</strong><br />
+New record.<br />
+<br />
+----: <strong>I</strong><br />
+0001= <strong>PRINT 'Hello world!'</strong><br />
+0002= <strong>END</strong><br />
+0003= <strong>(Press ENTER)</strong><br />
+Bottom at line 2.<br />
+----: <strong>FORMAT</strong><br />
+??FB??<br />
+----: <strong>P</strong><br />
+??FB??<br />
+----: <strong>FI</strong><br />
+Record "HELLO.WORLD" filed in file "BP".<br />
+&gt;</code></p>
+<p>The <code>P</code> command above is not strictly necessary: but
+I wanted to show you what <code>FORMAT</code> had done to your
+code. The 'standard' indent was applied to your first line, and the
+final <code>END</code> was pulled in to the left. This pattern will
+become more and more meaningful to you as you gain experience
+writing and formatting programs.</p>
+<h2>Compiling your program</h2>
+<p>Having written your program, you must compile it. Before
+discussing the command you must enter, it is perhaps worth
+explaining what happens when you compile a program.</p>
+<p>If you were running a interpreted language, such as Dartmouth
+Basic, each line of your program would be read in turn, and
+converted into a series of numeric instruction codes which would be
+fed to your computer's CPU for execution.</p>
+<p>A true compiled language, like <em>C</em>, is converted into
+numeric instruction codes before a single line of code is run. Once
+this has been done, the original <em>C</em> source code could, in
+theory, be thrown away: the computer merely executes the numbers.
+It is kept only because it is likely that the program may need to
+be changed in the future.</p>
+<p>The UniVerse Basic approach lies somewhere between these two.
+The problem with compiling down to numbers suitable for a
+particular CPU is that CPUs, and the numbers they understand, vary
+from computer to computer, so code compiled on one machine cannot
+be run on another, and so a compiler capable of translating
+directly from source code to 'binary' code must be created for each
+machine.</p>
+<p>In addition, whereas an interpreter contains many complex
+routines internally (and thus can employ them whenever they are
+required by the current instruction), a compiled language must
+include all the code for common activities in the binary code of
+any program which uses them.</p>
+<p>To get round this, the original PICK was built on a 'virtual
+machine'. Dick Pick asked himself what functions the 'ideal' CPU
+would have for implementating his database. He then built a program
+which behaved like this 'ideal' CPU by translating instructions
+into the instructions undestood by the machine he was working on.
+In principle, this 'virtual machine' is the only part of an PICK
+system written in code specific to the CPU being used: the rest of
+PICK is written in PICK Basic, which is compiled into the numeric
+instructions required not by the underlying CPU, but by the
+'virtual machine'. (I say in principle because some implementations
+cheat in certain places for efficiency reasons).</p>
+<p>Thus, when PICK (or its later descendants) moved from computer
+to computer, only the virtual machine had to be rewritten for the
+new host. The rest of PICK continued using the same virtual
+machine, and thus the same numeric instruction set.</p>
+<p>Pascal programmers may find this approach familiar as Pascal
+originally implemented a similar idea, with Pascal being compiled
+down to 'P code', which was then interpreted by a virtual CPU.
+Later Pascals, again for efficiency reasons, have largely abandoned
+the approach in favour of true compilation, but UniVerse retains
+the idea.</p>
+<p>The numeric instructions used by the UniVerse virtual machine
+are known as 'op-codes', and the series of op-codes generated when
+you compile a UniVerse Basic program as 'beta code' or (in common
+with true compilers) 'object code'.</p>
+<p>How much sense all this made to you will depend largely on your
+technical background. If it seems complicated, don't worry, because
+you can use UniVerse Basic without having to understand any of it:
+it is provided to satisfy the voracious technical appetite of
+<em>C</em> programmers to know what is going on 'under the
+bonnet'.</p>
+<p>To compile your program, use the command:</p>
+<p><code>&gt;<strong>BASIC BP HELLO.WORLD</strong><br />
+??FB??<br />
+&gt;</code></p>
+<p>Notice that <code>BASIC</code> created a file called
+<code>BP.O</code>. The <code>O</code> stands for 'object code', and
+the object code for your program is stored in this file. This is
+because object code is one of the very few things in UniVerse which
+is not stored in ASCII, and programs like <code>ED</code> get very
+confused when asked to load object code records. To reduce the
+possibility of this, a separate file is created to store it. You
+will see messages reporting the creation of a <code>.O</code> file
+whenever your compile the first program in a new program file.</p>
+<h2>Running your program</h2>
+<p>All that remains now is to run your new program. True to
+UniVerse's philosophy, the command to do this is what you'd expect
+it to be:</p>
+<p><code>&gt;<strong>RUN BP HELLO.WORLD</strong><br />
+??FB??<br />
+&gt;</code></p>
+<h2>Developing from the editor</h2>
+<p>This program is so simple that it is unlikely you would have to
+repeat the <code>ED/BASIC/RUN</code> loop more than once to get it
+working correctly, but in real world examples you may find yourself
+doing it frequently.</p>
+<p>If the cycle is perfectly even, you may find yourself typing
+<code>.X3</code> again and again to reuse the appropriate commands
+from the stack (see <span class="link" onclick=
+"_goto('prompt-stack.html')">The Command Stack</span>): but you
+will eventually trip yourself up when your program doesn't compile,
+you therefore omit to run the program, and suddenly
+<code>.X3</code> is no longer the right command. Even if your
+programs always compile without error (which planet are
+<em>you</em> from?) this approach still requires you to reinvoke
+<code>ED</code> and find the line you were last working on each
+time round.</p>
+<p>There is a useful alternative.</p>
+<p>1. Use <code>SAVE</code> to write your program to the file
+without leaving the editor (best to do this periodically anyway, so
+that next time a 'Machine being shut down in 5 minutes' message is
+delayed by 6 minutes by a busy network you don't lose too much
+work).<br />
+2. Still from the editor, use the command <code>XEQ BASIC BP
+HELLO.WORLD</code> command to compile your program.<br />
+3. If your program compiled correctly, use the command <code>XEQ
+RUN BP HELLO.WORLD</code> to test run it.</p>
+<p>The beauty is that you need never leave the editor or lose your
+position in the record.</p>
+<p>This can be made even easier by creating an editor macro:</p>
+<p><code>ED &amp;ED&amp; BASIC.RUN<br />
+New record.<br />
+<br />
+----: I<br />
+0001= E<br />
+0002= SAVE<br />
+0003= XEQ BASIC @FILE @ID<br />
+0004= XEQ RUN @FILE @ID<br />
+0005=</code> (Press ENTER) <code><br />
+Bottom at line 5.<br />
+----: FILE</code></p>
+<p>If this macro seems familiar, it is because it first appeared in
+the section <span class="link" onclick=
+"_goto('records-macros.html')">Editor Macros</span>. If you
+followed the examples in that section, you may find this record
+already in your <code>&amp;ED&amp;</code> file. You can now reduce
+your build cycle to an occassional <code>.X BASIC.RUN</code> issued
+from the editor. Even if your program is not suitable for running
+from the editor (because, for instance, it is a subroutine not
+designed to be run independently), you can still save and compile
+it in this way: create an alternative macro called just
+<code>BASIC</code> which omits the <code>RUN</code> command.</p>
+<p>Note once again the use of <code>@FILE</code> and
+<code>@ID</code> to replace <code>BP</code> and
+<code>HELLO.WORLD</code>: these tokens automatically take the
+appropriate values for the record your are editing, and allow you
+to use the same macro while editing any program. Again, all this is
+explained in the section <span class="link" onclick=
+"_goto('records-macros.html')">Editor Macros</span>.</p>
+<h2>Creating a command to run your program</h2>
+<p>You may wish to create a VOC record to run your program:
+allowing you, and your client users, to run your program by
+entering a single command at the UniVerse prompt. The simplest way
+is by creating a <em>paragraph</em>:</p>
+<p><code>&gt;<strong>ED VOC RUN.HELLO.WORLD</strong><br />
+New record.<br />
+<br />
+----: <strong>I</strong><br />
+0001= <strong>PA Say hello to the world</strong><br />
+0002= <strong>RUN BP HELLO.WORLD</strong><br />
+0003= <strong>(Press RETURN)</strong><br />
+Bottom at line 2.<br />
+----: <strong>FI</strong><br />
+"RUN.HELLO.WORLD" filed in file "VOC".<br />
+&gt;</code></p>
+<p>This will work perfectly well. However, it is probably better to
+create a <em>verb</em> rather than a paragraph, like this:</p>
+<p><code>&gt;<strong>ED VOC HELLO.WORLD</strong><br />
+New record.<br />
+<br />
+----: <strong>I</strong><br />
+0001= <strong>V Say hello to the world</strong><br />
+0002= <strong>HELLO.WORLD</strong><br />
+0003= <strong>B</strong><br />
+0004= <strong>BP.O</strong><br />
+0005= <strong>(Press RETURN)</strong><br />
+Bottom at line 4.<br />
+----: <strong>FI</strong><br />
+"HELLO.WORLD" filed in file "VOC".<br />
+&gt;</code></p>
+<p>The <code>B</code> on the third line indicates the
+<code>HELLO.WORLD</code> is a Basic program, and the
+<code>BP.O</code> on the fourth provides the name of the file which
+stores the programs object code.</p>
+<p>Both paragraphs and verbs were covered in greater depth earlier
+in this course. See <span class="link" onclick=
+"_goto('voc-paragraphs.html')">Paragraphs</span> and <span class=
+"link" onclick="_goto('voc-verbs.html')&quot;">Verbs</span> for
+more information.</p>
+<p>So why prefer the verb to the paragraph? Chiefly because it is
+specfically designed for this job. A paragraph is a device for
+handling command scripts of all kinds: a verb is purpose build for
+running programs, and so a more precise fit to the purpose.</p>
+<p>Also, there is a system variable called <code>@SENTENCE</code>
+which you can use in a UniVerse Basic to capture the string that
+the user typed in to run your program, and which is usually used to
+support command line parameters. The <code>@SENTENCE</code> value
+generated by the paragraph includes the words <code>RUN BP</code>,
+which are just noise and make the command string harder to
+parse.</p>
+
+</body>
+</html>

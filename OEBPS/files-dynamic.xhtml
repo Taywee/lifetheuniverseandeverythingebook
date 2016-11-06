@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Dynamic
+Files</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Dynamic Files' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, dynamic, files" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Dynamic Files</h1>
+<p>To create a directory file, the command is:</p>
+<p><code>CREATE.FILE filename 30</code> <em>or</em><br />
+<code>CREATE.FILE filename DYNAMIC</code></p>
+<p>(Both these commands have the same effect: the creation of a
+dynamic file.)</p>
+<p>If the last section on static files convinced you that they were
+likely to prove a pain to set up and maintain well, then you are
+not alone. For many years, static hashed files were the only kind
+available with PICK systems, but in the late eighties Prime added a
+new file type called 'dynamic' files to Prime INFORMATION. VMark
+adopted these into UniVerse.</p>
+<p>Dynamic files are intended to perform the same tasks as static
+files. Like static files, they are divided into groups, and like
+static files, they 'hash' records into these groups according to
+their keys. The vital difference is that as you add data to dynamic
+files, they increase their own modulo automatically: and as you
+remove it, they reduce it. Hence 'dynamic'.</p>
+<p>They have a wide range of parameters (wider than static files)
+which you can specify at creation time, or modify after creation,
+and which allow you to fine tune their performance: but unlike
+static files (which must be configured well in order to perform),
+dynamic files perform reasonably well with all of these parameters
+set to their defaults. When you become involved in the intricate
+performance tuning of a system which uses dynamic files, you can
+find the information you'll need in the UniVerse documentation, but
+it is not necessary to provide it in an introductory course like
+this one.</p>
+<p>If this is all true, why are static files still in use at
+all?</p>
+<p>1. At many sites, they aren't.<br />
+2. Dynamic files have a slightly higher write overhead: the
+processing which normally takes place during a static file
+<code>RESIZE</code> is divided amongst thousands on individuals
+record writes to dynamic files.<br />
+3. A well sized static file will slightly outperform a dynamic
+file. If your file is extremely stable (and therefore can be
+well-sized once and left like that), or your resizing process
+extremely efficient, you may benefit from this.<br />
+4. Basic on some very old anecdotes, some users seem to fear that
+dynamic files are prone to corruption. While files do sometimes
+corrupt, I have found dynamic files no more likely to do so that
+static ones.</p>
+<p>My own advice, in short, is that unless you have a good reason
+not to, use dynamic files.</p>
+
+</body>
+</html>

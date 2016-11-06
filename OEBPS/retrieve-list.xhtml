@@ -1,0 +1,784 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Listing
+Records</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Listing Records' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, listing, records" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Listing Records</h1>
+<h2>An example file</h2>
+<p>To illustrate the query language, we need a file to enquire
+about. The examples in this section will use
+<code>COPY.OF.VOC</code>, which we created to illustrate the use of
+indexes (see <span class="link" onclick=
+"_goto('dictionaries-indexing.html')">Indexing Fields</span>).</p>
+<p>If you did not follow the examples in that section, you can
+create this file as follows:</p>
+<p><code>&gt;<strong>CREATE.FILE COPY.OF.VOC DYNAMIC</strong><br />
+Creating file "COPY.OF.VOC" as Type 30.<br />
+Creating file "D_COPY.OF.VOC" as Type 3, Modulo 1, Separation
+2.<br />
+Added "@ID", the default record for RetrieVe, to
+"D_COPY.OF.VOC".<br />
+&gt;<strong>COPY FROM VOC TO COPY.OF.VOC ALL</strong><br />
+<br />
+825 records copied.<br />
+&gt;<strong>COPY FROM DICT VOC TO DICT COPY.OF.VOC ALL
+OVERWRITING</strong><br />
+<br />
+19 records copied.<br />
+&gt;</code></p>
+<p>You also learnt earlier (see <span class="link" onclick=
+"_goto('dictionaries-phrases.html')">Phrases</span>) that the
+<code>@</code> phrase is used as to provide 'default' parameters to
+<code>LIST</code> instructions if they are entered without
+parameters. In this section, though, this would complicate the
+examples. We must remove the <code>@</code> phrase from the
+dictionary of <code>COPY.OF.VOC</code> to avoid this. The
+<code>DELETE</code> command used below is straightforward, and
+explained fully later during our discussion of the TCL command
+language. For now, enter:</p>
+<p><code>&gt;<strong>DELETE DICT COPY.OF.VOC @</strong><br />
+<br />
+<br />
+1 records DELETEd.<br />
+&gt;</code></p>
+<p>Your file is now ready to enquire on.</p>
+<h2>A basic list</h2>
+<p>As you have already discovered, to list the records in a file
+you need only enter the command <code>LIST</code> followed by a
+file name. For instance:</p>
+<p><code>&gt;<strong>LIST COPY.OF.VOC</strong></code></p>
+<pre>
+LIST COPY.OF.VOC 10:05:46  08-19-99  PAGE 1
+VOC.........
+
+F9
+PRINT.ADMIN
+TEST.PARAGRA
+PH
+COMO
+NOHEAD
+LT
+BREAK.VERB
+SUBO
+ALL.MATCH
+INQUIRING
+LIST.ME
+IN
+MAP.VERB
+CONSYS.REPOR
+TS
+MAKE.DEMO.FI
+LES
+STATS
+PTIME
+Press any key to continue...
+</pre>
+<p>There are 800 or so records in this file, so <code>LIST</code>
+will pause at the bottom of every page. You may see the next page
+by pressing ENTER, or abandon the enquiry by pressing
+<code>Q</code>. If you want the enquiry to run to its last page
+(perhaps in order to see totals) without pausing after every page,
+press <code>N</code>. For now, press <code>Q</code>.</p>
+<h2>Listing fields</h2>
+<p>This listing displays only record keys. To display other fields,
+simply add their names to the command:</p>
+<p><code>&gt;<strong>LIST COPY.OF.VOC TYPE DESC
+SIZE</strong></code></p>
+<pre>
+LIST COPY.OF.VOC TYPE DESC SIZE 10:32:37  08-19-99  PAGE 1
+VOC.........    TYPE    DESC..........................    Length...
+
+F9              D       Data descriptor for Field 9 of           11
+                        any file
+PRINT.ADMIN     PA      Paragraph                                25
+TEST.PARAGRA    PA      PA                                       64
+PH
+COMO            V       Verb - Control copying of                31
+                        command output to files
+NOHEAD          K       Keyword - Do not print a                  5
+                        banner page
+LT              K       Keyword - "Less Than" operator            3
+BREAK.VERB      V       Verb - Enable or disable INTR,           12
+                        STOP, SUSP, and BRK keys.
+SUBO            V       Verb - Subtract OCTAL numbers            17
+ALL.MATCH       K       Keyword - Specify that ALL                5
+                        strings should match for
+                        SEARCH/ESEARCH statement
+INQUIRING       K       Keyword - Prompt for record               4
+                        name
+LIST.ME         S       Sentence - Return status of              11
+                        all users with your login name
+Press any key to continue...
+</pre>
+<h2>Sorting</h2>
+<p>The order in which these records appear is not, strictly
+speaking, random, as it is reflects the order in which the records
+are found in the physical groups, which in turn depends on the
+hashing of the file (see <span class="link" onclick=
+"_goto('files.html')">UniVerse Files</span>). It is not though, as
+some believe, the order in which the records were added: in fact it
+has no logical meaning.</p>
+<p>To sort your records by <code>fieldname</code>, add the words
+<code>BY fieldname</code> to the end of your enquiry. To sort first
+by <code>fieldname1</code> and within that by
+<code>fieldname2</code>, add the words <code>BY fieldname1 BY
+fieldname 2</code>. You can in fact chain as many sorts in this way
+as you wish. This example sorts first by type, and then by key:</p>
+<p><code>&gt;<strong>LIST COPY.OF.VOC TYPE DESC SIZE BY
+TYPE</strong></code></p>
+<pre>
+LIST COPY.OF.VOC TYPE SIZE DESC BY TYPE BY @ID 10:42:31  08-19-99  PAGE 1
+VOC.........    TYPE    Length...    DESC..........................
+
+F1              D              11    Data descriptor for Field 1 of
+                                     any file
+F10             D              12    Data descriptor for Field 10
+                                     of any file
+F2              D              11    Data descriptor for Field 2 of
+                                     any file
+F3              D              11    Data descriptor for Field 3 of
+                                     any file
+F4              D              11    Data descriptor for Field 4 of
+                                     any file
+F5              D              11    Data descriptor for Field 5 of
+                                     any file
+F6              D              11    Data descriptor for Field 6 of
+                                     any file
+F7              D              11    Data descriptor for Field 7 of
+                                     any file
+F8              D              11    Data descriptor for Field 8 of
+                                     any file
+F9              D              11    Data descriptor for Field 9 of
+                                     any file
+Press any key to continue...
+</pre>
+<p>You can sort your records 'backwards' by using
+<code>BY.DSND</code> ('by descending') in place of
+<code>BY</code>.</p>
+<p>An interesting footnote is that UniVerse provides a
+<code>SORT</code> command which is identical to <code>LIST</code>
+in every respect save one: it acts as if <code>BY @ID</code> had
+been added to the end of the list of <code>BY</code> clauses. There
+is, perhaps, little harm in it, but I generally recommend that
+people do not use it, but use instead <code>LIST</code> and add the
+required <code>BY @ID</code>. This is simply because the latter is
+more descriptive and less easily misunderstood. For instance, if
+you saw the command...</p>
+<p><code>SORT COPY.OF.VOC BY TYPE</code></p>
+<p>...would it be obvious to you that the file was being sorted by
+both <code>TYPE</code> and <code>@ID</code>? The functionally
+identical...</p>
+<p><code>LIST COPY.OF.VOC BY TYPE BY @ID</code></p>
+<p>...makes this inescapable.</p>
+<h2>Sampling</h2>
+<p>It is sometimes useful to enquire on a sample of the records in
+your file. Just use the <code>SAMPLE n</code> keyword to list a
+sample of <code>n</code> records. The records are the first
+<code>n</code> encountered in the physical order they are stored in
+the file. As explained above, this is not strictly random, but
+usually might as well be. Be aware, though, that repeated
+<code>SAMPLE</code> enquiries on the same file will not yield
+different sets of records each time.</p>
+<p><code>&gt;<strong>LIST COPY.OF.VOC TYPE DESC SIZE SAMPLE
+3</strong></code></p>
+<pre>
+LIST COPY.OF.VOC TYPE DESC SIZE SAMPLE 3 11:57:30  08-19-99  PAGE 1
+VOC.........    TYPE    DESC..........................    Length...
+
+F9              D       Data descriptor for Field 9 of           11
+                        any file
+PRINT.ADMIN     PA      Paragraph                                25
+TEST.PARAGRA    PA      PA                                       64
+PH
+
+Sample of 3 records listed.
+&gt;
+</pre>
+<h2>Listing selectively</h2>
+<p>If you wish to enquire on only a subset of the records in your
+file, you can use the keyword <code>WITH</code> followed by your
+criteria. For instance, if you were interested only in seeing
+<code>M</code> types, you would enter the command:</p>
+<p><code>&gt;<strong>LIST COPY.OF.VOC TYPE DESC SIZE WITH TYPE =
+'M'</strong></code></p>
+<pre>
+LIST COPY.OF.VOC TYPE DESC SIZE WITH TYPE = "M" 12:00:46  08-19-99  PAGE 1
+VOC.........    TYPE    DESC..........................    Length...
+
+CONV.ACCT.ME    M       Menu - UniVerse Account                  34
+NU                      Importation
+PRINT.ADMIN.    M       Menu - UniVerse Spooler                  35
+MENU                    Administration
+BASIC.CONT      M       Menu                                     31
+SP.JOB          M       Menu                                     27
+CONSYS.MENU     M       M                                        26
+SP.MOD          M       Menu                                     27
+ACCT.CONV       M       Menu                                     30
+SP.STATUS       M       Menu                                     30
+MENUS           M       MENU selector - Invoke the               31
+                        MENU maintenance menu
+
+9 records listed.
+&gt;
+</pre>
+<p>The equal sign <code>=</code> is probably the most commonly
+used, but still only one of many comparison operators you can use
+in your criteria. Here is a list of the most popular, with
+examples:</p>
+<table>
+<tr>
+<td>
+<p>Operator</p>
+</td>
+<td>
+<p>Example and Meaning</p>
+</td>
+<td>
+<p>Synonyms</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>=</code></p>
+</td>
+<td>
+<p><code>TYPE = 'M'</code><br />
+Type equal to 'M'</p>
+</td>
+<td>
+<p><code>EQ</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>#</code></p>
+</td>
+<td>
+<p><code>TYPE # 'M'</code><br />
+Type not equal to 'M'</p>
+</td>
+<td>
+<p><code>&lt;&gt;, &gt;;&lt;, NE</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>&gt;</code></p>
+</td>
+<td>
+<p><code>SIZE &gt; 10</code><br />
+Size greater than 10</p>
+</td>
+<td>
+<p><code>GT, AFTER</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>&lt;</code></p>
+</td>
+<td>
+<p><code>SIZE &lt; 10</code><br />
+Size less than 10</p>
+</td>
+<td>
+<p><code>LT, BEFORE</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>&gt;=</code></p>
+</td>
+<td>
+<p><code>SIZE &gt;= 10</code><br />
+Size greater than or equal to 10</p>
+</td>
+<td>
+<p><code>=&gt;, GE</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>&lt;=</code></p>
+</td>
+<td>
+<p><code>SIZE &lt;= 10</code><br />
+Size less than or equal to 10</p>
+</td>
+<td>
+<p><code>=&lt;, LE</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>LIKE</code></p>
+</td>
+<td>
+<p><code>DESC LIKE ...PRINTER...</code><br />
+Description with the word 'PRINTER' in it. Note that the '...'
+strings act as wildcards</p>
+</td>
+<td>
+<p><code>MATCHES MATCHING</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>UNLIKE</code></p>
+</td>
+<td>
+<p><code>DESC UNLIKE ...PRINTER...</code><br />
+Description without the word 'PRINTER' in it. Note that the '...'
+strings act as wildcards</p>
+</td>
+<td>
+<p><code>NOT.MATCHING</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>SPOKEN</code></p>
+</td>
+<td>
+<p><code>DESC SPOKEN 'SMITH'</code><br />
+Description pronounced 'Smith'. Does phonetic matching, especially
+useful with name searches, but less so here...</p>
+</td>
+<td>
+<p><code>SAID, ~</code></p>
+</td>
+</tr>
+</table>
+<p>You can reverse any of these criteria using <code>NOT</code>:
+but you don't normally need to, as most of the operators have
+opposites in any case. For instance, <code>NOT TYPE = 'M'</code>
+means the same as <code>TYPE # 'M'</code>,</p>
+<p>More usefully, you can combine these criteria using the keywords
+<code>AND</code> and <code>OR</code>. Joining two conditions with
+<code>AND</code> means that they must <em>both</em> be true for the
+record to be selected. Joining them with <code>OR</code> means that
+<em>at least one</em> of them must be true.</p>
+<p>UniVerse always evaluates <code>AND</code> links before
+<code>OR</code> links: you need to be careful when combining
+conditions to ensure that they mean to UniVerse what they mean to
+you. For instance, consider the following criteria:</p>
+<p><code>...WITH SIZE GT 100 AND TYPE = 'PA' OR TYPE =
+'S'</code></p>
+<p>What this criteria will do is select all the paragraphs more
+than 100 bytes in length, and all the sentences regardless of their
+lengths. Is this rather odd result what the developer wanted?
+Probably not: it would seem more likely he was looking for long
+sentences and paragraphs: ie. any sentence or paragraph more than
+100 bytes long. He could have resolved the ambiguity with
+brackets:</p>
+<p><code>...WITH SIZE GT 100 AND (TYPE = 'PA' OR TYPE =
+'S')</code></p>
+<p>The meaning of this is obvious to both developer and
+UniVerse.</p>
+<p>Even if the original developer <em>had</em> intended, for some
+reason, to choose long paragraphs and all sentences, he still wrote
+poor code as it is difficult for maintenance programmers to tell
+whether that was the intended result, or whether the condition
+contains a bug. He would have been better to include the brackets
+for clarity, even though they are redundant:</p>
+<p><code>...WITH (SIZE GT 100 AND TYPE = 'PA') OR TYPE =
+'S'</code></p>
+<p>No question here what is intended.</p>
+<h2>Totalling</h2>
+<p>To total a numeric column, add the word <code>TOTAL</code>
+before the appropriate field.</p>
+<p><code>&gt;<strong>LIST COPY.OF.VOC TYPE DESC TOTAL
+SIZE</strong></code></p>
+<pre>
+LIST COPY.OF.VOC TYPE DESC TOTAL SIZE 10:46:25  08-19-99  PAGE 1
+VOC.........    TYPE    DESC..........................    Length...
+
+F9              D       Data descriptor for Field 9 of           11
+                        any file
+PRINT.ADMIN     PA      Paragraph                                25
+TEST.PARAGRA    PA      PA                                       64
+PH
+COMO            V       Verb - Control copying of                31
+                        command output to files
+NOHEAD          K       Keyword - Do not print a                  5
+                        banner page
+LT              K       Keyword - "Less Than" operator            3
+BREAK.VERB      V       Verb - Enable or disable INTR,           12
+                        STOP, SUSP, and BRK keys.
+SUBO            V       Verb - Subtract OCTAL numbers            17
+ALL.MATCH       K       Keyword - Specify that ALL                5
+                        strings should match for
+                        SEARCH/ESEARCH statement
+INQUIRING       K       Keyword - Prompt for record               4
+                        name
+LIST.ME         S       Sentence - Return status of              11
+                        all users with your login name
+Press any key to continue...
+</pre>
+<p>...to <em>see</em> your total, you'll need to get to the end of
+the enquiry. Press <code>N</code> at the 'end of page' prompt to
+skip all further pauses. The enquiry will flash all the pages past
+your screen until it gets to...</p>
+<pre>
+LIST COPY.OF.VOC TYPE DESC TOTAL SIZE 10:46:25  08-19-99  PAGE 88
+VOC.........    TYPE    DESC..........................    Length...
+
+                        LORRY for packing and
+                        unpacking Universe files into
+                        ASCII 'lorry' files
+P.DET           V       Verb - UNASSIGN a physical               27
+                        PRINTER from your task
+LIST.ITEM       V       Verb - List complete records             37
+                        in specified file
+INFORM          K       Keyword - Display the spooler             5
+                        job number of newly queued
+                        jobs
+BREAK.ON        K       Keyword - Specify BREAK                   4
+                        conditions in a report
+LISTPA          R       Remote - LIST the PARAGRAPHS             24
+                        stored in the VOCABULARY file
+CUSTOMERS       F       F                                        24
+                                                          =========
+                                                             21,211
+
+
+824 records listed.
+&gt;
+</pre>
+<h2>Setting breakpoints</h2>
+<p>To break the report into sections, add the word
+<code>BREAK.ON</code> before the appropriate field. This will force
+a break whenever the field in question changes. Note that this will
+produce meaningless results unless the records are sorted by the
+field being broken on, so a sort <code>BY</code> the appropriate
+field almost always accompanies a <code>BREAK.ON</code>. Note also
+that totalled numeric fields automatically show subtotals at
+breakpoints:</p>
+<p><code>&gt;<strong>LIST COPY.OF.VOC BREAK.ON TYPE DESC TOTAL SIZE
+BY TYPE</strong></code></p>
+<pre>
+LIST COPY.OF.VOC BREAK.ON TYPE DESC TOTAL SIZE BY TYPE 10:55:11  08-19-99  PAGE1
+VOC.........    TYPE    DESC..........................    Length...
+
+F9              D       Data descriptor for Field 9 of           11
+                        any file
+F7              D       Data descriptor for Field 7 of           11
+                        any file
+F1              D       Data descriptor for Field 1 of           11
+                        any file
+F2              D       Data descriptor for Field 2 of           11
+                        any file
+F4              D       Data descriptor for Field 4 of           11
+                        any file
+F5              D       Data descriptor for Field 5 of           11
+                        any file
+F6              D       Data descriptor for Field 6 of           11
+                        any file
+F10             D       Data descriptor for Field 10             12
+                        of any file
+F8              D       Data descriptor for Field 8 of           11
+                        any file
+F3              D       Data descriptor for Field 3 of           11
+                        any file
+                **                                        ---------
+                D                                               111
+
+MANNY.BP.O      F       F                                        26
+DICT.DICT       F       File - The DICTIONARY for all            51
+                        uniVerse dictionaries in the
+                        system
+TEST1           F       F                                        16
+CUSTOMER.INV    F       F                                        30
+OICES
+DICT.PICK       F       File - The DICTIONARY for all            51
+                        Pick style uniVerse
+                        dictionaries in the system
+CONSYS.RESIZ    F       F                                        72
+E.FILES
+THISISALONGN    F       F                                        30
+AME
+INTEOD.UFD      F       F                                        28
+Press any key to continue...
+</pre>
+<p>(I've cheated here, for clarity omitting the page end prompt
+between the first and second pages of the report. Depending on the
+exact contents of your <code>VOC</code>, and thus your
+<code>COPY.OF.VOC</code>, the first breakpoint will probably occur
+somewhere after the first page.)</p>
+<p>As you can see, <code>RetrieVe</code> puts a line of stars at
+the end of each section. If you'd like some other visual marker
+used instead, specify it in double quotes after your
+<code>BREAK.ON</code>:</p>
+<p><code>&gt;<strong>LIST COPY.OF.VOC BREAK.ON "::::" TYPE DESC
+TOTAL SIZE BY TYPE</strong></code></p>
+<pre>
+LIST COPY.OF.VOC BREAK.ON "::::" TYPE DESC TOTAL SIZE BY TYPE 11:20:57  08-19-99
+  PAGE 1
+VOC.........    TYPE    DESC..........................    Length...
+
+F9              D       Data descriptor for Field 9 of           11
+                        any file
+F7              D       Data descriptor for Field 7 of           11
+                        any file
+F1              D       Data descriptor for Field 1 of           11
+                        any file
+F2              D       Data descriptor for Field 2 of           11
+                        any file
+F4              D       Data descriptor for Field 4 of           11
+                        any file
+F5              D       Data descriptor for Field 5 of           11
+                        any file
+F6              D       Data descriptor for Field 6 of           11
+                        any file
+F10             D       Data descriptor for Field 10             12
+                        of any file
+F8              D       Data descriptor for Field 8 of           11
+                        any file
+F3              D       Data descriptor for Field 3 of           11
+                        any file
+                ::::                                      ---------
+                D                                               111
+
+MANNY.BP.O      F       F                                        26
+DICT.DICT       F       File - The DICTIONARY for all            51
+                        uniVerse dictionaries in the
+                        system
+TEST1           F       F                                        16
+CUSTOMER.INV    F       F                                        30
+OICES
+DICT.PICK       F       File - The DICTIONARY for all            51
+                        Pick style uniVerse
+                        dictionaries in the system
+CONSYS.RESIZ    F       F                                        72
+E.FILES
+THISISALONGN    F       F                                        30
+AME
+INTEOD.UFD      F       F                                        28
+Press any key to continue...
+</pre>
+<p>By including certain special codes in your marker string, you
+can further control how your breakpoints work. For instance, the
+<code>'N'</code> token resets the page number to one after each
+breakpoint. All the codes take this same form: a single letter in
+single quotes. To use it, you'd enter the command <code>LIST
+COPY.OF.VOC BREAK.ON "::::'N'" TYPE TOTAL SIZE BY TYPE</code>.</p>
+<p>Other tokens include <code>'D'</code>, which suppresses the
+breakpoint line if there's only one corresponding record (because
+who needs to total one record?), and 'P' begins a new page for each
+breakpoint value. Check out <code>BREAK.ON</code> in the UniVerse
+documentation for a complete list: but these are the ones I tend to
+use most often.</p>
+<h2>Summarising your report</h2>
+<p>If you are only interested in the break points themselves, and
+not the individual records, you can summarise your report by adding
+the word <code>DET.SUP</code> (short for 'detail suppress'). Note
+that this has the effect of hiding the <code>@ID</code> column as
+this is clearing particular to individual records, and not
+breakpointed groups. The <code>DESC</code> field would be equally
+meaningless in a report of this kind and I have omitted it:</p>
+<p><code>&gt;<strong>LIST COPY.OF.VOC BREAK.ON TYPE TOTAL SIZE BY
+TYPE DET.SUP</strong></code></p>
+<pre>
+LIST COPY.OF.VOC BREAK.ON TYPE TOTAL SIZE BY TYPE DET.SUP 11:11:09  08-19-99  PA
+GE 1
+TYPE    Length...
+
+D             111
+F           4,351
+K           1,783
+M             271
+PA          4,032
+PH            393
+PQ            226
+Q             117
+R             688
+S             569
+V           8,607
+X              63
+        =========
+           21,211
+
+824 records listed.
+&gt;
+</pre>
+<h2>Providing headers and footers</h2>
+<p>So far, the text of the <code>LIST</code> command itself has
+appeared as the heading of your enquiries. To apply your own
+heading, add <code>HEADING "heading text"</code>:</p>
+<p><code>&gt;<strong>LIST COPY.OF.VOC TYPE DESC SIZE HEADING "My
+COPY.OF.VOC report"</strong></code></p>
+<pre>
+My COPY.OF.VOC Report
+VOC.........    TYPE    DESC..........................    Length...
+
+F9              D       Data descriptor for Field 9 of           11
+                        any file
+PRINT.ADMIN     PA      Paragraph                                25
+TEST.PARAGRA    PA      PA                                       64
+PH
+COMO            V       Verb - Control copying of                31
+                        command output to files
+NOHEAD          K       Keyword - Do not print a                  5
+                        banner page
+LT              K       Keyword - "Less Than" operator            3
+BREAK.VERB      V       Verb - Enable or disable INTR,           12
+                        STOP, SUSP, and BRK keys.
+SUBO            V       Verb - Subtract OCTAL numbers            17
+ALL.MATCH       K       Keyword - Specify that ALL                5
+                        strings should match for
+                        SEARCH/ESEARCH statement
+INQUIRING       K       Keyword - Prompt for record               4
+                        name
+LIST.ME         S       Sentence - Return status of              11
+                        all users with your login name
+Press any key to continue...
+</pre>
+<p>You can add footers similarly by adding <code>FOOTING "footer
+text"</code>.</p>
+<p>There are a number of special 'tokens' you can include in
+headers and footers. They all appear between single quotes:</p>
+<p><code>'P'</code> will include a page number.<br />
+<code>'D'</code> will include the date.<br />
+<code>'L'</code> will include a line break.<br />
+<code>'G'</code> will expand to a string of spaces as long as any
+other 'G' on the same line, and sufficient to make the complete
+line cover the width of the page. This ludicrous explanation is
+entirely correct and completely impossible to understand: the net
+effect is to 'spread out' elements of a heading, so <code>HEADING
+"'D''G'My Heading'G''P'"</code> will put the date on the extreme
+left, the page number on the extreme right, and the words <code>My
+Heading</code> equidistant between them.</p>
+<p><code>&gt;<strong>LIST COPY.OF.VOC TYPE DESC SIZE HEADING
+"'D''G'COPY.OF.VOC Report'G''P'"</strong></code></p>
+<pre>
+08-19-99                         COPY.OF.VOC Report                         1
+VOC.........    TYPE    DESC..........................    Length...
+
+F9              D       Data descriptor for Field 9 of           11
+                        any file
+PRINT.ADMIN     PA      Paragraph                                25
+TEST.PARAGRA    PA      PA                                       64
+PH
+COMO            V       Verb - Control copying of                31
+                        command output to files
+NOHEAD          K       Keyword - Do not print a                  5
+                        banner page
+LT              K       Keyword - "Less Than" operator            3
+BREAK.VERB      V       Verb - Enable or disable INTR,           12
+                        STOP, SUSP, and BRK keys.
+SUBO            V       Verb - Subtract OCTAL numbers            17
+ALL.MATCH       K       Keyword - Specify that ALL                5
+                        strings should match for
+                        SEARCH/ESEARCH statement
+INQUIRING       K       Keyword - Prompt for record               4
+                        name
+LIST.ME         S       Sentence - Return status of              11
+                        all users with your login name
+Press any key to continue...
+</pre>
+<p>You can also link your heading to your breakpoints, such that
+each breakpoint value starts on a new page, and the breakpoint
+value itself appears in the heading for that page. To do this, you
+need to use one of <code>BREAK.ON</code>'s special codes (see
+above) which I've not yet mentioned: <code>'B'</code>. This causes
+the breakpoint value to appear in the heading. You also need to put
+a <code>'B'</code> token into your heading, telling
+<code>LIST</code> where to put the value.</p>
+<p>This is one of those things that is harder to describe than to
+do. Check over the <code>BREAK.ON</code> notes again, try the
+following example, and you should get it:</p>
+<p><code><strong>LIST COPY.OF.VOC BREAK.ON "'B'" TYPE DESC TOTAL
+SIZE BY TYPE HEADING "Type 'B' records"</strong></code></p>
+<pre>
+Type D records
+VOC.........    TYPE    DESC..........................    Length...
+
+F9              D       Data descriptor for Field 9 of           11
+                        any file
+F7              D       Data descriptor for Field 7 of           11
+                        any file
+F1              D       Data descriptor for Field 1 of           11
+                        any file
+F2              D       Data descriptor for Field 2 of           11
+                        any file
+F4              D       Data descriptor for Field 4 of           11
+                        any file
+F5              D       Data descriptor for Field 5 of           11
+                        any file
+F6              D       Data descriptor for Field 6 of           11
+                        any file
+F10             D       Data descriptor for Field 10             12
+                        of any file
+F8              D       Data descriptor for Field 8 of           11
+                        any file
+F3              D       Data descriptor for Field 3 of           11
+                        any file
+Press any key to continue...
+</pre>
+<p>It's redundant, of course, to show the 'D' type in the heading
+and then again on ever row. To avoid it, use <code>BREAK.SUP</code>
+(break on suppressing column) instead of <code>BREAK.ON</code>:</p>
+<p><code><strong>LIST COPY.OF.VOC BREAK.ON "'B'" TYPE DESC TOTAL
+SIZE BY TYPE HEADING "Type 'B' records"</strong></code></p>
+<pre>
+Type D records
+VOC.........    DESC..........................    Length...
+
+F9              Data descriptor for Field 9 of           11
+                any file
+F7              Data descriptor for Field 7 of           11
+                any file
+F1              Data descriptor for Field 1 of           11
+                any file
+F2              Data descriptor for Field 2 of           11
+                any file
+F4              Data descriptor for Field 4 of           11
+                any file
+F5              Data descriptor for Field 5 of           11
+                any file
+F6              Data descriptor for Field 6 of           11
+                any file
+F10             Data descriptor for Field 10             12
+                of any file
+F8              Data descriptor for Field 8 of           11
+                any file
+F3              Data descriptor for Field 3 of           11
+                any file
+Press any key to continue...
+</pre>
+<h2>Printing your enquiry</h2>
+<p>To send your enquiry results to the printer instead of the
+screen, add <code>LPTR</code> ('line printer') to your command, as
+in <code>LIST COPY.OF.VOC TYPE SIZE DESC LPTR</code>. This will
+print to your 'default printer': which printer is your default
+printer will depend on how your system adminstrator has configured
+your system. Go and hassle him if you're in doubt.</p>
+<p>If your system has many printers, you administrator may have set
+up more than one UniVerse 'print channel'. Different channels can
+route output to different printers or even to files on your disk.
+They are created with the <code>SETPTR</code>, which we will
+encounter later in these notes, and each one is numbered. If you
+need to print to a channel other than the default (channel 0), add
+the channel number to the end of your <code>LPTR</code> command, as
+in <code>LIST COPY.OF.VOC TYPE SIZE DESC LPTR 2</code>.</p>
+
+</body>
+</html>

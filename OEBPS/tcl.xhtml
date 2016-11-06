@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: The TCL Command
+Language</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: The TCL Command Language' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, the, tcl, command, language" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> The TCL Command Language</h1>
+<p>The UniVerse command language, called <em>TCL</em> under a
+number of PICK systems and <em>PERFORM</em> under Prime
+INFORMATION, was introduced very near the beginning of this course
+(see <span class="link" onclick="_goto('prompt.html')">The Command
+Prompt</span>).</p>
+<p>Strictly speaking, TCL incorporates all the UniVerse commands
+shipped with UniVerse (as opposed to you add to the VOC file). Many
+of these have already been described fully in earlier sections: for
+instance, see<span class="link" onclick=
+"_goto('files.html')">Universe Files</span> for
+<code>CREATE.FILE</code>, <span class="link" onclick=
+"_goto('retrieve-list.html')">Listing Records</span> for
+<code>LIST</code>, and <span class="link" onclick=
+"_goto('records-ed.html')&quot;">The Editor - ED</span> for, well,
+<code>ED</code>. <em>This</em> section introduces what I believe to
+be the best of the rest: the most common and useful commands not
+already mentioned. It makes no attempt to be comprehensive. For
+more specialised commands, and technically complete descriptions of
+each command, refer to the UniVerse documentation. This selection,
+though, will get you up and running confidently much more quickly
+than the sometimes ponderous reference guides.</p>
+<p>Many commands have a number of different syntaxes, which allow
+them to do a number of different things: I haven't tried to show
+them all, again I focus on the most common and useful ones. Some of
+the uses are far from intuitive and are easy to tie yourself into
+knots with. For instance, here is an example <code>COPY</code>
+command:</p>
+<p><code>COPY FROM INVOICES TO OLD.INVOICES 0001 0002</code></p>
+<p>Now, even before reading the documentation, it'll be pretty
+clear that this copies records <code>0001</code> and
+<code>0002</code> from the <code>INVOICES</code> file to the
+<code>OLD.INVOICES</code> file. Now look at:</p>
+<p><code>COPY FROM INVOICES TO OLD.INVOICES 0003,0004</code></p>
+<p>Would you have guessed that this copies only one record, and
+then changes its key? And if both commands were in the same
+paragraph can you be sure that you, and future maintenance
+programmers, would notice the vital comma in the second
+command?</p>
+<p>More computer time and utility is lost through bugs and
+maintenance work than is recovered by tiny performance
+improvements. Rather than use the 'copy and rename' version of
+<code>COPY</code>, recast the second command as follows:</p>
+<p><code>COPY FROM INVOICES TO OLD.INVOICES 0003<br />
+CNAME OLD.INVOICES 0003,0004</code></p>
+<p>It's difficult to imagine anyone misunderstanding this.</p>
+
+</body>
+</html>

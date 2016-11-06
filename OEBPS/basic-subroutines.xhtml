@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Basic External
+Subroutines</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Basic External Subroutines' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, basic, external, subroutines" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Basic External Subroutines</h1>
+<p>Within any system, there are some tasks which are common to many
+different routines. Some of them are highly abstract, like the task
+of sorting a list or calculating a factorial number: some are
+specific to the real world purpose of the system, like running a
+credit check against a customer code, but either way they may be a
+necessary part of many different UniVerse Basic programs.</p>
+<p>It would, of course, be a waste of time to write the same
+'customer credit check' code in every UniVerse Basic program which
+required it. It would multiply the chance of error, as each
+implementation of the task would require separate testing, and if
+any changes were made to the real world credit checking procedure,
+they would have to be reflected by code changes in many different
+programs.</p>
+<p>It would be better if you could write a single
+<code>CHECK.CUSTOMER.CREDIT</code> subroutine which could be
+accessed by any other program as required. And, of course, you
+can.</p>
+<p>To call an external subroutine, you use the <code>CALL</code>
+statement, followed by the name of the subroutine, and a list of
+'parameter' values in round brackets and separated by commas. For
+example:</p>
+<pre>
+CUSTOMER.CODE = ORDER.RECORD(4)
+ORDER.VALUE = ORDER.RECORD(7)
+CREDIT.OK = 0
+CALL CHECK.CREDIT(CREDIT.OK, CUSTOMER.CODE, ORDER.VALUE)
+IF CREDIT.OK THEN
+   GOSUB FULFILL.ORDER
+END ELSE
+   GOSUB REJECT.ORDER
+END
+</pre>
+<p>In this routine, the external subroutine
+<code>CHECK.CREDIT</code> is called. It is 'passed' three
+parameters. <code>CUSTOMER.NUMBER</code> and
+<code>ORDER.VALUE</code> are supplied as the information the
+external subroutine requires to make its decision, and
+<code>CREDIT.OK</code> is the variable that the calling routine is
+expecting the subroutine to assign. The calling routine then bases
+its choice between fulfilling and rejecting the order on the new
+value of <code>CREDIT.OK</code> value.</p>
+<p>The subroutine might look something like this:</p>
+<pre>
+   SUBROUTINE CHECK.CREDIT(RESULT.FLAG, CUSTOMER.ID, CREDIT.REQUESTED)
+   RESULT.FLAG = 1
+   BEGIN CASE
+      CASE CUSTOMER.ID = 'ACME' ;* No more credit for ACME!!
+         RESULT.FLAG = 0
+      CASE CUSTOMER.ID = 'GSL'  AND CREDIT.REQUESTED &gt; 500 ; * Limited credit to GSL
+         RESULT.FLAG = 0
+      CASE CREDIT.REQUESTED &gt; 1000 ; * Noone gets more than 1000
+         RESULT.FLAG = 0
+   END CASE
+   RETURN
+END
+</pre>
+<p>This isn't a very realistic example: very few companies would
+hard code volatile commercial data into a subroutine, but it serves
+to illustrate the principle. As you can see, the
+<code>CHECK.CREDIT</code> routine is like any other UniVerse Basic
+program, except for two things: it begins with a
+<code>SUBROUTINE</code> statement, and it ends with a
+<code>RETURN</code>,</p>
+<p>The <code>SUBROUTINE</code> statement quotes the name of the
+subroutine, and lists the parameters which any calling routines
+have to supply. If you compare the <code>CALL</code> statement in
+the calling routine with the <code>SUBROUTINE</code> statement
+above, you will see that while the parameter variables have
+different names, they correspond in number and purpose. In fact,
+the parameters are passed by position: as long as the RESULT.FLAG
+is passed as the first parameter by the calling program, it doesn't
+matter what variable name is used to pass it. The same goes for the
+other variables.</p>
+<p>The <code>RETURN</code> statement returns control to the
+statement following the <code>CALL</code> statement in the calling
+routine.</p>
+<p>Note that the value of <code>RESULT.FLAG</code> is changed in
+the subroutine, and that the change is reflected in the value of
+<code>CREDIT.OK</code> in the calling routine. The technical term
+for this is 'passing by reference'. What it means is that the
+calling routine is actually passing not merely a value '0' as the
+current value of <code>CREDIT.OK</code>, it is passing the variable
+<code>CREDIT.OK</code> itself. Thus, when any changes are made to
+<code>RESULT.FLAG</code>, they are made to <code>CREDIT.OK</code>
+in the main program automatically.</p>
+<p>The alternative is called 'passing by value', in which only the
+value is passed, and changes in the subroutine do not affect the
+main routine. In most programming languages, you are given an
+explicit choice when you write your calls to subroutines which
+parameters you will pass by reference and which by value. UniVerse
+Basic does not do so quite so directly. If you use a single
+variable name in a parameter position, it will pass it by
+reference, meaning that the subroutine will have the power to
+change the value of the variable in the calling routine. If you use
+a constant or an expression, it will pass by value, preventing any
+changes in the corresponding variable in the subroutine affecting
+the calling routine.</p>
+<p>However, you can use this knowledge to prevent variables which
+you don't want changed being passed by reference. Simply turn them
+into expressions. The simplest expression which evaluates to the
+value of variable <code>X</code> is <code>(X)</code>. By putting
+brackets round variables in your <code>CALL</code>, you prevent the
+subroutine you call changing them.</p>
+<p>For this reason, it might have been better to write the
+<code>CALL</code> statement in the original example like this:</p>
+<pre>
+CALL CALL CHECK.CREDIT(CREDIT.OK, (CUSTOMER.CODE), (ORDER.VALUE))
+</pre>
+<p>This is, in fact, what I'd recommend. Not only is it safer, but
+it adds documentation. Anyone looking at this <code>CALL</code> can
+see that you don't plan to have <code>CUSTOMER.CODE</code> and
+<code>ORDER.VALUE</code> changed. However, whether you do this
+depends on how confident you are that your subroutines never change
+parameters they shouldn't.</p>
+<p>In order to all <code>CHECK.CREDIT</code> to be called, it must
+be compiled (like any program) and then 'cataloged': or added to a
+register of subroutines kept by UniVerse. The most common catalog
+command looks like this: <code>CATALOG filename programname</code>,
+so in this case would have run:</p>
+<pre>
+CATALOG BP CHECK.CREDIT
+</pre>
+<p>However, only puts the subroutine on a register of subroutines
+available from the current account. If you are writing a subroutine
+you wish to make available to programs in any account, you must use
+a 'glabal' catalog. The syntax is slightly different, as you put an
+asterisk in front of the subroutine name when cataloging:</p>
+<pre>
+CATALOG BP *CHECK.CREDIT
+</pre>
+<p>The <code>CALL</code> statement required to call a globally
+catalogued subroutine is also slighted different, also taking an
+asterisk before the subroutine name:</p>
+<pre>
+CALL *CALL CHECK.CREDIT(CREDIT.OK, (CUSTOMER.CODE), (ORDER.VALUE))
+</pre>
+<p>If you make changes to a catalogued subroutine - whether it is
+cataloged within the account or globally cataloged - the changes
+will not become visible to calling routines until the subroutine
+has been recompiled and recataloged. When you recatalog a globally
+cataloged routine you will see the following warning:</p>
+<pre>
+&gt;CATALOG BP *CHECK.CREDIT
+"*CHECK,CREDIT" already exists globally.
+Overwriting this file may affect other users.
+Do you want to overwrite the existing version?  (Y/N) =
+</pre>
+<p>Enter a <code>Y</code> to force the catalog. To prevent the
+warning appearing, add the word <code>FORCE</code> to the
+<code>CATALOG</code> command:</p>
+<pre>
+&gt;CATALOG BP *CHECK.CREDIT FORCE
+"*CHECK.CREDIT" cataloged.
+</pre>
+
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Select
+Lists</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Select Lists' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, select, lists" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Select Lists</h1>
+<h2>NOTE!</h2>
+<p>RetrieVe and SQL both use a command called <code>SELECT</code>.
+They are not related. UniVerse can tell whether you are executing a
+RetrieVe or a SQL <code>SELECT</code> by analysing the syntax of
+the overall command: they are formed quite differently, and do
+different things, All the examples below are <em>RetrieVe</em>
+<code>SELECT</code> commands.</p>
+<h2>The SELECT command</h2>
+<p>The <code>SELECT</code> command creates a list of keys 'in
+memory' which is then used by the next command you execute. Much of
+its syntax is the same as that for the <code>LIST</code> command
+(see <span class="link" onclick=
+"_goto('retrieve-list.html')">Listing Records</span>). It supports
+the same <code>WITH</code>, <code>BY</code> and <code>SAMPLE</code>
+keyswords. For instance:</p>
+<p><code>&gt;<strong>SELECT COPY.OF.VOC SAMPLE 3</strong><br />
+<br />
+3 record(s) selected to SELECT list #0.<br />
+&gt;&gt;</code></p>
+<p>So what has happened here? Well, three keys from the
+<code>COPY.OF.VOC</code> file are now stored in a select list. Note
+the prompt is now <code>&gt;&gt;</code> instead of the usual
+<code>&gt;</code>: this is a reminder that the command you are
+about to type in will be using a select list.</p>
+<p>To see what effect this has, try the following command:</p>
+<p><code>&gt;&gt;<strong>LIST COPY.OF.VOC</strong></code></p>
+<pre>
+LIST COPY.OF.VOC 14:00:33  08-19-99  PAGE 1
+VOC.........
+
+F9
+PRINT.ADMIN
+TEST.PARAGRA
+PH
+
+3 records listed.
+&gt;
+</pre>
+<p>This <code>LIST</code> command would normally have displayed all
+the records in the file: but because there was (in UniVerse jargon)
+an 'active select list' of three keys, it displayed only those
+three records.</p>
+<p>So what is the point of this? You could have achieved the same
+thing more easily by typing <code>LIST COPY.OF.VOC SAMPLE
+3</code>.</p>
+<p>Firstly, <code>LIST</code> is not the only command which
+responds to select lists. For instance, if you wished to edit a
+number of records, you could first create a select list containing
+their keys, and then use <code>ED</code> like this:</p>
+<p><code>&gt;<strong>SELECT COPY.OF.VOC SAMPLE 3</strong><br />
+<br />
+3 record(s) selected to SELECT list #0.<br />
+&gt;&gt;ED COPY.OF.VOC<br />
+<br />
+SELECTed record name = "F9".<br />
+6 lines long.<br />
+<br />
+----:</code></p>
+<p>What has happened here? Well, <code>ED</code> has spotted the
+select list, and so has begun by using the first key from that list
+to open a record. As soon as you abandon or file the current
+record, the editor will open the next record in the select list,
+and so on until it runs out of keys and prompts you to enter the
+next. Try it:</p>
+<p><code>----: <strong>Q</strong><br />
+<br />
+SELECTed record name = "PRINT.ADMIN".<br />
+2 lines long.<br />
+<br />
+----:</code></p>
+<p>Two new commands become available within <code>ED</code> when
+you are using it with a select list in this way. The first,
+<code>N</code>, simply moves to the next record in the list without
+saving the current one (much as <code>Q</code> does, so I'm not
+entirely sure of the point to this command), while <code>X</code>
+leaves the editor altogether, regardless of the number of keys left
+in the select list. Use this to exit this example.</p>
+<p>Most commands which operate on individual records will respond
+to select lists. The compiler <code>BASIC</code> will compile all
+the records (programs) in a select list, <code>DELETE</code> will
+delete them all, <code>COPY</code> will copy them all, and so on.
+You'll learn about these commands during our discussion of the TCL
+command language later.</p>
+<p>Also, the UniVerse Basic programming language contains
+statements to read the keys from select lists, and so it is
+possible to write programs which are designed to be run once a
+select list is in memory, and thus can be applied to any group of
+records the user requires.</p>
+<h2>Intersecting select lists</h2>
+<p>One of the commands which will automatically work from an active
+select list is the <code>SELECT</code> command itself. This
+effectively means that by issuing a <em>series</em> of
+<code>SELECT</code> commands, the various lists produced can be
+intersected. For instance, to create a select list of three sampled
+<code>M</code> type <code>COPY.OF.VOC</code> records, try:</p>
+<p><code>&gt;<strong>SELECT COPY.OF.VOC WITH TYPE =
+'M'</strong><br />
+<br />
+9 record(s) selected to SELECT list #0.<br />
+&gt;&gt;<strong>SELECT COPY.OF.VOC SAMPLE 3</strong><br />
+<br />
+3 record(s) selected to SELECT list #0.<br />
+&gt;&gt;<strong>LIST COPY.OF.VOC TYPE</strong><br />
+<br />
+LIST COPY.OF.VOC TYPE 14:52:46 08-19-99 PAGE 1<br />
+VOC......... TYPE<br />
+<br />
+CONV.ACCT.ME M<br />
+NU<br />
+PRINT.ADMIN. M<br />
+MENU<br />
+BASIC.CONT M<br />
+<br />
+3 records listed.<br />
+&gt;</code></p>
+<p>Of course, the same select list could have been built in one
+step by using the clause <code>WITH TYPE = 'M' SAMPLE 3, but such
+simplification is not always easy, or even possible. Where it
+isn't, this intersecting behaviour is useful.</code></p>
+<h2><code>Numbered select lists</code></h2>
+<p><code>The examples above showed the use of the 'default' select
+list. In fact, UniVerse allows each user to store up to ten select
+lists, numbered 0 to 9. The default is number 0, and if the select
+command is specified without a select list number, the results are
+loaded into 0. To load a different numbered select list, use the
+<code>TO</code> keyword, as here:</code></p>
+<p><code>&gt;<strong>SELECT COPY.OF.VOC SAMPLE 3 TO
+1</strong></code><br />
+<br />
+3 record(s) selected to SELECT list #1.<br />
+&gt;&gt;</p>
+<p>Note that this time, the command prompt has not become
+<code>&gt;&gt;</code> as it did before. This is because only the
+default select list, list 0, will automatically be picked up by the
+following commands. The numbered select lists can be accessed by
+UniVerse Basic statements, and a few other commands which take
+select list number parameters, and are therefore used less
+often.</p>
+<h2>Saving, getting, and clearing lists</h2>
+<p>If you wish to, you can save your select list for use in the
+future. One advantage of this is that you can then use it more than
+once without the overhead of reselecting the records which make it
+up. To save a select list, use the command
+<code>SAVE.LIST</code>:</p>
+<p><code>&gt;<strong>SELECT COPY.OF.VOC SAMPLE 3</strong><br />
+<br />
+3 record(s) selected to SELECT list #0.<br />
+&gt;&gt;SAVE.LIST MYLIST<br />
+<br />
+3 record(s) SAVEd to SELECT list "MYLIST".<br />
+&gt;</code></p>
+<p>The keys are actually written to a record called
+<code>MYLIST</code> in the file <code>&amp;SAVEDLISTS&amp;</code>:
+you may remember that this was one of the three UniVerse files
+created automatically when you first created your UniVerse account,
+along with <code>VOC</code> and <code>VOCLIB</code>. You can even
+look at the record with the editor:</p>
+<p><code><strong>ED &amp;SAVEDLISTS&amp; MYLIST</strong><br />
+3 lines long.<br />
+<br />
+----: <strong>P</strong><br />
+0001: F9<br />
+0002: PRINT.ADMIN<br />
+0003: TEST.PARAGRAPH<br />
+Bottom at line 3.<br />
+----: <strong>Q</strong><br />
+&gt;</code></p>
+<p>As you can see, it is a simple list, with each field bearing a
+key. In fact, you can create your own 'saved lists' using
+<code>ED</code> without ever issuing a <code>SELECT</code> command
+just by creating a record in <code>&amp;SAVEDLISTS&amp;</code>.</p>
+<p>To activate your saved list, use the command
+<code>GET.LIST</code>:</p>
+<p><code>&gt;<strong>GET.LIST MYLIST</strong><br />
+<br />
+3 record(s) selected to SELECT list #0. &gt;&gt;</code></p>
+<p>Finally, you can clear a list you don't plan to use with the
+<code>CLEARSELECT</code> command:</p>
+<p><code>&gt;<strong>CLEARSELECT</strong><br />
+SELECT list number 0 cleared.</code></p>
+<p>Any of these commands can be used with numbered select lists
+too, by using the forms:</p>
+<p><code>SAVE.LIST listname FROM listnumber<br />
+GET.LIST listname TO listnumber<br />
+CLEARSELECT listnumber</code></p>
+
+</body>
+</html>

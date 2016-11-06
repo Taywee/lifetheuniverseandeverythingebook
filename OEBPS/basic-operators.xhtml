@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Basic
+Operators</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Basic Operators' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, basic, operators" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Basic Operators</h1>
+<p>Most of these operators have appeared already in this course,
+often used to support example code. For completeness, however, here
+is a complete list:</p>
+<h2>Precedence: ()</h2>
+<p>Brackets are used to override the usual 'precedence' rules, the
+order in which operators are applied. For instance, <code>1 + 2 *
+3</code> would normally evaluate to <code>7</code>, but <code>(1 +
+2) * 3</code> evaluates to <code>9.</code></p>
+<h2>Addition: +</h2>
+<p>If a <code>+</code> is put before a single operand, it simply
+means 'positive', so <code>+4</code> is the same as
+<code>4</code>.</p>
+<p>If it appears between two values, it adds them. <code>4 +
+2</code> evaluates to <code>6</code></p>
+<h2>Subtraction</h2>
+<p>If a <code>-</code> is put before a single operand, it simply
+means 'negative', so <code>-4</code> is simply 'minus 4'.</p>
+<p>If it appears between two values, it substracts the second from
+the first. <code>4 - 2</code> evaluates to <code>2</code></p>
+<h2>Multiplication: *</h2>
+<p><code>4 * 2</code> evaluates to <code>8</code>.</p>
+<h2>Division: /</h2>
+<p><code>4 / 2</code> evaluates to <code>2</code>.</p>
+<h2>Exponentiation: ^ or **</h2>
+<p><code>4 ^ 2</code> and <code>4 ** 2</code> both evaluate to
+<code>16</code>.</p>
+<h2>Concatenation: or CAT</h2>
+<p><code>'Hello ' : 'World!'</code> and <code>'Hello ' CAT
+'World!'</code> both evaluate to <code>Hello World!</code>.</p>
+<h2>Substring extraction: []</h2>
+<p>To extract <em>n</em> characters from the end of a string,
+append <code>[n]</code>. <code>'UniVerse'[2]</code> evaluates to
+<code>se</code>.</p>
+<p>To extract <em>n</em> characters starting from position
+<em>p</em>, append <code>[p,n]</code>. <code>'UniVerse'[3,2]</code>
+evaluates to <code>iV</code>.</p>
+<p>To break your string into sections delimited by character
+<em>c</em>, and take <em>n</em> sections beginning from section
+<em>s</em>, append <code>[c,s,n]</code>. <code>'UniVerse Basic
+Programming Language'[' ',2,1]</code> evaluates to
+<code>Basic</code>.</p>
+<h2>Equality: EQ or =</h2>
+<p><code>1 = 2</code> evaluates to <code>0</code> (falsity).</p>
+<h2>Inequality: NE or #</h2>
+<p><code>1 # 2</code> evaluates to <code>1</code> (truth).</p>
+<h2>'Less than' test: LT or &lt;</h2>
+<p><code>1 &lt; 2</code> evaluates to <code>1</code> (truth).</p>
+<h2>'Greater than' test: GT or &gt;</h2>
+<p><code>1 &gt; 2</code> evaluates to <code>0</code> (falsity).</p>
+<h2>'Less than or equal to' test: LE, &lt;=, =&lt;, or #&lt;</h2>
+<p><code>1 &lt;= 2</code> evaluates to <code>1</code> (truth).</p>
+<h2>'Greater than or equal to' test: GE, &gt;=, =&gt;, or
+#&gt;</h2>
+<p><code>1 &gt;= 2</code> evaluates to <code>0</code>
+(falsity).</p>
+<h2>Pattern matching: MATCH or MATCHES</h2>
+<p>Use this operator to check a string against a 'pattern
+template'. These templates are made up of a number of elements
+strung together. Each element takes the form <em>nt</em>, where
+<em>n</em> is a number between 0 and 9, representing 'number of
+characters' (0 meaning 'any number of characters) and <em>t</em> is
+a 'type of characters': A for alpha, N for numeric, and X for
+'any'. Thus the pattern template <code>2A</code> means 'two alpha
+characters, <code>0N</code> means 'any number of numeric
+characters', and <code>2X1A</code> means 'any two characters
+followed by an alpha character'. A few examples may clarify. All of
+the following evaluate to <code>1</code> (truth):</p>
+<p><code>'ABC123' MATCHES '3A3N'<br />
+'Route 66' MATCHES '0X2N'<br />
+'Cloud 9' MATCHES '5A1X1N'</code></p>
+<p>You can also include literals in your pattern template, putting
+them in quotes if they might otherwise be mistaken for pattern
+elements. My own advice is to use quotes to highlight literals
+whether or not they are required. All these are true too:</p>
+<p><code>'ABC123' MATCHES '"ABC"3N'<br />
+'Route 66' MATCHES '"Route "2N'<br />
+'Cloud 9' MATCHES '0X"9"'</code></p>
+<p>Fin her expression could be used. <em>C</em> programmers may
+recognise this as a form of their beloved <code>condition ?
+truevalue : falsevalue</code> operator.</p>
+<h2>Logical operators: AND, OR and NOT</h2>
+<p><code>AND</code> combines two conditions, and evaluates to
+<code>1</code> (truth) if they are both true, or <code>0</code>
+(falsity) if either or both are not. <code>1 = 2 AND 3 # 4</code>
+evaluates to <code>0</code> (false).</p>
+<p><code>OR</code> combines two conditions, and evaluates to
+<code>1</code> (truth) if either or both are true, or
+<code>0</code> (falsity) if they are both false. <code>1 = 2 AND 3
+# 4</code> evaluates to <code>1</code> (truth).</p>
+<p><code>NOT</code> is actually a function, but is so closely
+related to <code>AND</code> and <code>OR</code> that it is always
+documented with them. <code>NOT</code> takes a single parameter,
+returning <code>1</code> (truth) if it is false, or <code>0</code>
+(falsity) if it is true. <code>NOT(1 = 2)</code> evaluates to
+<code>1</code> (truth).</p>
+<h2>Assignment operators: =, +=, -= and :=</h2>
+<p>The assignment of variables is straightforward, taking the form
+<code>VARIABLE = VALUE</code>.</p>
+<p>To increase the numeric value stored by a variable, use
+<code>VARIABLE += INCREMENT</code>. This is logically the same as
+<code>VARIABLE = VARIABLE + INCREMENT</code>, but is more efficient
+and clearer.</p>
+<p>Similarly, you can decrease the numeric value stored by a
+variable using <code>VARIABLE -= DECREMENT</code>.</p>
+<p>To concatenate a string to the end of an existing string, use
+<code>VARIABLE := EXTRA.BIT</code>.</p>
+<p>The following example code uses all four assignment
+operators.</p>
+<pre>
+VALUE = 100
+VALUE += 1 ; * Value now 101
+VALUE -= 2 ; * Value now 99
+VALUE := '!' ; * Value now 99!
+</pre>
+
+</body>
+</html>

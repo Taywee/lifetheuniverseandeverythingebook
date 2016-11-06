@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe:
+Dictionaries</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Dictionaries' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, dictionaries" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Dictionaries</h1>
+<p>Dictionaries have been mentioned in passing several times in
+earlier sections without a full explanation of their use: we will
+now examine them in detail.</p>
+<p>To begin with, whenever you create a UniVerse file, you are
+actually creating <em>two</em> files: a data file, and a
+<strong>dictionary</strong> file. The terminology here is somewhat
+confusing at first until you get used to it. Let's say you create a
+file called <code>CUSTOMER.INVOICES</code>. The term <em>file</em>
+is used to refer both to the thing you've created (ie. the
+<code>CUSTOMER.INVOICES</code> file, complete with data and
+dictionary portions), and to the data file and dictionary file
+individually. You get used to it.</p>
+<p>Let's try this as an example:</p>
+<p><code>&gt;<strong>CREATE.FILE CUSTOMER.INVOICES
+DYNAMIC</strong><br />
+WARNING: An operating system file will be created with a truncated
+name.<br />
+Creating file "CUSTOMER.001" as Type 30.<br />
+Creating file "D_CUSTOMER.001" as Type 3, Modulo 1, Separation
+2.<br />
+Added "@ID", the default record for RetrieVe, to
+"D_CUSTOMER.001".<br />
+&gt;</code></p>
+<p>As you can see, there are two 'Creating...' messages. The first
+refers to the creation of the data file (which has a UNIX filename
+of <code>CUSTOMER.001</code>), and the second to the creation of
+the dictionary file (which has a UNIX filename of
+<code>D_CUSTOMER.001</code>). This makes it clear that the files
+are physically entirely separate. They are associated by the F
+(file) type VOC record <code>CUSTOMER.INVOICES</code>, the second
+field of which points to the data file <code>CUSTOMER.001</code>,
+and the third line of which points to the dictionary file
+<code>D_CUSTOMER.001</code> (see <span class="link" onclick=
+"_goto('voc-files.html')">File Pointers</span>). When you use the
+word <code>CUSTOMER.INVOICES</code> in a UniVerse command, UniVerse
+consults the VOC file and therefore knows where to find both the
+data and dictionary files.</p>
+<p>In the data file, each record represents an invoice, and be
+'keyed' by the invoice number. The fields of each record would each
+carry some piece of information about an invoice. While a real
+invoicing file might have hundreds of such fields, a simple layout
+for the purposes of illustration might run:</p>
+<table>
+<tr>
+<td>
+<p>Key</p>
+</td>
+<td>
+<p>Invoice number</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Field 1</p>
+</td>
+<td>
+<p>Customer name</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Field 2</p>
+</td>
+<td>
+<p>Product description</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Field 3</p>
+</td>
+<td>
+<p>Unit price</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Field 4</p>
+</td>
+<td>
+<p>Quantity invoiced</p>
+</td>
+</tr>
+</table>
+<p>You could start entering these records simply by using the
+editor. Try the examples below (for the sake of argument, we'll
+assume the pricing is in &euro;uros):</p>
+<p><code>&gt;<strong>ED CUSTOMER.INVOICES 0001</strong><br />
+New record.<br />
+----: <strong>I</strong><br />
+0001= <strong>ACME Widgets Limited</strong><br />
+0002= <strong>Castellated Grommets</strong><br />
+0003= <strong>10.38</strong><br />
+0004= <strong>2000</strong><br />
+0005= <strong>(Press RETURN)</strong><br />
+Bottom at line 5.<br />
+----: <strong>FI</strong><br />
+"0001" filed in file "CUSTOMER.INVOICES".<br />
+&gt;<strong>ED CUSTOMER.INVOICES 0002</strong><br />
+New record.<br />
+----: <strong>I</strong><br />
+0001= <strong>Universal Thingies Inc.</strong><br />
+0002= <strong>Revolving Stud Pins</strong><br />
+0003= <strong>427</strong><br />
+0004= <strong>7</strong><br />
+0005= <strong>(Press RETURN)</strong><br />
+Bottom at line 5.<br />
+----: <strong>FI</strong><br />
+"0002" filed in file "CUSTOMER.INVOICES".<br />
+&gt;<strong>ED CUSTOMER.INVOICES 0003</strong><br />
+New record.<br />
+----: <strong>I</strong><br />
+0001= <strong>Imperial Exporters plc</strong><br />
+0002= <strong>Galvanised Retention Sprockets</strong><br />
+0003= <strong>38</strong><br />
+0004= <strong>104</strong><br />
+0005= <strong>(Press RETURN)</strong><br />
+Bottom at line 5.<br />
+----: <strong>FI</strong><br />
+"0003" filed in file "CUSTOMER.INVOICES".</code></p>
+<p>As you can see, you were able to create the file and enter
+records without a dictionary. So why do you need a dictionary?</p>
+<p>Their primary use is to explain the structure of their records
+to the Retrieve enquiry language. This language is explained in
+detail later (turn to <span class="link" onclick=
+"_goto('retrieve.html')">The Retrieve Query Language</span>), but a
+few simple examples will be used here to illustrate the use of
+dictionaries.</p>
+<p>Let's say you wanted to enquire on the records you had just
+entered. The simplest way to do this would be to use the
+<code>LIST</code> command. Try this:</p>
+<p><code>&gt;<strong>LIST CUSTOMER.INVOICES</strong><br />
+<br />
+LIST CUSTOMER.INVOICES 11:51:31 08-06-99 PAGE 1<br />
+CUSTOMER.INVOICES<br />
+<br />
+0001<br />
+0002<br />
+0003<br />
+<br />
+3 records listed.<br />
+&gt;</code></p>
+<p>This is fine as far as it goes: you have a complete listing of
+the keys of the records you entered on your screen. But to show the
+contents of those records, you must define dictionary records. The
+following sections describe the different types of dictionary
+record, how to create them, and how they are used.</p>
+
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Data Fields</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Data Fields' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, data, fields" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Data Fields</h1>
+<p>Each record in the dictionary file represents a field in the
+corresponding data file. For instance, the first field of the
+<code>CUSTOMER.INVOICES</code> file contains customer names. A
+record called <code>CUSTOMER.NAME</code> should therefore be
+created on the dictionary to represent it.</p>
+<p>The easiest way to enter dictionary records is with the editor.
+All dictionary records have the same format:</p>
+<p><code>&gt;<strong>ED DICT CUSTOMER.INVOICES
+CUSTOMER.NAME</strong><br />
+New record.<br />
+<br />
+----: <strong>I</strong><br />
+0001= <strong>D The customer's trading name</strong><br />
+0002= <strong>1</strong><br />
+0003= <strong>(Enter a space and press RETURN)</strong><br />
+0004= <strong>Customer Name</strong><br />
+0005= <strong>15T</strong><br />
+0006= <strong>S</strong><br />
+0007= <strong>(Press RETURN)</strong><br />
+Bottom at line 7.<br />
+----: <strong>FI</strong><br />
+"CUSTOMER.NAME" filed in file "CUSTOMER.INVOICES".</code></p>
+<p>Note that the keyword <code>DICT</code> was used before the file
+name <code>CUSTOMER.INVOICES</code> to refer to the
+<em>dictionary</em> of the file. In general, where a command takes
+the form <code>command filename ...</code> you can use
+<code>command DICT filename...</code> to apply the command to the
+<em>dictionary</em> of a file.</p>
+<p>The first field of the dictionary record is much like the first
+field of a VOC record, being made up of a one or two letter
+<em>type</em>, followed by an optional <em>description</em>. In
+this case, the type is <code>D</code>, meaning 'data' (you will
+encounter other types in the following sections), and the
+description is <code>The customer's trading name</code>. This last
+is there solely as internal documentation, to provide information
+to anyone who might edit the dictionary record in the future.</p>
+<p>The second field (of a D type - other types use their second
+fields differently) of the dictionary record carries the field
+number of each data record which carries the
+<code>CUSTOMER.NAME</code>. In this case, as field 1 of every
+<code>CUSTOMER.INVOICES</code> record carries the customer's name,
+the value here is 1.</p>
+<p>The third field contains a 'conversion specification'. This is
+because the form in which some information is typically stored by
+UniVerse differs from the form in which it is displayed. For
+instance, dates are stored as the number of days passed since 1967.
+The way in which a field should be converted before display can be
+coded. For dates, for instance, the conversion code of <code>D
+DMY[2,A3,4]</code> would store <code>1</code> and display <code>01
+JAN 1968</code>. Text strings like customer names, though, are
+generally displayed exactly as stored, and so the conversion
+specification can be left blank. The space entered above is
+ignored.</p>
+<p>The fourth field is the title which will appear at the head of
+the column of customer names in an enquiry.</p>
+<p>The fifth field combines the width of the column displayed in
+the enquiry with the 'justification' of the column. For instance,
+to display a right-justified column 10 characters wide, you would
+enter a format of <code>10R</code>. To allow 30 characters, left
+justified but breaking on complete words where possible, you would
+enter <code>30T</code> (<code>T</code> standing for 'text'
+justification). Please bear in mind that this does not set a limit
+on the <em>capacity</em> of the field. Even if a dictionary record
+defines a field as having a format of <code>10R</code>, it may
+contain 11 characters (or 111). They will simply 'wrap around' the
+column in an enquiry.</p>
+<p>Finally, the sixth field contains either an <code>S</code> or an
+<code>M</code>. As was explained during our discussion of the
+UniVerse's data structures (see <span class="link" onclick=
+"_goto('about-paradigm.html')">The UniVerse Paradigm</span> above),
+fields can be further divided into <em>values</em>, and values into
+<em>subvalues</em>. If a field is designed to hold more than one
+piece of information in this way, it is <em>multi-valued</em> and
+must carry an <code>M</code> in this field of its dictionary
+record. Otherwise, it is <em>single-valued</em> and carries an
+<code>S</code>.</p>
+<p>In the same way, set up the following records in <code>DICT
+CUSTOMER.INVOICES</code></p>
+<table>
+<tr>
+<td></td>
+<td></td>
+<td>
+<p>PRODUCT</p>
+</td>
+<td>
+<p>UNIT.PRICE</p>
+</td>
+<td>
+<p>QUANTITY</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>Type/Description</p>
+</td>
+<td>
+<p>D Product sold</p>
+</td>
+<td>
+<p>D Unit Price</p>
+</td>
+<td>
+<p>D Quantity sold</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>Field Number</p>
+</td>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>4</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>Conversion</p>
+</td>
+<td>
+<p>(blank)</p>
+</td>
+<td>
+<p>MD20P</p>
+</td>
+<td>
+<p>(blank)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Column Header</p>
+</td>
+<td>
+<p>Product</p>
+</td>
+<td>
+<p>Unit Price</p>
+</td>
+<td>
+<p>Quantity</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>5</p>
+</td>
+<td>
+<p>Format</p>
+</td>
+<td>
+<p>20T</p>
+</td>
+<td>
+<p>10R</p>
+</td>
+<td>
+<p>10R</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>6</p>
+</td>
+<td>
+<p>S or M</p>
+</td>
+<td>
+<p>S</p>
+</td>
+<td>
+<p>S</p>
+</td>
+<td>
+<p>S</p>
+</td>
+</tr>
+</table>
+<p>Now try the command:</p>
+<pre>
+&gt;LIST CUSTOMER.INVOICES CUSTOMER.NAME PRODUCT UNIT.PRICE QUANTITY
+
+LIST CUSTOMER.INVOICES CUSTOMER.NAME PRODUCT UNIT.PRICE QUANTITY 16:41:00  08-06
+-99  PAGE 1
+CUSTOMER.INVOICES  Customer Name..  Product.............  Unit Price  Quantity..
+
+0001               ACME Widgets     Castellated Grommets       10.38        2000
+                   Limited
+0002               Universal        Revolving Stud Pins       427.00           7
+                   Thingies Inc.
+0003               Imperial         Galvanised Retention       38.00         104
+                   Exporters plc    Sprockets
+&gt;
+</pre>
+<p>The <code>LIST</code> command consulted the dictionary of
+<code>CUSTOMER.INVOICES</code> to determine the meaning of the
+words <code>CUSTOMER.NAME</code>, <code>PRODUCT</code>,
+<code>UNIT.PRICE</code> and <code>QUANTITY</code>, and was
+therefore able to extract the appropriate data from each record and
+format it appropriately. Note, for instance, that the customer and
+product names are being wrapped on word boundaries as a result of
+their <code>...T</code> formats, and that the unit price is showing
+two decimal places even where decimal places were not included as
+part of the data, thanks to its <code>MD20P</code> conversion.
+(This conversion code, and others, will be explained in the section
+on UniVerse Basic).</p>
+<p>Note that <code>LIST</code> displays the record keys
+automatically, using the file name as the column header, and
+extending the width of the column to accomodate this name. While
+it's useful to show the keys, this is not the best format to
+choose.</p>
+<p>It is determined by the dictionary record <code>@ID</code>. This
+dictionary record is created automatically when you create a file,
+as whatever other fields you may decide on, UniVerse knows that you
+must have a key to each record. You should never delete the
+<code>@ID</code> dictionary record, because UniVerse can become
+confused if it does not find it: but you can edit it to control the
+way in which the key is shown in enquiries. The table below shows
+both the 'default' <code>@ID</code> record as it was created by
+UniVerse, and a modified version which would show the keys more
+suitably. Use the editor to modify the <code>@ID</code>
+appropriately.</p>
+<table>
+<tr>
+<td></td>
+<td></td>
+<td>
+<p>Default @ID</p>
+</td>
+<td>
+<p>Improved @ID</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>Type/Description</p>
+</td>
+<td>
+<p>D Default record ID for RetrieVe</p>
+</td>
+<td>
+<p>D Invoice number</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>Field Number</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>0</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>Conversion</p>
+</td>
+<td>
+<p>(blank)</p>
+</td>
+<td>
+<p>(blank)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>Column Header</p>
+</td>
+<td>
+<p>CUSTOMER.INVOICES</p>
+</td>
+<td>
+<p>InvNum</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>5</p>
+</td>
+<td>
+<p>Format</p>
+</td>
+<td>
+<p>10L</p>
+</td>
+<td>
+<p>6R</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>6</p>
+</td>
+<td>
+<p>S or M</p>
+</td>
+<td>
+<p>S</p>
+</td>
+<td>
+<p>S</p>
+</td>
+</tr>
+</table>
+<p>Rerunning the command we tried earlier now gives the following
+results:</p>
+<pre>
+LIST CUSTOMER.INVOICES CUSTOMER.NAME PRODUCT UNIT.PRICE QUANTITY 17:41:33  08-06
+-99  PAGE 1
+InvNum    Customer Name..    Product.............    Unit Price    Quantity..
+
+  0001    ACME Widgets       Castellated Grommets         10.38          2000
+          Limited
+  0002    Universal          Revolving Stud Pins         427.00             7
+          Thingies Inc.
+  0003    Imperial           Galvanised Retention         38.00           104
+          Exporters plc      Sprockets
+
+3 records listed.
+&gt;
+</pre>
+<p>As you can see, the invoice number now has a more meaningful
+column header, and a column width more appropriate to its
+length.</p>
+<p>You may have noticed a similarity between the use of
+dictionaries and the use of the VOC file. VOC records also begin
+with a line stating their type and providing a description. They
+are also used to interpret the meaning of words supplied on a
+command line. In fact, in some versions of PICK, the VOC file is
+called the <em>Master Dictionary</em>. The similarity applies to
+another feature. As you know, you can define a synonym for any word
+by copying its VOC record under a different key. Similarly, you can
+set up a synonym for any field name by copying its dictionary
+record. Making a copy of the <code>CUSTOMER.NAME</code> record
+called <code>CLIENT.NAME</code> allows you to use these words
+synonymously in RetrieVe enquiries.</p>
+<p>However, this can be more than just a convenient way of making
+synonyms. As you can see above, the customer name is rather
+cramped. It has a narrow column width designed to allow all four
+columns to be shown across the screen at once. But what if you
+wanted to omit the other columns and show the customer's name in a
+wider column? You could of course edit the
+<code>CUSTOMER.NAME</code> dictionary record: but that would mean
+changing it before each enquiry, which would become cumbersome. A
+better approach is to create a synonym called, say
+<code>WIDE.CUSTOMER.NAME</code>, and change its format to
+<code>50T</code>. Try this, and then enter the command:</p>
+<pre>
+&gt;LIST CUSTOMER.INVOICES WIDE.CUSTOMER.NAME
+
+LIST CUSTOMER.INVOICES WIDE.CUSTOMER.NAME 17:53:56  08-06-99  PAGE 1
+InvNum    Customer Name.....................................
+
+  0001    ACME Widgets Limited
+  0002    Universal Thingies Inc.
+  0003    Imperial Exporters plc
+
+3 records listed.
+&gt;
+</pre>
+<p>As you can see, each customer name fits comfortably within the
+new column size, and the original <code>CUSTOMER.NAME</code> field
+definition is still available.</p>
+<p>In fact, though, this is not the method I would recommend to
+achieve this effect. The problem is that it creates two field names
+for a single field, and this can be a development and maintenance
+headache. In much the same way that it is good practice to have a
+single <code>F</code> type pointer to each file (see <span class=
+"link" onclick="_goto('voc-files.html')">File Pointers</span>), it
+is good practice to have a single <code>D</code> type pointer for
+each data field. You can still set up synonyms similar to the ones
+described here, though, using <code>I</code> types, which are
+discussed in the next section.</p>
+
+</body>
+</html>

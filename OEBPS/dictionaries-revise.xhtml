@@ -1,0 +1,403 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: The REVISE
+Command</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: The REVISE Command' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, the, revise, command" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> The REVISE Command</h1>
+<h2>Creating and modifying UniVerse records</h2>
+<p>So far, we have been creating records using the editor: and you
+will find throughout your UniVerse career that this is often the
+simplest and quickest way of entering and modifying information. It
+is particularly useful when you are very familiar with the format
+of a file, and therefore know with confidence what information
+should go onto each numbered field. This is particularly true, of
+course, of VOC and dictionary records, which have a format common
+to all UniVerse accounts, applications, and systems.</p>
+<p>However, such an approach is clearly unsuitable to an end-user,
+and would never be incorporated as a permanent part of a live
+system. The editor provides no help, no control, and no validation.
+For this reason, data entry under UniVerse is almost always done
+under the control of UniVerse Basic programs, which can offer users
+meaningful prompts, help messages, type and data validation,
+security control, and so forth. Sometimes such programs are coded
+by hand. Others consist of unique UniVerse Basic programs generated
+by 'screen generators' or 'fourth generation languages' (4GL's)
+working from screen specifications created by analysts or even end
+users.</p>
+<p>A variation on this theme is the 'screen interpreter'. This is a
+UniVerse Basic program designed to handle all the common functions
+required for data entry and modification. Instead of taking a
+screen specification and generating a UniVerse Basic program from
+it, it uses it to control the prompts it displays, and validation
+it applies, at run time, and actually does the data entry
+itself.</p>
+<p>The pros and cons of these various methods are really outside
+the scope of this course. I mention them because UniVerse provides
+its own, rather basic, screen interpreter. It is called
+<code>REVISE</code>, and it uses the dictonary of a file as a
+screen specification: because the dictionary contains much of the
+information it requires: the names of the fields, user friendy
+labels for them (column headings), display widths and so on.</p>
+<p>Truth be told, though, <code>REVISE</code> is not great. It's
+interface is extremely clunky, and it is still too awkward for most
+users, while offering few advantages to the developer over the
+naked editor.</p>
+<p>Having said that, it is sometimes a convenient way of creating a
+quick and dirtry makeshift data entry screen. It is also used to
+edit menu records, which contain many multivalued fields and are
+therefore rather tiresome to handle using <code>ED</code>. Once
+you've tried it, you'll need to decide on its suitability for any
+particular purpose, but almost any tool is sometimes useful.</p>
+<p>To illustrate the REVISE command, we shall need a data file. If
+you wish to follow the examples which follow, create a dynamic file
+called CUSTOMERS with the dictionary below (if you are unsure how
+to do this, consult the earlier sections of this guide on
+<span class="link" onclick="_goto('files.html')">Universe
+Files</span>, <span class="link" onclick=
+"_goto('dictionaries.html')">Dictionaries</span> and <span class=
+"link" onclick="_goto('records-ed.html')&quot;">The Editor:
+ED</span> before continuing).</p>
+<table>
+<tr>
+<td>
+<p>Name</p>
+</td>
+<td>
+<p>@ID</p>
+</td>
+<td>
+<p>NAME</p>
+</td>
+<td>
+<p>CONTACTS</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Type/Desc</p>
+</td>
+<td>
+<p>D Customer Code</p>
+</td>
+<td>
+<p>D Customer Name</p>
+</td>
+<td>
+<p>D Contact Names</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Field</p>
+</td>
+<td>
+<p>0</p>
+</td>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>2</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Conversion</p>
+</td>
+<td>
+<p>(none)</p>
+</td>
+<td>
+<p>(none)</p>
+</td>
+<td>
+<p>(none)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Heading</p>
+</td>
+<td>
+<p>Cus. Code</p>
+</td>
+<td>
+<p>Cus. Name</p>
+</td>
+<td>
+<p>Contacts</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Formats</p>
+</td>
+<td>
+<p>10L</p>
+</td>
+<td>
+<p>30T</p>
+</td>
+<td>
+<p>30T</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Single/Multivalued</p>
+</td>
+<td>
+<p>S</p>
+</td>
+<td>
+<p>S</p>
+</td>
+<td>
+<p>M</p>
+</td>
+</tr>
+</table>
+<h2>A sample REVISE session</h2>
+<p>The simplest way to invoke <code>REVISE</code> is simply to type
+<code>REVISE filename</code>. Try it:</p>
+<p><code>&gt;<strong>REVISE CUSTOMERS</strong><br />
+<br />
+CUSTOMERS REVISE.1 Mon Aug 16 13:44:29 1999<br />
+<br />
+<br />
+Cus. Code=</code></p>
+<p>The prompt here, Cus. Code, is taken from the 'column heading'
+(line 4) of your <code>@ID</code> dictionary record.
+<code>REVISE</code> is asking for the key of the record you wish to
+edit or create. If the key you entered existed, the corresponding
+record would be displayed on the screen for you to edit: you will
+see what this display looks like a little later. For now, the file
+is empty, so any key is going to be new. When you enter a new key,
+<code>REVISE</code> prompts you field by field for the information
+it needs to create the record.</p>
+<p><code>Cus. Code= <strong>GSL</strong><br />
+New Record<br />
+Cus. Name=</code></p>
+<p>Again, this prompt is taken from line 4 of a dictionary record:
+this time line 4 of the <code>NAME</code> field definition. Simply
+enter a value and hit ENTER:</p>
+<p><code>Cus. Name= <strong>Grommet Subframes
+Limited</strong><br />
+CUSTOMERS -Screen 2-CONTACTS Mon Aug 16 13:48:46 1999<br />
+<br />
+@ID==&gt; GSL<br />
+No. CONTACTS......................<br />
+1<br />
+Contacts=</code></p>
+<p>You may recall that the <code>CONTACTS</code> field was defined
+as multivalued, to allow more than one contact name to be recorded
+against each company. <code>REVISE</code> handles multivalued
+fields by clearing the screen and then prompting you for values one
+by one. When you do not wish to enter any more values, you just
+press ENTER:</p>
+<p><code>Contacts= <strong>Hugo Grommet (MD)</strong><br />
+Contacts= <strong>Ashleigh Plumbstone (FD)</strong><br />
+Contacts= <strong>(Press RETURN)</strong><br />
+<br />
+CUSTOMERS -Screen 2-CONTACTS Mon Aug 16 13:56:26 1999<br />
+<br />
+@ID==&gt; GSL<br />
+No. CONTACTS......................<br />
+1 Hugo Grommet (MD)<br />
+2 Ashleigh Plumbstone (FD)<br />
+3<br />
+<br />
+Change which line item=</code></p>
+<p>Once you have entered as many values as you wish,
+<code>REVISE</code> lists them for you to check, and to modify if
+necessary. Let us assume that you need to modify the second
+contact, as his name is actually spelt 'Ashley'. Enter 2:</p>
+<p><code>Change which line item= <strong>2</strong><br />
+<br />
+CUSTOMERS -Screen 2-CONTACTS Mon Aug 16 13:58:05 1999<br />
+<br />
+@ID==&gt;&gt;GSL Line==&gt;&gt; 2<br />
+3 CONTACTS Ashleigh Plumbstone (FD)<br />
+Contacts= <strong>Ashley Plumbstone (FD)</strong><br />
+CUSTOMERS -Screen 2-CONTACTS Mon Aug 16 13:59:50 1999<br />
+<br />
+@ID==&gt; GSL<br />
+No. CONTACTS......................<br />
+1 Hugo Grommet (MD)<br />
+2 Ashley Plumbstone (FD)<br />
+3<br />
+<br />
+Change which line item=</code></p>
+<p>As you can see, the new contact name is now in the list of
+values: but only because you retyped it in its entirety. Is there a
+quicker way to correct small mistakes? Say, this time, you must
+correct the second contact because there should be no 'b' in his
+surname. Once again, you begin by selecting the second line to
+edit.</p>
+<p><code>Change which line item= <strong>2</strong><br />
+CUSTOMERS -Screen 2-CONTACTS Mon Aug 16 14:02:46 1999<br />
+<br />
+@ID==&gt;&gt;GSL Line==&gt;&gt; 2<br />
+3 CONTACTS Ashley Plumbstone (FD)<br />
+Contacts=</code></p>
+<p>At this point, you could retype the entire name, ommitting the
+'b' from the surname by way of correction. However, there is an
+easier way. <code>REVISE</code> allows you to use the
+<code>C</code> or 'change' command from its cousin <code>ED</code>.
+To remove the 'b', you therefore need only enter:</p>
+<p><code>Contacts= <strong>C/b//</strong><br />
+<br />
+CUSTOMERS -Screen 2-CONTACTS Mon Aug 16 14:03:32 1999<br />
+<br />
+@ID==&gt; GSL<br />
+No. CONTACTS......................<br />
+1 Hugo Grommet (MD)<br />
+2 Ashley Plumstone (FD)<br />
+3<br />
+<br />
+Change which line item=</code></p>
+<p>Once again, the corrected list of values is displayed for your
+approval. Let us now assume there are no further errors. Simply
+press ENTER to complete your entry of the
+<code>CONTACTS</code>:</p>
+<p><code>Change which line item= <strong>(Press
+ENTER)</strong><br />
+<br />
+CUSTOMERS -Screen 1-FIRST SCREEN Mon Aug 16 14:04:15 1999<br />
+<br />
+1 @ID GSL<br />
+2 NAME Grommet Subframes Limited<br />
+<br />
+S1 == FIRST SCREEN<br />
+S2 == CONTACTS<br />
+<br />
+CHANGE=</code></p>
+<p>You have now finished enter your <code>CUSTOMERS</code> record,
+and you now have the chance to modify any of the fields you have
+entered. This, incidentally, is the display you would have seen if,
+when you first entered <code>GSL</code> at the <code>Cus.
+Code</code> prompt, it had been an existing record.</p>
+<p>Notice, incidentally, how this screen is using the actual
+underlying field names to label the values in the display, rather
+than the column headings from line 4 of the dictionary records it
+was using earlier: such as <code>@ID</code> instead of <code>Cus.
+Code</code>. It is difficult to account for this rather bizzare
+inconsistency, and if you plan to allow you eventual users to use
+<code>REVISE</code> to enter and modify records, you should try and
+stick to friendly and meaningful field names (but of course, you
+were going to do that anyway, weren't you?). Even so, it is
+difficult to avoid the most arcane of them all: <code>@ID</code>,
+unless you set up a second <code>D</code> type dictionary record
+for field 0, which is something I hate doing.</p>
+<p>At this prompt, you could enter a <code>2</code> to change the
+customer's name, or (interestingly enough) a <code>1</code> to
+change its key. Changing the key of a new record has no unusual
+implications: <code>REVISE</code> will simply file the new record
+under its new key, and as it never existing under its old, this is
+straightforward. However, if you use <code>REVISE</code> to modify
+an <em>existing</em> record, <code>REVISE</code> will quite happily
+let you do so. This has the effect of deleting the original record
+and creating a new one under your new key: logical enough, but a
+somewhat drastic implementation to be buried under what looks like
+a simple field change.</p>
+<p>You could also enter <code>S1</code> or <code>S2</code>. They
+are both labelled: and as you can see from those labels,
+<code>S2</code> will take you back to the <code>CONTACTS</code>
+list for further additions or modifications. <code>S1</code> will
+take you to the 'first screen'. But hang on: aren't you at the
+first screen? Yes. And would you see this prompt anywhere except
+the first screen? No. So what does <code>S1</code> do? Try it.</p>
+<p><code>CHANGE= <strong>S1</strong><br />
+CHANGE=</code></p>
+<p>That's it. Enter <code>S1</code> and it will simply redisplay
+the prompt: and <em>keep</em> redisplaying it until you enter
+something other than <code>S1</code>. Stranger than fiction.</p>
+<p>Anyway, by now I am assuming you have recorded more than you
+ever wanted to know about <code>Grommet Subframes Limited</code>,
+so simply press ENTER to indicate that you do not wish to change
+anything further:</p>
+<p><code>CHANGE= <strong>(Press ENTER)</strong><br />
+<br />
+CUSTOMERS REVISE.1 Mon Aug 16 14:07:49 1999<br />
+<br />
+<br />
+Cus. Code=</code></p>
+<p>You are finally returned to the very first revise screen you saw
+after entering the original <code>REVISE</code> command. Here, you
+can enter further keys to edit or create, or you can just press
+ENTER to exit.</p>
+<p><code>Cus. Code= <strong>(Press ENTER)</strong><br />
+&gt;</code></p>
+<h2>?, TOP and ^</h2>
+<p><code>REVISE</code> has a few special instructions you can use
+while you are editing. The most important are <code>?</code>,
+<code>TOP</code> and <code>^</code>.</p>
+<p><code>?</code> is a request for help. It displays messages of
+varying degrees of helpfulness and consistent terseness.</p>
+<p><code>^</code> is supposed to resemble an 'up arrow', which is
+does a bit, once you know. It returns you to the previous prompt,
+in case you have made a mistake during entry you wish to correct
+immediately.</p>
+<p><code>TOP</code> returns you right to the 'top' of your record:
+effectively 'quitting' the record (like <code>Q</code> in
+<code>ED</code>). Why it couldn't have been called
+<code>QUIT</code> I am not sure. Be aware also that
+<code>TOP</code>, <em>unlike</em> <code>ED</code>'s <code>Q</code>,
+does <code>not</code> warn you if you are about to abandon changes
+without filing them.</p>
+<h2>@REVISE and @ phrases</h2>
+<p>So where does revise get the list of fields to prompt for? It
+follows the following strategy:</p>
+<p>1. If there is an <code>@REVISE</code> (or <code>@ENTRO</code>)
+phrase on the dictionary, it will derive its list of fields to edit
+from that. This is a link back to the good old days when
+<code>REVISE</code> was called <code>ENTRO</code>: UniVerse seems
+to have gone to some lengths to provide versions of all command
+names with a 'V' in them (or should I have said 'Versions'?). Try
+<code>ENTRO</code>, it still works.</p>
+<p>2. Failing an <code>@REVISE/@ENTRO</code>, it will take use an
+<code>@</code> entry (see <span class="link" onclick=
+"_goto('dictionaries-phrases.html')">Phrases</span>).</p>
+<p>3. Failing both of these, it will automatically <em>create</em>
+an <code>@ENTRO</code> phrase by listing all the D types in the
+dictionary. If more than one D type refers to the same field
+number, it will choose the first one it finds (<em>not</em> by
+alphabetical order: effectively at random). This is another good
+reason for only having one D type per physical field. You could, of
+course, edit the <code>@ENTRO</code> phrase to correct the choice
+of field names if you would prefer others, but why set up
+situations like this which increase your workload?</p>
+<p>By editing the <code>@ENTRO</code> phrase, you can persuade
+<code>REVISE</code> to edit only a subset of the fields. You can
+also add keywords (like <code>VERIFY</code> and
+<code>VERIFIELD</code>) which add some useful internal and external
+validation: but this level of detail is outside the scope of this
+course. As ever, if your appetite is wetted, consult the UniVerse
+documentation for more information.</p>
+<p>In summary, <code>REVISE</code> is a sometimes useful but rather
+clunky and at times rather odd program. Personally, I would never
+stick it in front of a user, though I find it occassionally useful
+as a developer's utility. It's a nice idea, but I can't help
+feeling it could have been written better. At the end of the day,
+it's your call.</p>
+
+</body>
+</html>

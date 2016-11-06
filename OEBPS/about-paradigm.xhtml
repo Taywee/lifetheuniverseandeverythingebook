@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: The UniVerse
+Paradigm</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: The UniVerse Paradigm' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, the, universe, paradigm" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> The UniVerse Paradigm</h1>
+<h2>'Typelessness'</h2>
+<p>Perhaps the first point to understand, particularly for
+developers used to other development languages and environments, is
+that UniVerse is 'typeless'. It does not distinguish the way other
+languages do between numbers, dates and text: let alone between
+bytes, words, short integers and long integers. All of its data,
+without exception, is stored on disk, and manipulated in memory, as
+strings of ASCII characters.</p>
+<p>For instance, if you were to examine some UniVerse data using a
+low level disk editor, you would find that the value of an invoice
+for R12.23 was stored as a character 49: the ASCII '1', followed by
+a character 50, the ASCII '2', and so on.</p>
+<p>The treatment of these values in memory is just the same. If a
+variable in a UniVerse Basic Program, for instance, has a value of
+'111', you can add '2' to it to make it '113', or concatenate '1'
+to make it '1112'.</p>
+<h2>The UniVerse Hierarchy:<br />
+Accounts, Files, Records, Fields, Values, and Subvalues</h2>
+<p>As was explained above (see<span class="link" onclick=
+"_goto('about-unix.html')">UniVerse and UNIX</span>) UniVerse
+accounts are UNIX directories which contain a basic UniVerse 'file
+set'. To invoke UniVerse, you must first <code>cd</code> to such a
+directory under Unix before using the <code>uv</code> command to
+start UniVerse. If the files UniVerse requires to run do not exist
+in your current directory, it will inform you that the directory
+'is not a valid UniVerse account' and offer to make it one, by
+copying the necessary files from UniVerses home directory.</p>
+<p>These files define UniVerse's behaviour within the account they
+inhabit. Unlike UNIX, which can search across an entire system for
+program names corresponding to the commands you enter, or files
+corresponding to the names you enter, UniVerse interprets commands
+and filename strictly locally. While you can make a file in one
+UniVerse account visible to another, you must do this on a file by
+file basis. Each UniVerse account is essentially a closed
+environment.</p>
+<p>UniVerse files are not quite the same thing as UNIX files. A
+UniVerse file is more like an Oracle table or a DBase file: it is a
+collection of records. Naturally, as UniVerse runs over UNIX, each
+UniVerse file is unlimately implemented as one or more UNIX files,
+but the way in which this is done is hidden from the UniVerse user.
+The UNIX implementation of these files will be explained later, but
+for now it is sufficient to see UniVerse files as the second stage
+of the UniVerse hierarchy: UniVerse accounts are collections of
+UniVerse files.</p>
+<p>The files contain collections of records, and each record
+represents a single entity. For instance, if you were running an
+accounting system, it is likely you would have a CUSTOMERS file:
+each record in such a file would represent one of your customers.
+Each would also have a 'key': a unique string associated with the
+record, allowing it to be accessed directly without searching
+through the whole file. So far, this is elementary, and most
+Database Management Systems take this same approach. The difference
+lies in the consistency with which UniVerse applies this approach.
+Everything within UniVerse must fit into the Accounts/Files/Records
+hierarchy, and so each program your write becomes a record in a
+programs file, and each command in the TCL Universe command
+language is a record in a special file called the VOC file.</p>
+<p>Records are further divided into fields. In a data file (such as
+the mythical CUSTOMERS file already mentioned) each field in a
+record has a defined purpose: the first field of each record might
+store the customers company name, the second their phone number,
+and so on. However, in some records, the fields do not all
+represent different 'kinds' of information. For instance, each
+program in a UniVerse system is a record in a file, and each line
+of each program is, strictly speaking, a field of that record.
+Naturally, while the lines of the program must be in a defined
+order for the program to work, this does not mean that the third
+field of one program record has the same meaning as the third field
+of another. UniVerse programmers rarely think of the lines of their
+programs as fields, but nevertheless this is how they are stored,
+and in this way they remain within the rules of the UniVerse
+hierarchy.</p>
+<p>Values and subvalues are subdivisions of fields, enabling a
+single field to store many pieces of information. For instance, if
+you decide to store the names of your customers children on the
+CUSTOMERS file, you can define a single field called CHILDREN and
+record each child's name as a value within that field. If you
+decided to store all the given names of each child ('John Micheal
+Steven Smith') you could even divide the values into subvalues:
+'multi-valued' fields are very common in UniVerse systems,
+'sub-valued' ones, thankfully, less so.</p>
+<p>A common and useful technique is the 'association' of
+multi-valued fields. For instance, if you wished to store the
+name<em>and date of birth</em>of each child, you could do so by
+defining two multivalued fields, CHILD.NAMES and CHILD.DOBS, where
+the first value in CHILD.NAMES corresponded to the first date in
+CHILD.DOBS, and so on. This is again a commonly found
+technique.</p>
+<p>Thus the UniVerse structure can be thought of a 6-dimensional.
+Thus, to find a single piece of data, you must know:</p>
+<p>1. Which account the file is in<br />
+2. Which file the record is in<br />
+3. Which record the field is in<br />
+4. Which field the value is in<br />
+5. Which value the sub-value is in<br />
+6. Which sub-value the data is in.</p>
+<p>Unlike UNIX, though, the UniVerse data structure is not
+recursive. UNIX directories can contain other directories. UniVerse
+accounts can only contain files, not other accouts; files can only
+contain records, not other files, and so on.</p>
+<p>It was mentioned earlier that all the data in this structure is
+stored as strings of ASCII characters. Each record, in fact, is a
+single string. The ASCII character 254 divides each field from the
+next and is known as a field mark, the ASCII character 253 divides
+values within fields, and is known as the value mark, and the ASCII
+character 252 divides each subvalue from the next, and is thus (you
+guessed it) known as the subvalue mark. In theory, files could be
+implemented as a single string broken into records, and accounts as
+a single string broken into files, but the concept is not taken so
+far. As an interesting note, though, the character 255 is still
+known as a 'record mark' or 'item mark' (the original PICK term for
+records being 'items'), but it is very rarely used.</p>
+<h2>The 'Post-relational' Database Management System</h2>
+<p>You will sometimes hear UniVerse referred to as a
+'post-relational' system, and may have wondered what this
+meant.</p>
+<p>In fact, it is a piece of marketing nonsense which implies two
+things: (a) Universe is NOT relational, and (b) that's a good
+thing, not a bad one.</p>
+<p>Strictly speaking, a relational database is one which conforms
+to the 12 relational 'laws' devised by Codd and Date, the
+originators of 'relational calculus' which underpins the
+'relational model', and it is debatable as to whether any
+commercial database is truly relational: even those which claim to
+be like Oracle and Ingres. However, UniVerse breaks so many of them
+that it cannot even pretend to be relational, hence (a).</p>
+<p>(b) is more debateable. For instance, one of the reasons
+UniVerse cannot be considered relational is that it allows
+'repeating' or multivalued fields. Of course, you
+don't<em>have</em>to use them in your designs, so is this a
+problem? The relational laws, though, are designed to make it as
+difficult as possible to implement non-relational systems. You may,
+of course, form your own view once you've completed this
+course.</p>
+<p>Personally I think this flexibility is one of UniVerse's
+strengths. UniVerse allows quick and intuitive development and
+modelling: it is designed in a simple and pragmatic way, rather
+than in close adherence to any underlying theory. This does,
+though, give one a lot of rope. It's still up to us, though,
+whether we hang ourselves.</p>
+
+</body>
+</html>

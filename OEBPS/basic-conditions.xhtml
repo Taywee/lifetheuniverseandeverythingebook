@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Basic
+Conditions</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Basic Conditions' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, basic, conditions" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Basic Conditions</h1>
+<h2>Condition handling: IF</h2>
+<p>To execute a statement only on a particular condition, use an
+<code>IF</code> statement like this:</p>
+<pre>
+IF VALUE = 0 THEN PRINT 'Value is 0'
+</pre>
+<p>To execute a different statement if the condition is not true,
+add an <code>ELSE</code> clause:</p>
+<pre>
+IF VALUE = 0 THEN PRINT 'Value is 0' ELSE PRINT "Value isn't 0"
+</pre>
+<p>More than 1 line can be made conditional by beginning a new line
+immediately after then <code>THEN</code>, and closing the clause
+with an <code>END</code>:</p>
+<pre>
+IF VALUE = 0 THEN
+   PRINT 'The value is 0.'
+   PRINT 'No invoice will be printed.'
+END
+</pre>
+<p>If you wish to add an else clause, use <code>END ELSE</code> to
+terminate the <code>THEN</code> clause, and <code>END</code> to
+close then <code>ELSE</code> clause.</p>
+<pre>
+IF VALUE = 0 THEN
+   PRINT 'The value is 0.'
+   PRINT 'No invoice will be printed.'
+END ELSE
+   PRINT 'This invoice has a value of ' : VALUE
+   PRINT 'Invoice to be prnted...'
+END
+</pre>
+<p>Finally, <code>IF</code> statements may be nested:</p>
+<pre>
+IF VALUE = 0 THEN
+   IF QUANTITY = 0 THEN
+      PRINT 'The invoice has no quantity'
+          PRINT 'and no value.'
+   END ELSE
+      PRINT 'There has been a mistake.'
+          PRINT 'The quantity is ' : QUANTITY
+          PRINT 'The value should not be zero.'
+   END
+END ELSE
+   PRINT 'This invoice has a value of ' : VALUE
+   PRINT 'Invoice to be prnted...'
+END
+</pre>
+<p>Note the identation of the lines above. This is done
+automatically by the editor's <code>FORMAT</code> command, and is
+extremely useful. If an <code>END</code> statement does not line up
+with the <code>IF</code> statement which set the condition, then
+somewhere along the way you have omitted an <code>END</code>, or a
+<code>THEN</code>, or in some other way made a mistake in your
+code: so this forms a useful check.</p>
+<h2>Multiple condition handing: CASE</h2>
+<p>A commonly asked question is 'does UniVerse Basic support
+<code>ELSEIF?</code>'. The answer is <em>no</em>, but it does
+provide the same facility in the form of the <code>CASE</code>
+block.</p>
+<p>A case block begins with <code>BEGIN CASE</code> and ends with
+<code>END CASE</code>. Between these lie one or more
+<code>CASE</code> statements, each followed by a particular
+condition. When UniVerse reaches <code>BEGIN CASE</code>, it then
+examines each <code>CASE</code> condition in the block until it
+finds one which is true. It then starts executing the statements
+under that <code>CASE</code> statement until it encounters either
+the next <code>CASE</code> or the block's <code>END CASE</code>.
+Finally, it transfers control to the statement following the
+<code>END CASE</code>.</p>
+<p>As ever, a written description can make something sound more
+complicated than it is. Consider instead the following example:</p>
+<pre>
+BEGIN CASE
+   CASE TYPE = 'I'
+      PRINT 'Processing INVOICE document...'
+      * Process INVOICES here.
+   CASE TYPE = 'C'
+      PRINT 'Processing CREDIT NOTE document...'
+      * Process CREDIT NOTES here.
+   CASE 1
+      PRINT 'Invalid document type: not processed.'
+END CASE
+</pre>
+<p>Each time the code above is run, only one of the three messages
+will be printed: as soon as UniVerse Basic has found a true
+<code>CASE</code>, the others are ignored. Note the <code>CASE
+1</code>: this is a common and useful trick. As the value 1 is
+logically true (see <span class="link" onclick=
+"_goto('basic-types.html')">Basic Types</span>), the statements
+between the <code>CASE 1</code> and the <code>END CASE</code> will
+always be executed if none of the other <code>CASE</code>s are
+true: a handy safety net. Of course, <code>CASE 1</code></p>
+will always be the last <code>CASE</code> in the list: any cases
+below it would never be reached, as <code>CASE 1</code> is always
+true.
+<p>Such constructs are more efficient if the cases more likely to
+be true are put at the top (providing, of course, that the
+arrangement doesn't alter the logic away from that desired, as
+moving <code>CASE 1</code> above would). To explain this, imagine
+that the code above is used to process 9000 invoices, 900 credit
+notes, and 100 invalid types. To discover an invoice takes only one
+comparison: <code>TYPE = 'I'</code> must be true. To find a credit
+note takes two: <code>TYPE = 'I'</code> must be false, and
+<code>TYPE = 'C'</code> true. Invalid types take three. Thus, the
+total number of comparisons made is 9000 * 1 + 900 * 2 + 100 * 3 or
+11,100. However, reverse the order of the first two tests, and
+suddenly invoices will require two tests, and credit notes only
+one. The number of comparisons made would become 900 * 1 + 9000 * 2
++ 100 * 3 or 19,200: getting on for twice as many.</p>
+
+</body>
+</html>

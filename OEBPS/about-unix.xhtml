@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: UniVerse and
+UNIX</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: UniVerse and UNIX' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, universe, and, unix" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> UniVerse and UNIX</h1>
+<h2>Accounts</h2>
+<p>A UniVerse account is a UNIX directory containing what might be
+termed the basic UniVerse 'file set'.</p>
+<p>The easiest way to create a UniVerse account is to create an
+empty UNIX directory, <code>cd</code> to it, and enter the 'uv'
+command to invoke UniVerse. The UniVerse <code>bin</code> directory
+contains its executable: if it is not on your path, you will have
+to enter the full path to the command: something like
+<code>/universe/bin/uv.</code></p>
+<p>UniVerse will display:</p>
+<p><code>This is not a valid UniVerse account.<br />
+Would you like to make it one?</code></p>
+<p>Enter a <code>Y</code> in reply, and you will be offered a
+choice of Universe 'flavours' (see above: <span class="link"
+onclick="_goto('about.html')">About UniVerse</span>). My own
+background is in Prime INFORMATION, and that is the flavour used by
+the EDS team at the Cape of Good Hope bank who form the immediate
+audience for this guide, so I shall assume you choose the Prime
+INFORMATION flavour: the differences, though, are generally
+minor.</p>
+<p>A few indecipherable messages will scroll past your screen as
+UniVerse copies its basic 'file set' into its account, and you will
+be left at the UniVerse <code>&gt;</code> prompt you will soon grow
+to love.</p>
+<p>At this point, it might be instructive to have a peek at the
+UNIX directory underlying this UniVerse account. You will discover
+at this point that none of the UNIX commands you have spent years
+coming to terms with work from the UniVerse prompt (with one or two
+minor exceptions) as UniVerse has its own command language. The
+first command in this language you will now learn: <code>SH</code>
+opens a UNIX command shell from 'inside' UniVerse. Enter this
+command know, and at the Unix prompt enter the 'ls' command to take
+a look.</p>
+<p>You will notice six five files and a directory. The files are
+<code>VOC</code>, <code>D_VOC</code>, <code>VOCLIB</code>,
+<code>D_VOCLIB</code>, and <code>D_&amp;SAVEDLISTS&amp;</code>: the
+directory <code>&amp;SAVEDLISTS&amp;</code>. By now you will have
+noticed several unsettling things:</p>
+<p>1. UniVerse commands and filenames are almost entirely in UPPER
+CASE. Later you will also discover that the keywords and variable
+names in its programming language Universe Basic are also in upper
+case. This is a surprise and sometimes a problem for UNIX people,
+whose 'caps lock' key has usually rusted over from lack of use. Get
+used to it.</p>
+<p>The &amp; character appears appears in two of these names: in
+fact, it is a favourite of PICK people and appears in the names of
+many system files, So much so that the UK's leading Prime
+INFORMATION software house was called &amp;Ampersand Systems Ltd.
+Be careful when typing these names under UNIX to prefix the &amp;
+symbols with a backslash, thus:
+<code>\&amp;SAVEDLISTS\&amp;</code>. You will kick off a lot of
+phantom processes (which is what &amp; is used for under UNIX)
+until you get used to this.</p>
+<p>3. You had to go to UNIX to get a view of the physical structure
+of the underlying directory. This is because UniVerse takes a
+completely different view of what is going on: instead of five UNIX
+files and one UNIX directory, it can see three UniVerse files
+complete with 'dictionaries'. What this means you will discover
+soon, but for now the distinction is worth bearing in mind. UNIX
+and UniVerse 'files' are related, but are not one to one and not
+even always under the same names. For this reason, tinkering with
+the contents of a UniVerse account from UNIX usually causes
+problems, as UNIX doesn't understand UniVerse and tends to trample
+across its carefully laid structures: take care until you know how
+the two systems relate.</p>
+<p>Don't forget to enter the UNIX <code>exit</code> command to
+close the UNIX shell and return to UniVerse...</p>
+
+</body>
+</html>

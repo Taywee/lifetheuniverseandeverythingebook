@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: File
+Pointers</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: File Pointers' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, file, pointers" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> File Pointers</h1>
+<p>Earlier in this course (see <span class="link" onclick=
+"_goto('about-unix.html')">Universe and UNIX</span>) we explored
+the relationship between what unix calls 'files' and what universe
+calls 'files'. to briefly recap: the terms are related, but not
+synonymous. depending on the <em>type</em> of the universe file
+(see <span class="link" onclick=
+"_goto('files.html')&quot;">Universe Files</span>), what UniVerse
+calls a file may be implemented using any of a number of different
+combinations of UNIX directories and files.</p>
+<p>Each file has a file pointer in the VOC of its parent
+environment: created by the CREATE.FILE command along with the UNIX
+portions of the file itself. The name of the VOC record defines the
+name of the file as it is known to UniVerse. The contents of the
+record tells UniVerse where to find the file within the UNIX filing
+structure.</p>
+<p>To examine these file pointers, and the things they point to, we
+shall create three files: one directory file, one static file, and
+one dynamic file. Begin by creating the directory file with the
+command:</p>
+<p><code>&gt;CREATE.FILE DIRECTORY.FILE 19<br />
+WARNING: An operating system file will be created with a truncated
+name.<br />
+Creating file "DIRECTORY000" as Type 19.<br />
+Creating file "D_DIRECTORY000" as Type 3, Modulo 1, Separation
+2.<br />
+Added "@ID", the default record for RetrieVe, to
+"D_DIRECTORY000".</code></p>
+<p>This rather unfriendly and misleading series of messages is
+trying to tell us a number of things:</p>
+<p>1. A UNIX <em>directory</em> called <code>DIRECTORY000</code>
+has been created as the physical form of the UniVerse
+<code>DIRECTORY.FILE</code> file.</p>
+<p>2. A UNIX <em>file</em> called <code>D_DIRECTORY000</code> has
+been created as the physical form of the UniVerse
+<code>DIRECTORY.FILE</code> file. The purpose of dictionaries is
+covered later in the course. For now, it is worth noting simply
+that a file dictionary is, itself, an independent file, and that
+every 'data' file has a companion 'dictionary' file which describes
+its contents to utilities such as the <code>RetrieVe</code> query
+language. Whatever type you select for your file, UniVerse creates
+your dictionary files as type 3 (ie. static), modulo 1, separation
+2.</p>
+<p>A record with the key <code>@ID</code> has been added to this
+dictionary.</p>
+<p>The UNIX file names chosen are interesting. CREATE.FILE creates
+two files, a main or 'data' file with the name 'X', and a
+'dictionary' file with the name 'D_X'. UniVerse attempts to keep
+the names of the UNIX files it creates to 14 characters or less,
+and so applies the following naming scheme:</p>
+<p>1. If the requested UniVerse file name is 12 characters or less
+in length, like TWELVE.CHARS, the name of the directory file
+created is the same, ie. <code>TWELVE.CHARS</code>, and the name of
+the UniVerse dictionary file is preceded by a <code>D_</code> thus:
+<code>D_TWELVE.CHARS</code>.</p>
+<p>2. If the requested UniVerse file name is more than
+twelve.characters in length, like OVER.TWELVE.CHARS, the name of
+the directory file created consists of the first nine characters of
+this name followed by a three digit suffix, in this case
+<code>OVER.TWEL000</code>. The dictionary file is prefixed in the
+usual way, giving <code>D_OVER.TWEL000</code>. The three digits are
+chosen so as to ensure the UNIX file name is unique. If UNIX file
+<code>OVER.TWEL000</code> already exists, the file is called
+<code>OVER.TWEL001</code>, and so on.</p>
+<p>Returning to the file <code>DIRECTORY.FILE</code> we created
+earlier, its file pointer looks like this:</p>
+<p><code>ED VOC DIRECTORY.FILE<br />
+3 lines long.<br />
+<br />
+----: P<br />
+0001: F<br />
+0002: DIRECTORY000<br />
+0003: D_DIRECTORY000<br />
+----:</code></p>
+<p>As do all <code>VOC</code> records, file points store their
+<em>type</em> and an optional description in field 1.</p>
+<p>Field 2 contains the name of the UNIX directory used to
+physically implement the main <code>DIRECTORY.FILE</code> file.</p>
+<p>Field 3 contains the name of the UNIX file used to physically
+implement <code>DIRECTORY.FILE</code>'s dictionary.</p>
+<p>To create our example static file, enter the command:</p>
+<p><code>&gt;CREATE.FILE STATIC.FILE 2 1 4<br />
+Creating file "STATIC.FILE" as Type 2, Modulo 1, Separation
+4.<br />
+Creating file "D_STATIC.FILE" as Type 3, Modulo 1, Separation
+2.<br />
+Added "@ID", the default record for RetrieVe, to
+"D_STATIC.FILE".</code></p>
+<p>The message which follows is very similar to the one we saw when
+creating <code>DIRECTORY.FILE</code> above. In this case, the
+UniVerse file name is less than 13 characters long, and so the
+corresponding UNIX file names are not abbreviated: but exactly the
+same naming conventions apply to the creation of static files as do
+to the creation of directory files.</p>
+<p>In fact, the only difference here is that the 'data' file is
+implemented as a UNIX file (rather than a UNIX directory) because
+it is a UniVerse <strong>static</strong> file rather than a
+UniVerse <strong>directory</strong> file.</p>
+<p>The file pointer to <code>STATIC.FILE</code> is much as you
+would expect.</p>
+<p><code>ED VOC STATIC.FILE<br />
+3 lines long.<br />
+<br />
+----: P<br />
+0001: F<br />
+0002: STATIC.FILE<br />
+0003: D_STATIC.FILE<br />
+----:</code></p>
+<p>Finally, to create a dynamic file, enter the command:</p>
+<p><code>&gt;CREATE.FILE DYNAMIC.FILE DYNAMIC<br />
+Creating file "DYNAMIC.FILE" as Type 30.<br />
+Creating file "D_DYNAMIC.FILE" as Type 3, Modulo 1, Separation
+2.<br />
+Added "@ID", the default record for RetrieVe, to
+"D_DYNAMIC.FILE".</code></p>
+<p>As do directory and static files, dynamic files are created with
+static dictionaries, type 3, modulo 1, separation 2. Also, the same
+UNIX file naming conventions apply: as the UniVerse file name
+<code>DYNAMIC.FILE</code> is exactly 12 characters long, it is not
+truncated: but if it had been longer, it would have been.</p>
+<p>The UNIX entity <code>DYNAMIC.FILE</code> is actually a
+directory. This is because the 'data' part of a dynamic file is
+implemented using exactly two UNIX files, alwats called
+<code>DATA.30</code> and <code>OVER.30</code>, and these are stored
+in this directory: the former stores the 'ordinary' data, and the
+latter any data which has overflowed its groups. The names of these
+files therefore do not appear in the file's pointer, as they never
+vary: only the name of the directory containing them varies, and
+this appears in the pointer, which looks like this:</p>
+<p><code>ED VOC DYNAMIC.FILE<br />
+3 lines long.<br />
+<br />
+----: P<br />
+0001: F<br />
+0002: DYNAMIC.FILE<br />
+0003: D_DYNAMIC.FILE<br />
+----:</code></p>
+<p>As all the files and directories named on fields 2 and 3 of file
+pointers are UNIX objects, UNIX can be used to move them from place
+to place. Furthermore, while we have only seen simple UNIX names in
+these file pointers, they are in fact relative paths which simply
+happen to point to the current directory: ie. the directory housing
+the current UniVerse account. It follows from this that it is
+possible to play lots of games with UniVerse file pointers and the
+UNIX objects they point to. For instance:</p>
+<p>1. By editing a file pointer and saving it under a different
+name, you have now created a synonym by which the same file can be
+referred to: neither of which has any claim to being the 'real'
+name, and thus either of which might be used by different
+developers in their work, creating confusion and ambiguity.</p>
+<p>2. By editing a file pointer, saving it under a different name,
+and deleting the original, you have effectively changed the name of
+the UniVerse file: and in the process broken any programs which
+refer to the file under the original name.</p>
+<p>3. By moving the UNIX entities making up the file, and editing
+the file pointer to reflect the new paths on fields 2 and 3, you
+have effectively created a file with is nominally part of the
+account, but is not actually stored within the account directory.
+Therefore, if at some point someone backs up the directory (on the
+assumption that they are backing up the account), they will
+unknowingly omit this file and thus undermine the validity of the
+backup.</p>
+<p>From my description of these activities, you will have gathered
+that I don't generally encourage them. There are few good reasons
+for imposing an artificial structure in place of UniVerse's own,
+and it is a common cause of error and corruption. The sole
+legitimate aim recorded above, that of creating synonyms, is better
+achieved using Q pointers: see the next topic <span class="link"
+onclick="_goto('voc-qpointers.html')">Q Pointers</span>.
+</p>
+</body>
+</html>

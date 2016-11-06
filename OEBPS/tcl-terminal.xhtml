@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Terminal
+Commands</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Terminal Commands' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, terminal, commands" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Terminal Commands</h1>
+<h2>SET.TERM.TYPE</h2>
+<p><strong>Syntax: SET.TERM.TYPE terminalname</strong></p>
+<p>In order to properly control your display, UniVerse must know
+what kind of terminal you are using. Each terminal must be sent
+different sets of 'instruction strings' to do things like clear the
+screen, position the cursor, and so on. If you were using a DEC
+VT100 terminal you'd enter the command <code>SET.TERM.TYPE
+VT100</code>. You'd enter the same command, of course, if you were
+using a terminal which <em>emulated</em> a VT100, or a PC based
+'terminal emulator' in VT100 mode.</p>
+<p>To see the list of terminal types supported by your UniVerse
+installation, enter the <code>SET.TERM.TYPE</code> command without
+a terminal name. When you are prompted for one, enter a
+<code>?</code>, and the names will be listed.</p>
+<p>Some terminals, and most terminal emulators, can display a range
+of screen sizes other than the ubiquitous 80 columns by 24 rows. To
+persuade UniVerse to make use of the extra space in displaying
+enquiry results and so forth, enter the command <code>SET.TERM.TYPE
+WIDTH numberofcols LENGTH numberofrows</code>. You can also add the
+<code>WIDTH</code> and <code>LENGTH</code> keywords after the
+terminal name and thus set the terminal type, and its dimensions,
+in a single command.</p>
+<p>The <code>SET.TERM.TYPE</code> command is often included in
+<code>LOGIN</code> paragraphs (see <span class="link" onclick=
+"_goto('voc-login.html')">LOGIN, ON.EXIT and ON.ABORT</span>):
+complete with a terminal name if the developer knows the kind of
+terminal his users will be using, and without if he does not (so
+that they will be prompted to choose one).</p>
+<h2>GET.TERM.TYPE</h2>
+<p><strong>Syntax: GET.TERM.TYPE</strong></p>
+<p>Sister command to <code>SET.TERM.TYPE</code>, displays the
+current terminal type, width and length settings.</p>
+<h2>PTERM</h2>
+<p><strong>Syntax: PTERM settingname setting</strong></p>
+<p>Use <code>PTERM</code> to define your terminal settings. To get
+a complete list of possible <code>settingname</code> values, simply
+type <code>PTERM</code>, and they will all be displayed along with
+their current values. By far the most import is <code>PTERM ERASE
+(press erase key)</code>, which will define the key use wish to use
+to 'backspace' over mistyped characters. If you try <code>PTERM
+ERASE</code>..., and see the message <code>PTERM: Option 'ERASE'
+requires an argument</code>, it means that whatever key you pressed
+is <em>already</em> defined as the erase key, and effectively
+erased the space after the <code>ERASE</code> rather than being
+passed to <code>PTERM</code> as a parameter: in other words, you
+needn't worry.</p>
+<h2>CS</h2>
+<p><strong>Syntax: CS</strong></p>
+<p>Clears the screen.</p>
+
+</body>
+</html>

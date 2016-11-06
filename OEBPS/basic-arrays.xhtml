@@ -1,0 +1,396 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Basic
+Arrays</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Basic Arrays' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, basic, arrays" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Basic Arrays</h1>
+<h2>Static <em>vs</em> Dynamic arrays</h2>
+<p>UniVerse Basic supports two kinds of array: <em>dimensioned
+arrays</em> (also called <em>static arrays</em>), and <em>dynamic
+arrays</em>. They have in common merely the fact that they are
+arrays: that is, they can hold more than one value. They are
+otherwise entirely different in their use and function.</p>
+<p>(The difference between <em>static</em> and <em>dynamic</em>
+arrays has nothing to do with the differences between
+<em>static</em> and <em>dynamic</em> hashed files. The similarity
+in terminology is entirely coincidental.)</p>
+<h2>Dimensioned arrays</h2>
+<p>A dimensioned array is very similar to the array structures
+found in other languages.</p>
+<p>A dimensioned array (uniquely amongst UniVerse Basic variables)
+must be declared before it can be used, using the <code>DIM</code>
+statement:</p>
+<p><code>DIM DEMO.ARRAY(10)</code></p>
+<p>This statement dimensions the array <code>DEMO.ARRAY</code> to
+store 10 values. The values can be individually addressed using a
+subscript in round brackets. The elements are numbered from 1 to 10
+(<em>C</em> and <em>Pascal</em> programmers please note: not 0 to
+9). Each individually addressed element can be treated much as any
+variable can.</p>
+<pre>
+DEMO.ARRAY(1) = 'This is a value for element 1'
+DEMO.ARRAY(1) := ' with a bit appended'
+PRINT DEMO.ARRAY(1)
+</pre>
+<p>To assign the same value to all elements of a dimensioned array
+in one go, use the <code>MAT</code> statement:</p>
+<p><code>MAT DEMO.ARRAY = ''</code></p>
+<p>You can create one or two dimensional arrays using
+<code>DIM</code>. To create a two dimensional array and address its
+elements, use code like the following:</p>
+<pre>
+DIM TWO.DIM.ARRAY(10,10) ; * TWO.DIM.ARRAY contains 100 elements
+TWO.DIM.ARRAY(1,1) = 'This is a value for element 1,1'
+TWO.DIM.ARRAY(1,1) := ' with a bit appended'
+</pre>
+<p>(For some reason, the special term <em>vector</em> is sometimes
+applied to a one dimensional array, and <em>matrix</em> to a two
+dimensional one.)</p>
+<p>You can change the number of elements in a dimensioned array
+while your program is running, simply by reusing <code>DIM</code>
+with the same array name. An example follows:</p>
+<pre>
+DIM MATRIX(3,3)
+MAT MATRIX = 99
+DIM MATRIX(4,2)
+</pre>
+<p>The state of the <code>MATRIX</code> array is now as
+follows:</p>
+<table>
+<tr>
+<td>
+<p>MATRIX</p>
+</td>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>(3)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>1</p>
+</td>
+<td>
+<p>99</p>
+</td>
+<td>
+<p>99</p>
+</td>
+<td>
+<p>(lost)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>2</p>
+</td>
+<td>
+<p>99</p>
+</td>
+<td>
+<p>99</p>
+</td>
+<td>
+<p>(lost)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>3</p>
+</td>
+<td>
+<p>99</p>
+</td>
+<td>
+<p>99</p>
+</td>
+<td>
+<p>(lost)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>4</p>
+</td>
+<td>
+<p>(unassigned)</p>
+</td>
+<td>
+<p>(unassigned)</p>
+</td>
+<td></td>
+</tr>
+</table>
+<p>Counting squares in the table above reveals:</p>
+<p>Six elements have subscripts valid in both the old and new
+versions of <code>MATRIX</code>. They are <code>1,1</code>,
+<code>1,2</code>, <code>2,1</code>, <code>2,2</code>,
+<code>3,1</code> and <code>3,2</code>. They all retain their value
+of <code>99.</code>.</p>
+<p>Three elements in the original <code>MATRIX</code> had
+subscripts outside the range of the new matrix: <code>1,3</code>,
+<code>2,3</code> and <code>3,3</code>. The values these elements
+contained are simply lost, and the memory used to store them is
+simply returned to the operating system.</p>
+<p>Two elements in the new <code>MATRIX</code> are themselves new:
+<code>4,1</code> and <code>4,2</code>. These elements are
+'unassigned'. Reading their values will cause a run time error
+until some value has been assigned to them.</p>
+<h2>Dynamic arrays</h2>
+<p>A dynamic array is simply a long string divided into sections by
+the occurence of certain delimiter characters.</p>
+<p>There are three levels of delimiter, known as the field mark
+(ASCII character 254), the value mark (ASCII character 253) and the
+subvalue mark (ASCII character 252). If these names and values seem
+familiar, it is because they exactly correspond to the markers used
+to separate fields, values and subvalues in a record in a UniVerse
+file (see <span class="link" onclick=
+"_goto('about-paradigm.html')">The UniVerse Paradigm</span>).</p>
+<p>There is no equivalent to the <code>DIM</code> statement which
+applies to dynamic arrays. As a dynamic array is merely a string,
+you can begin just by assigning a value to it. You can use the
+UniVerse Basic system variables <code>@FM</code>, <code>@VM</code>
+and <code>@SM</code> to evaluate to field, value, and subvalue
+markers.</p>
+<pre>
+DYNARRAY = '[F1]' : @FM : '[F2V1]' : @VM : '[F2V2S1]' : @SM : '[F2V2S2]'
+</pre>
+<p>As a dynamic array is merely a string, you can also use it
+wherever you would use a string. For instance, you could:</p>
+<pre>
+PRINT DYNARRAY ; * Prints [F1]&thorn;[F2V1]&yacute;[F2V2S1]&uuml;[F2V2S2]
+</pre>
+<p>(As characters 252, 253 and 254 lie outside the range of ASCII
+'printable characters' (32, space, to 126, ~), the way they are
+displayed will depend on the terminal or printer you are using. The
+odd characters shown above are dependent on the font used to
+display this page: they may be different on your own equipment
+should you run these examples. If you are particularly unlucky,
+they may even set printer or display modes, and cause the equipment
+to behave oddly: the truth is that these markers are not generally
+meant to be displayed.)</p>
+<p>You can access the fields in a dynamic array using a subscript
+in 'vector' or 'pointy' brackets (as I've heard them called) like
+this:</p>
+<pre>
+PRINT DYNARRAY&lt;1&gt; ; * Prints [F1]
+PRINT DYNARRAY&lt;2&gt; ; * Prints [F2V1]&yacute;[F2V2S1]&uuml;[F2V2S2]
+</pre>
+<p>To access the values in the second field individually, use two
+subscripts within the pointy brackets:</p>
+<pre>
+PRINT DYNARRAY&lt;2,1&gt; ; * Prints [F2V1]
+PRINT DYNARRAY&lt;2,2&gt; * Prints [F2V2S1]&uuml;[F2V2S2]
+</pre>
+<p>Finally, and predictably, three subscripts allow you to access
+individual subvalues:</p>
+<pre>
+PRINT DYNARRAY&lt;2,2,1&gt; ; * Prints [F2V2S1]
+PRINT DYNARRAY&lt;2,2,2&gt; * Prints [F2V2S2]
+</pre>
+<p>As you can see, a dynamic array can be used to store up to three
+'dimensions' of information. Note also that using 'out of range'
+subscripts causes no run time error when accessing fields, values,
+or subvalues: the dynamic array simply yields an empty string if
+the subscript you are looking for 'doesn't exist'. The code below
+illustrates this point:</p>
+<pre>
+PRINT DYNARRAY&lt;1,2&gt; ; * Prints an empty string, ie. nothing
+PRINT DYNARRAY&lt;1000&gt; * * Prints an empty string, ie. nothing
+PRINT DYNARRAY&lt;99,472,293&gt; * * Prints an empty string, ie. nothing
+</pre>
+<p>The subscript notation can also be used to assign values to a
+dynamic array, either overwriting existing values, or creating new
+ones.</p>
+<pre>
+DYNARRAY&lt;1&gt; = '[F1V1]' ; * Overwrites field 1 of DYNARRAY
+PRINT DYNARRAY&lt;1&gt; ; * Prints [F1V1]
+DYNARRAY&lt;1,2&gt; = '[F1V2]' ; * Adds second value to field 1, creating a value mark in the process
+PRINT DYNARRAY&lt;1&gt; ; * Prints [F1V1]&yacute;[F1V2]
+DYNARRAY&lt;10&gt; = '[F10]' ;* Adds a string of field marks to position [F10] in field 10
+PRINT DYNARRAY ; * Prints [F1V1]&yacute;[F1V2]&thorn;[F2V1]&yacute;[F2V2S1]&uuml;[F2V2S2]&thorn;&thorn;&thorn;&thorn;&thorn;&thorn;&thorn;&thorn;[F10]
+</pre>
+<p>You can insert values into a dynamic using the <code>INS</code>
+statement:</p>
+<pre>
+INS '[NEWFIELD]' BEFORE DYNARRAY&lt;10;&gt;
+PRINT DYNARRAY ; * [F1V1]&yacute;[F1V2]&thorn;[F2V1]&yacute;[F2V2S1]&uuml;[F2V2S2]&thorn;&thorn;&thorn;&thorn;&thorn;&thorn;&thorn;&thorn;[NEWFIELD]&thorn;[F10]
+</pre>
+<p>Note the difference here between using <code>INS</code> to load
+field 10 and using <code>...&lt;10&gt;=...</code>. A simple
+assignment would have overwritten the value in field 10.
+<code>INS</code> actually inserts a new field at that position,
+pushing the value <code>[F10]</code> out into field 11.</p>
+<p>You can also delete values using <code>DEL</code>:</p>
+<pre>
+DEL DYNARRAY&lt;10;&gt;
+PRINT DYNARRAY ; * [F1V1]&yacute;[F1V2]&thorn;[F2V1]&yacute;[F2V2S1]&uuml;[F2V2S2]&thorn;&thorn;&thorn;&thorn;&thorn;&thorn;&thorn;&thorn;[F10]
+</pre>
+<p>The string <code>F10</code> is now back in field 10.</p>
+<p>If you wish to find a string within your dynamic array, you can
+do so using the <code>LOCATE</code> statement:</p>
+<pre>
+* Finds [F10] at field number 10 and prints '10'
+LOCATE '[F10]' IN DYNARRAY&lt;1&gt; SETTING POSITION THEN
+PRINT POSITION
+ELSE
+PRINT 'Not found'
+END
+</pre>
+<p>Note the &lt;1&gt; after the <code>DYNARRAY</code> array name in
+this code. This indicates that the search should begin with field
+1, but more importantly it indicates that the <em>string being
+searched for is a complete field</em>. Compare the following:</p>
+<pre>
+* Fails to find [F1V2] because it is not a complete field, and prints 'Not found'
+LOCATE '[F1V2]' IN DYNARRAY&lt;1&gt; SETTING POSITION THEN
+PRINT POSITION
+ELSE
+PRINT 'Not found'
+END
+</pre>
+<p>To find <code>[F1V2]</code>, you would have to search at
+<em>value</em> level:</p>
+<pre>
+* Finds [F1V2] as the second value in field 1 and prints 2
+LOCATE '[F1V2]' IN DYNARRAY&lt;1,1&gt; SETTING POSITION THEN
+PRINT POSITION
+ELSE
+PRINT 'Not found'
+END
+</pre>
+<p>The <code>&amp;lt1,1&gt;</code> not only defines the starting
+position for the search, it indicates that the search must find a
+value <em>within field 1</em>. The general principle remains that
+you can only search 'one level down': you can search an entire
+dynamic array for a complete field, a field for a value, or a value
+for a subvalue. As the result is returned as a single number and
+not a set of coordinates, it could not be otherwise. How would
+<code>LOCATE</code> report finding <code>[F1V2]</code> in field 1,
+value 2, by returning a single number?</p>
+<p><code>LOCATE</code> really comes into its own, however, when
+dealing with a field only list (containing no values or subvalues):
+particularly if the fields are in sorted order. Consider the
+following:</p>
+<pre>
+NEWARRAY = 1 : @FM : 2 : @FM : 4 : @FM : 5
+LOCATE 5 IN NEWARRAY&lt;1&gt; BY 'AR' SETTING POSITION ELSE PRINT '5 absent' ; * Prints nothing
+PRINT POSITION ; * Prints 4
+LOCATE 3 IN NEWARRAY &lt;1&gt; BY 'AR' SETTING POSITION ELSE PRINT '3 absent' ; * Prints '3 absent'
+PRINT POSITION ; * Prints 3
+</pre>
+<p>First, to explain the <code>BY 'AR'</code> clause. This optional
+clause informs <code>LOCATE</code> that it is dealing with a sorted
+list: the <code>AR</code> denotes the sort order: ascending
+right-justified. <code>AL</code> stands for ascending left
+justified, <code>DR</code> for descending right justified, and
+<code>DL</code> for descending left justified.</p>
+<p>One advantage of the <code>BY</code> clause is that it can speed
+up your search. If your list is sorted <code>AR</code>, and you are
+looking for the value 3, UniVerse knows that it can give up the
+search as soon as it reaches the first string higher than 3: which
+it does when it gets to 4. It therefore doesn't have to search the
+entire dynamic array for a value that is not there unless the value
+it is looking for happens to be bigger than all the fields already
+in the array.</p>
+<p>More importantly, though, it adds an interesting twist to the
+action of the <code>SETTING</code> clause in the case where the
+string searched for cannot be found: as the variable following
+<code>SETTING</code> is set to the position the string
+<em>would</em> have been in if it <em>had</em> been found. By using
+<code>INS</code> to insert the string in this position, the dynamic
+array can be maintained in a sorted order without the need for a
+sorting algorithm.</p>
+<p>This is a very neat and widely used trick. The code runs as
+follows:</p>
+<pre>
+LOCATE STRING IN SORTEDARRAY&lt;1&gt; BY SORTORDER SETTING POSITION ELSE
+INS STRING BEFORE SORTEDARRAY&lt;POSITION&gt;
+END
+</pre>
+<p>This code will maintain a sorted list of <code>STRING</code>
+values automatically.</p>
+<h2>Comparison of dimensioned and dynamic arrays</h2>
+<p>From all this, it will seem that dynamic arrays are vastly more
+flexible than dimensioned arrays: and they are. They are supported
+by a <code>LOCATE</code> statement, for which dimensioned arrays
+have no equivalent, and allow strings to be inserted into the
+middle of an array by shuffling other strings to the right, which
+dimensioned arrays cannot do. They do not require each element to
+be initialised, do not cause run time errors if accessed 'out of
+range', and do not require resizing to accomodate more or fewer
+strings: all of which dimensioned arrays do. They even offer three
+dimensions in place of the maximum of two dimensions supported by
+dimensioned arrays.</p>
+<p>Why, then, should one ever use dimensioned arrays? While there
+are several reasons, one stands head and shoulders above the
+others: because they are faster. UniVerse can address a single
+element in a dimensioned array almost as quickly as a single
+variable. The fields, values, and subvalues of a dynamic array
+require clever searches along long strings counting field, value,
+and subvalue markers to address. While they are cleverly
+implemented, this will never be as fast as a dimensioned array.</p>
+<p>In general, I would make the following recommendations:</p>
+<p>1. Where each element you are going to store has a specific and
+unique meaning, and is wedded to its numeric position, use
+dimensioned arrays. This is precisely the situation you are in when
+you read a record from a UniVerse data file. Field 1 of the record
+may be the customer name, field to the product code, and so on. The
+values of these fields do not require sorting, and it would be
+meaningless to 'insert' elements into such an array. The number of
+elements you will require to hold the record is not going to change
+during the life time of the program. All these factors suggest
+dimensioned arrays as the natural home for records read into
+memory. UniVerse Basic offers two statements to read a record into
+memory: <code>READ</code> which will read one into a dynamic array,
+and <code>MATREAD</code> which will read it into a dimensioned
+array. For most data files, <code>MATREAD</code> is
+appropriate.</p>
+<p>2. Don't store values and subvalues in dynamic arrays: store
+fields only. By keeping your dynamic array structure flat, or
+'one-dimensional', you allow the dynamic array to be searched for
+values, you simplify the business of inserting and deleting values,
+and you make your code easier to understand and maintain. Rather
+than creating an array called <code>INVOICES</code> which stores
+fields, each of which has an invoice number in value 1 and invoice
+value in value 2, create <em>two</em> dynamic arrays, called
+<code>INVOICE.NUMBERS</code> and <code>INVOICE.VALUES</code>.
+Whenever you insert a field into one, insert a corresponding field
+into the other. Whenever you delete a field from one, delete the
+same field from the other. This has the added advantage that as
+each dynamic array is half the size, it is far quicker to
+process.</p>
+<p>3. In short, use dimensioned arrays for structures built from
+elements of data with different meanings, and dynamic arrays for
+lists of a single entity. If you must process lists of structures,
+combine the two: create a dimensioned array called
+<code>INVOICES</code>, element one of which is a dynamic array full
+of invoice numbers (stored as fields), element two of which is a
+dynamic array full of the corresponding invoice values, and so
+on.</p>
+
+</body>
+</html>

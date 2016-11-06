@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Menus of
+Commands</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Menus of Commands' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, menus, of, commands" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Menus of Commands</h1>
+<p>You can build menus for your applications without coding by
+using UniVerse's own 'menu procressor'. Just define your menu as a
+record in a menu definition file, entering lists of option names
+and associated commands. UniVerse then uses this information to
+display your menu, process the replies, and execute the
+commands.</p>
+<p>First create a file to store your menus:</p>
+<p><code>&gt;<strong>CREATE.FILE MY.MENUS DYNAMIC</strong><br />
+Creating file "MY.MENUS" as Type 30.<br />
+&gt;</code></p>
+<p>The UniVerse menu editor itself begins with a UniVerse menu. To
+bring it up onto your screen, enter the command:</p>
+<p><code>&gt;<strong>MENUS</strong></code></p>
+<pre>
+UniVerse Menu Maintenance
+
+ 1. Enter/Modify       a menu
+ 2. Enter/Modify       a formatted menu
+ 3. Display            a summary of all menus on a menu file
+ 4. Display            the contents of a menu
+ 5. Enter/Modify       a VOC menu selector item
+ 6. Enter/Modify       a VOC stored sentence item
+ 7. Display            all menu selector items on the VOC file
+ 8. Display            all stored sentence items on the VOC file
+ 9. Display            the dictionary of a file
+10. Print              a summary of all menus on a menu file
+11. Print              the contents of a menu
+12. Print              a virtual image of a menu on the printer
+13. Print              the contents of a formatted menu
+14. Print              the dictionary of a file
+15. Print              detail of a menu, including VOC records referenced
+
+Which would you like? ( 1 - 15 )  ?
+</pre>
+<p>Select option 1 to enter your new menu:</p>
+<p><code>Which would you like? ( 1 - 15 ) ?<strong>1</strong><br />
+Name of MENU file=</code></p>
+<p>Your menu file is called <code>MY.MENUS</code>, so:</p>
+<p><code>Name of MENU file=<strong>MY.MENUS</strong></code></p>
+<pre>
+ MENU PROCESS DEFINITIONS  REVISE.1  Fri Aug 20 14:43:39 1999
+
+
+MENU.NAME= 
+</pre>
+<p>You may find this sparse screen layout familiar. In fact, you've
+seen something like it before, because UniVerse uses
+<code>REVISE</code> to provide a menu maintenance screen (see
+<span class="link" onclick="_goto('dictionaries-revise.html')">The
+REVISE Command</span>). For this example, we'll call your menu
+<code>EXAMPLE.MENU</code>:</p>
+<p><code>MENU.NAME= <strong>EXAMPLE.MENU</strong><br />
+New record.<br />
+TITLE= <strong>My example menu</strong><br />
+<br />
+MENU PROCESS DEFINITIONS -Screen 2-MENU SELECTION ITEMS Fri Aug 20
+14:48:41 1999 MENU.NAME==&gt; EXAMPLE.MENU No.
+DESC............................... ACTION.........
+EXP................. 1 DESCRIPTION=</code></p>
+<p>Having entered a key for your menu record, and a title to
+display at the top of the menu, you are now prompted for the
+description of your first menu option. In fact, for each menu item
+you wish to create, you will be prompted for three pieces of
+information: a description (to display on the screen), an command
+to display on the screen if the menu option is selected by the
+user, and an optional 'explanation' to display if the user asks for
+help concerning the option.</p>
+<p>The first command will display a simple VOC listing, so try the
+following values:</p>
+<p><code>DESCRIPTION= <strong>List the VOC</strong><br />
+ACTION= <strong>LIST VOC BY @ID</strong><br />
+EXPLANATION= <strong>Display a sorted list of all the records in
+the VOC file</strong></code></p>
+<p>As soon as you have pressed return at the end of this
+explanation, you will be prompted for another menu item. Try this
+one:</p>
+<p><code>DESCRIPTION= <strong>Say hello</strong><br />
+ACTION= <strong>BLOCK.TERM HELLO</strong><br />
+EXPLANATION= <strong>A warm greeting</strong></code></p>
+<p>Once you have finished entering options, simply press ENTER at
+the <code>DESCRIPTION=</code> prompt:</p>
+<p><code>DESCRIPTION= <strong>(Press ENTER)</strong></code></p>
+<p>As usual, <code>REVISE</code> will redisplay the list of
+multivalues to allow you to change them. Press ENTER again:</p>
+<p><code>MENU PROCESS DEFINITIONS -Screen 2-MENU SELECTION ITEMS
+Fri Aug 20 15:01:38 1999<br />
+<br />
+MENU.NAME==&gt; EXAMPLE.MENU<br />
+No. DESC............................... ACTION.........
+EXP.................<br />
+1 List the VOC LIST VOC BY @ID Display a sorted lis<br />
+2 Say hello BLOCK.TERM HELL A warm greeting<br />
+3<br />
+<br />
+Change which line item= <strong>(Press ENTER)</strong></code></p>
+<p>Then press ENTER again to file the menu record:</p>
+<p><code>MENU PROCESS DEFINITIONS -Screen 1-MENU NAME AND TITLE Fri
+Aug 20 15:03:21 1999<br />
+<br />
+1 MENU.NAME EXAMPLE.MENU<br />
+2 TITLE My example menu<br />
+<br />
+S1 == MENU NAME AND TITLE<br />
+S2 == MENU SELECTION ITEMS<br />
+<br />
+CHANGE= <strong>(Press ENTER)</strong></code></p>
+<p>And (unusually for REVISE) enter <code>QUIT</code> when asked if
+you'd like to edit another menu record:</p>
+<p><code>MENU PROCESS DEFINITIONS REVISE.1 Fri Aug 20 15:04:37
+1999<br />
+<br />
+<br />
+MENU.NAME= <strong>QUIT</strong></code></p>
+<p>All of which will bring you back to the original menu:</p>
+<pre>
+UniVerse Menu Maintenance
+
+ 1. Enter/Modify       a menu
+ 2. Enter/Modify       a formatted menu
+ 3. Display            a summary of all menus on a menu file
+ 4. Display            the contents of a menu
+ 5. Enter/Modify       a VOC menu selector item
+ 6. Enter/Modify       a VOC stored sentence item
+ 7. Display            all menu selector items on the VOC file
+ 8. Display            all stored sentence items on the VOC file
+ 9. Display            the dictionary of a file
+10. Print              a summary of all menus on a menu file
+11. Print              the contents of a menu
+12. Print              a virtual image of a menu on the printer
+13. Print              the contents of a formatted menu
+14. Print              the dictionary of a file
+15. Print              detail of a menu, including VOC records referenced
+
+Which would you like? ( 1 - 15 )  ?
+</pre>
+<p>Where you can finally press ENTER to return to the UniVerse
+prompt.</p>
+<p>You need now to create a menu pointer in your VOC file before
+you can invoke your menu. The first line (like all VOC records)
+carries the type of the record, an <code>M</code>, followed by an
+optional description. The second line contains the name of the menu
+file, and the third the key to the menu record. Create one like
+this:</p>
+<p><code>&gt;<strong>ED VOC EXAMPLE.MENU</strong><br />
+New record.<br />
+<br />
+----: <strong>I</strong><br />
+0001= <strong>M Example menu created during training</strong><br />
+0002= <strong>MY.MENUS</strong><br />
+0003= <strong>EXAMPLE.MENU</strong><br />
+0004= <strong>(Press ENTER)</strong><br />
+Bottom at line 3.<br />
+----: <strong>FI</strong><br />
+"EXAMPLE.MENU" filed in file "MY.MENUS".<br />
+&gt;</code></p>
+<p>Finally invoke your menu via this menu pointer by typing:</p>
+<p><code>&gt;<strong>EXAMPLE.MENU</strong></code></p>
+<pre>
+My example menu
+
+ 1. List the VOC
+ 2. Say hello
+
+Which would you like? ( 1 - 2 )  ?
+</pre>
+<p>Trying option 1 displays:</p>
+<pre>
+LIST VOC BY @ID 15:16:11  20-08-99  PAGE 1
+NAME..........    TYPE    DESC..........................
+
+#                 K       Keyword - "Not Equal"
+%                 K       Keyword - Calculate
+                          percentages
+&amp;                 K       Keyword - The Boolean
+                          conjunction "AND"
+&amp;COMO&amp;            F       F 1,1 used for COMO listings
+&amp;DEVICE&amp;          F       File - Contains all logical
+                          device names
+&amp;ED&amp;              F       F 0 0
+&amp;HOLD&amp;            F       F
+&amp;MAP&amp;             F       File - Used by MAKE.MAP.FILE
+&amp;PARTFILES&amp;       F       File - Contains all parts of
+                          Distributed Files
+&amp;PH&amp;              F       F
+&amp;SAVEDLISTS&amp;      F       F
+&amp;UFD&amp;             F       File - Used by uniVerse to
+                          access the current directory.
+(                 K       Keyword - "Open Parenthesis"
+)                 K       Keyword - "Close Parenthesis"
+*                 K       Keyword - SQL multiplication
+Press any key to continue...
+</pre>
+<p>Press <code>Q</code> to escape the listing and then press ENTER
+to return to the menu. Option 2 displays:</p>
+<pre>
+
+    HHHH    HHHH   EEEEEEEEEEEE   LLLL           LLLL            OOOOOOOOOO
+    HHHH    HHHH   EEEEEEEEEEEE   LLLL           LLLL           OOOOOOOOOOOO
+    HHHH    HHHH   EEEE           LLLL           LLLL           OOOO    OOOO
+    HHHHHHHHHHHH   EEEEEEEEEE     LLLL           LLLL           OOOO    OOOO
+    HHHHHHHHHHHH   EEEEEEEEEE     LLLL           LLLL           OOOO    OOOO
+    HHHH    HHHH   EEEE           LLLL           LLLL           OOOO    OOOO
+    HHHH    HHHH   EEEE           LLLL           LLLL           OOOO    OOOO
+    HHHH    HHHH   EEEEEEEEEEEE   LLLLLLLLLLLL   LLLLLLLLLLLL   OOOOOOOOOOOO
+    HHHH    HHHH   EEEEEEEEEEEE   LLLLLLLLLLLL   LLLLLLLLLLLL    OOOOOOOOOO
+
+
+
+
+
+
+
+
+
+
+
+
+
+Press any key to return to the menu... 
+</pre>
+<p>Again, pressing ENTER will return you to the menu.</p>
+<p>To display the help you entered for the options, enter an option
+number followed by a question mark:</p>
+<p><code>Which would you like? ( 1 - 2 ) ?<strong>2?</strong><br />
+A warm greeting</code></p>
+<p>To access the general help on menus, which explains all this,
+simply enter a question mark:</p>
+<p><code>Which would you like? ( 1 - 2 )
+?<strong>?</strong></code></p>
+<pre>
+                                   MENU
+                                   ----
+
+
+
+
+
+       Typing in the number preceding the description of the selection
+             that you wish to run will start the desired process.
+
+
+                 To exit from this menu, just type &lt;RETURN&gt;.
+
+
+        If you wish further information about any selection, just type
+          in the selection number followed by a question mark ("?").
+
+   For example:
+          "1?" will give further information on selection number one.
+
+
+
+
+Press any key to return to the menu... 
+</pre>
+<p>Don't forget that each menu pointer in the VOC file is itself a
+valid command, and so can be invoked as the action of an option on
+another menu. Using this technique, you can develop nested menu
+structures.</p>
+<p>The menu processor also allows you to create menus in which the
+exact coordinates at which option is displayed can be defined, as
+can the string the user must type in to escape the menu: but the
+principle behind them and the creation is much the same: as usual,
+refer to UniVerse documentation for the tricksy stuff.</p>
+
+</body>
+</html>

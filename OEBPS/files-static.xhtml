@@ -1,0 +1,352 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Static
+Files</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Static Files' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, static, files" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Static Files</h1>
+<p>The command to create a static file is:</p>
+<p><code>CREATE.FILE filename type modulo separation</code></p>
+<p>The <code>type</code> must be between 2 and 18 if the file is to
+be a static file. Which of these you choose, and what the
+<code>modulo</code> and <code>separation</code> parameters do takes
+a little explanation.</p>
+<h2>How static files work</h2>
+<p>A static file is designed to hold application records: like
+customer records in a <code>CUSTOMERS</code> file. It's aims are to
+ensure that (a) the file structure is not so complicated that each
+record takes a long time to add to the file, but (b) the file
+structure allows records to be found quickly when they must be
+read. These aims are somewhat conflicting: the more clever your
+record indexing system (to make records easy to find), the longer
+it takes to add a record and update the indexing.</p>
+<p>Static files are a reasonable compromise between these
+conflicting aims. They can be most easily explained by an
+analogy.</p>
+<p>Imagine a post room. Every day they receive letters: each letter
+received is like a record being added to a file. There job is to
+somehow store them in such a way as to make them easy to find, so
+the postroom is like the file itself.</p>
+<p>Most postrooms solve the problem by screwing 'pigeon holes' to
+the wall: a series of wooden boxes with a label on each one.</p>
+<p>UniVerse files do the same. Instead of 'pigeon holes' they have
+'groups'. The <code>modulo</code> is simply the number of groups
+they have. The <code>separation</code> is the number of 512 byte
+'disk frames' are allocated to each group: so for instance, if you
+create a file with a separation of 4, each group can hold 2K.</p>
+<p>Returning to our postroom: as each letter arrives, it is put in
+the pigeon hole corresponding to the address it is being sent to.
+Gradually, the 'Wynberg' pigeon hole fills up with letters to
+various addresses in Wynberg, the 'Constantia' pigeon hole fills up
+with letters to Constantia, and so on.</p>
+<p>So far, so good. If you know the address a letter was sent to,
+you don't need to search through every letter in the post room to
+find it: you can just search through the letters in the appropriate
+pigeon hole.</p>
+<p>Again, this is exactly how UniVerse accesses static files. It
+Knows the 'key' (equivalent to the address) of the record it is
+looking for, and it knows which group that key should be in. It
+then looks through all the records in that group until it finds the
+one it wants. Note that this means that there is no index giving
+the precise location of each individual record, so there is no
+index to be updated every time a record is written.</p>
+<p>Again back in the post room: a problem arises when you have
+received so many letters for 'Wynberg' that no more will fit in
+that particular pigeon hole. You put a bucket on the floor, stick a
+'Wynberg' label on it, and start putting new letters to Wynberg in
+the bucket. This works, but by the time you've got three or four
+'Wynberg' buckets, it's going to take a long time whenever you want
+to find a letter to Wynberg.</p>
+<p>The same thing happens as you add records to a static file.
+After a while, some of the groups accumulate more records than they
+can hold. As explained above, the capacity of each group is
+determined by the <code>separation</code>, measured in 512 byte
+'disk frames'. A static file with a separation of 4 can therefore
+store 2K in each group, and 2K of disk space is reserved for each
+group when the file is created. If more than 2K of records were
+added to a group, the group would 'overflow', grabbing an extra
+disk frame to store the excess. Disk frames used in this way are
+called 'overflow frames', and groups can gradually build up long
+chains of overflow frames. The more a group overflows, the longer
+it takes to find individual records in the group.</p>
+<p>The man running the postroom could try and solve his problem in
+one of three ways:</p>
+<p>1. He could make each pigeon hole bigger. This might help a bit,
+because it gets the letters out of the buckets scattered around the
+floor and up into the pigeon holes, where they are all in the same
+place and quicker to get at.</p>
+<p>The equivalent under UniVerse would be to increase the file's
+<code>separation</code>, thus making the groups bigger. This
+removes many of the overflow frames, which may be scattered around
+the disk and thus particularly slow to search.</p>
+<p>The problem with this solution is that it doesn't actually
+reduce the number of letters in each pigeon hole. There many still
+be so many letters in the "Wynberg" pigeon hole that it takes a
+long time to find one.</p>
+<p>2. He could make more pigeon holes: perhaps dividing each
+current pigeon hole into two by having pigeon holes for "North
+Wynberg" and "South Wynberg", "North Edgemead" and "South Edgement"
+and so on. The basic system of deciding which pigeon hole each
+letter goes in hasn't changed: it's still based on suburb, but
+because there are more pigeon holes, the average number of letters
+in each pigeon hole will go down, and the amount of overflow will
+probably fall.</p>
+<p>The equivalent under UniVerse would be to incrase the file's
+<code>modulo</code>, thus making more groups available. This
+reduces the average number of records in each group, and thus,
+probably, the overflow.</p>
+<p>This is usually pretty effective, and increasing file modulos is
+the most common solution to overflow. However, it doesn't always
+solve the problem. Imagine that almost all of the letters in the
+old "Wynberg" pigeon hole ended up in the new North Wynberg pigeon
+hole. The new North Wynberg pigeon hole would then still be
+overflowed, and the new South Wynberg pigeon hole would be nearly
+empty. The problem here is that the letters are not being evenly
+distributed between the pigeon holes, so increasing the number of
+pigeon holes doesn't help.</p>
+<p>3. If faced with a bad distribution of letters, he could decide
+to replace the labels on the pigeon holes. For instance, instead of
+having 17 pigeon holes each with the name of a suburb, he might
+decide to label the pigeon holes with the numbers 1 to 17. All
+letters to house number 1, as in '1 High Street', would go into
+pigeon hole 1, all those to 2, as in '2 Villa Crescent', would go
+into pigeon hole 2, and so on. Letters to house number 18 would go
+into pigeon hole 1. In this way, he can completely change the
+distribution of the letters between the pigeon holes, and this new
+scheme will probably spread them more evenly.</p>
+<p>The equivalent under UniVerse is to try another
+<code>type</code>. As explained above, types 2 through 18 are all
+static files. The difference is that they each use a different
+system for deciding which group each record should go in. If the
+records in a static file are unevenly spread between the groups,
+try changing the type of the file.</p>
+<h2>Choosing a good separation</h2>
+<p>The UniVerse technical documentation makes two recommendations:
+(a) that your separation should be a power of 2, so that the
+boundaries of each group are more likely to coincide with the
+boundaries UNIX uses to organise its disk, which also tend to be in
+powers of 2 multiplied by 512 bytes, and (b) that your separation
+should not be over 16, as the performance of big groups tends to
+degrade.</p>
+<p>This gives a range of possible values of 2, 4, 8 or 16. The
+consultants Fitzgerald and Long, who specialise in PICK file
+maintenance, recommend 4 as being optimum for almost all files, and
+I tend to agree with them. A separation of 2 gives you group
+capacities of only 1K, and your records would have to be very small
+and evenly spread not to overflow such small groups. A separation
+of 8 or 16 allows 4K or 8K into each group respectively: and it
+will clearly take longer to read 4K or 8K to find a record than
+2K.</p>
+<h2>Choosing a good modulus</h2>
+<p>To decide on your modulus, you must calculate how much data the
+file is likely to store. If the file is completely new, this may be
+difficult, and you'll just need to make the best estimate you can.
+If it is already in use, you can count the number of records it
+contains and their average size, and multiply the two figures
+together.</p>
+<p>If you stick generally to a separation of 4, as I recommend
+above, then in principle each group can store 2K without
+overflowing. You could, therefore, divide the total amount of data
+you plan to store by 2K in order to find the number of groups, ie.
+the modulo, you need.</p>
+<p>The problem with this is that it assumes that the records will
+be spread exactly evenly: because if the average amount of data in
+each group is 2K, then if some groups store less than 2K, others
+must store more and must therefore be overflowed. Also, it makes no
+allowance for growth: and many files either fluctuate in size or
+get gradually bigger. For both these reasons, it's better to use a
+higher number than this formula would suggest.</p>
+<p>Experience suggests that a reasonable rule of thumb is to choose
+a modulo twice as big as you need in theory. So instead of dividing
+the amount of data by 2K to get the modulus, divide by 1K.</p>
+<p>One last point is that your modulo should be a prime number.
+This is because of the way in which the records are distributed
+between the groups. The key of each record is turned into a usually
+huge arbitrary number by a UniVerse 'hashing algorithm'. There are
+17 different hashing algorithms, corresponding to types 2 to 18
+discussed below. This 'hashing number' is then divided by the
+modulo, and the <em>remainder</em> determines which group the
+record should be stored in. The groups are numbered from 0. Thus if
+I add customer <code>IBM</code> to my modulo 7
+<code>CUSTOMERS</code> file, UniVerse might come up with a hashing
+number of 74. The remainder when this is divided by the modulo is
+4, which means the record goes into group 4. If the modulo is not a
+prime number, this system tends to favour certain groups at the
+expense of others because of a mathematical effect known as
+'factorising' which it is thankfully not necessary to understand.
+Just stick to prime numbers. The UniVerse command <code>PRIME
+n</code> will display the nearest prime numbers above and below
+<code>n</code>, so you don't need to work them out.</p>
+<h2>Choosing a good type</h2>
+<p>The 17 possible types, numbered from 2 to 18, each relate to a
+different mathematical formula known as a hashing algorithm. This
+algorithm takes your record key and turns it into a hashing number.
+The hashing number is then divided by the modulo, and the remainder
+determines which group the record will go into.</p>
+<p>What you are looking for, therefore, is a type which will give
+you the widest possible range of hashing numbers for the keys in
+your particular file. The more variation there is in the hashing
+numbers produced, the more evenly your records will be distributed
+between the groups.</p>
+<p>How do you choose it? Well, if you just type CREATE.FILE TEST
+without entering a type, you will be prompted to enter a type. If
+you enter a question mark, you will get the following advice:</p>
+<pre>
+...
+  2      Hashed.  Keys end with numbers.
+  3      Hashed.  Keys end mainly with numbers.
+  4      Hashed.  Keys end with letters.
+  5      Hashed.  Keys end with full range of ASCII characters.
+  6      Hashed.  Keys begin with numbers.
+  7      Hashed.  Keys begin mainly with numbers.
+  8      Hashed.  Keys begin with letters.
+  9      Hashed.  Keys begin with full range of ASCII characters.
+ 10      Hashed.  Keys are numbers.
+ 11      Hashed.  Keys are mainly numbers.
+ 12      Hashed.  Keys are letters.
+ 13      Hashed.  Keys are full range of ASCII characters.
+ 14      Hashed.  Entire keys are numbers.
+ 15      Hashed.  Entire keys are mainly numbers.
+ 16      Hashed.  Entire keys are letters.
+ 17      Hashed.  Entire keys are full range of ASCII characters.
+ 18      Hashed.  Entire keys are of arbitrary form.
+...
+</pre>
+<p>So it should be simple, shouldn't it? If your keys begin with
+letters, use type 8. There is even a UniVerse command called
+<code>HASH.HELP</code> which does this work for you. Enter
+<code>HASH.HELP VOC</code> and it will examine the VOC records and
+analyse them cleverly according to the rules above. It will then
+display something like:</p>
+<pre>
+File VOC  Type= 3  Modulo= 347  Sep= 4      02:29:23pm  28 Jun 1999  PAGE    1
+
+Of the 8826 total keys in this file:
+
+      0  keys were wholly numeric (digits 0 thru 9)
+         (Use File Type 2, 6, 10 or 14 for wholly numeric keys)
+
+      9  keys were numeric with separators (as reproduced below)
+         0123456789#$%&amp;*+-./:;_
+         (Use File Type 3, 7, 11 or 15 for numeric keys with separators)
+
+   8789  keys were from the 64-character ASCII set reproduced below
+         !"#$%&amp;'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`
+         (Use File Type 4, 8, 12 or 16 for 64-character ASCII keys)
+
+     28  keys were from the 256-character ASCII set
+         (Use File Type 5, 9, 13 or 17 for 256-character ASCII keys)
+
+The keys in this file are more unique in their entirety.
+The smallest modulo you should consider for this file is 4441.
+The smallest separation you should consider for this file is 4.
+The best type to choose for this file is probably type 18.
+</pre>
+<p>The only tiny problem with all this is that it is baloney. Type
+18, for example, is most definitely not the best type for the VOC
+file analysed above, and <code>HASH.HELP</code> has an uncanny
+knack of finding not only the wrong type, but more often than
+chance would predict, the <em>worst</em> type for your files.</p>
+<p>The truth is that there is no formula, rule of thumb, gift of
+experience, or system of demonic divination which will tell you the
+best type. The only way to find the best type for a static file is
+to try all 17 and see which one gives you the most even spread of
+records. If you've only just created your file, you wont be able to
+analyse the best type for it until its got some records in it. Just
+give it type 18 till then: there's one chance in 17 it's the best,
+and it's quicker than the 1 in 17 chance you get from trying to
+base your decision on how many letters there are in the key.</p>
+<h2>Maintaining your file</h2>
+<p>Universe provides a number of commands to allow you to analyse
+and maintain your file once you've created it.:</p>
+<p><code>RESIZE filename newtype newmodulo newseparation</code></p>
+<p><code>RESIZE</code> allows you to change the type, modulo, or
+separation of your static file. If there are any of these
+parameters you wish to leave unaltered, you can use a
+<code>*</code> in their place. For instance, <code>RESIZE MYFILE *
+107 *</code> changes the modulo of <code>MYFILE</code> to 107 while
+leaving the type and separation unchanged.</p>
+<p>You may occassionally wish to run a <code>RESIZE</code> using
+the parameters <code>* * *</code> (ie. leaving the type, modulo and
+separation as they are). Though this seems odd at first sight, it
+can be useful as during a resize the UniVerse file is 'compacted',
+and pockets of unused space left in groups by the addition and
+deletion of records are reclaimed, releasing disk space and
+reducing overflow.</p>
+<p>In fact, I don't recommend the use of <code>RESIZE</code>. The
+chief problem is that if a <code>RESIZE</code> is interrupted for
+any reason (such as, say, a power failiure), it corrupts the file
+it is working on. The following commands achieve the same affect
+(including the reclaimation of deleted space) but without this
+risk:</p>
+<p><code>CREATE.FILE NEWFILE 3 107 4</code><br />
+(where 3, 107 and 4 are the new parameters required)<br />
+<code>COPY FROM MYFILE TO NEWFILE ALL</code><br />
+(which copies all the records from MYFILE to NEWFILE<br />
+<code>DELETE.FILE MYFILE</code><br />
+(which deletes the original MYFILE)<br />
+<code>CNAME NEWFILE TO MYFILE</code><br />
+(changes the name of NEWFILE to MYFILE</p>
+<p><code>HASH.AID filename testtype testmodulo
+testseparation</code></p>
+<p><code>HASH.AID</code> reports on the various statistics a file
+<em>would</em> have if it were given the <code>testtype</code>,
+<code>testmodulo</code>, and <code>testseparation</code>. To test
+the existing value of any of these parameters, use <code>*</code>
+in their place. It follows from this that you can examine a file's
+current statistics using a command like <code>HASH.AID VOC * *
+*</code>. This produces a display like this:</p>
+<pre>
+File name                               = VOC
+File type, modulo, and separation       = 3, 347, 4
+Number of records                       = 8826
+Number of physical bytes                = 9461760
+Number of data bytes                    = 9116736
+
+Average number of records per group     = 25.4352
+Minimum number of bytes per group       = 888
+Maximum number of bytes per group       = 7897956
+Average number of bytes per group       = 26273.0144
+Minimum number of records in a group    = 7
+Maximum number of records in a group    = 83
+
+Average number of bytes per record      = 1032.9409
+Minimum number of bytes in a record     = 20
+Maximum number of bytes in a record     = 3958336
+
+Average number of fields per record     = 27.3937
+Minimum number of fields per record     = 1
+Maximum number of fields per record     = 89454
+
+Groups  25%    50%    75%   100%   125%   150%   175%   200% full
+          0      2     37    106     93     58     24     27
+</pre>
+<p>In fact, UniVerse provides a bewildering array of other commands
+for analysing static files, including
+<code>ACCOUNT.FILE.STATS</code>, <code>FILE.STAT</code>,
+<code>GROUP.STAT</code>, <code>GROUP.STAT.DETAIL</code>,
+<code>HASH.TEST</code>, <code>HASH.TEST.DETAIL</code>. Once you
+feel you have an understanding of types, modulos, and separations,
+consult the UniVerse documentation about these. In this
+documentation, you will also find advice on <code>HASH.HELP</code>
+and <code>HASH.HELP.DETAIL</code>: Ignore it.</p>
+
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Q Pointers</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Q Pointers' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, q, pointers" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Q Pointers</h1>
+<p>In our discussion of file pointers (see <span class="link"
+onclick="_goto('voc-files.html')">File Pointers</span> above), we
+discussed the danger of creating multiple file pointers simply in
+order to provide synonyms by which a file could be accessed. As the
+file pointer is the only thing which defines a file name under
+UniVerse, having more than one file pointer effectively gives the
+same file two names: and provides no clue to users that the two
+files are in fact the same, unless they take the trouble to edit
+the pointer records themselves.</p>
+<p>To illustrate the risks, try the following:</p>
+<p><code>&gt;<strong>CREATE.FILE DIRECTORY.FILE 19</strong><br />
+WARNING: An operating system file will be created with a truncated
+name.<br />
+Creating file "DIRECTORY000" as Type 19.<br />
+Creating file "D_DIRECTORY000" as Type 3, Modulo 1, Separation
+2.<br />
+Added "@ID", the default record for RetrieVe, to
+"D_DIRECTORY000".<br />
+&gt;</code></p>
+<p>The next stage in our illustration involves creating a 'synonym'
+file pointer to this file. In the last section, we did this by
+creating a new VOC record with the editor: and this is commonly the
+way it is done. UniVerse does, however, provide a command which
+achieves the same thing: so for the sake of learning this command,
+we shall use it instead:</p>
+<p><code>&gt;<strong>SETFILE</strong><br />
+<br />
+Enter DATA file pathname = <strong>DIRECTORY000</strong><br />
+<br />
+What do you want to call it in your VOC file =
+<strong>DIRECTORY.FILE.POINTER</strong><br />
+<br />
+Establishing file pointer:<br />
+Pathname "DIRECTORY000"<br />
+VOC Name "DIRECTORY.FILE.POINTER"<br />
+OK to establish pointer (Y/N) ? <strong>Y</strong><br />
+<br />
+Pointer "DIRECTORY.FILE.POINTER" established in VOC file.<br />
+&gt;</code></p>
+<p>This creates a VOC record in exactly the same way as you could
+with the editor, as you can check:</p>
+<p><code>&gt;<strong>ED VOC DIRECTORY.FILE.POINTER</strong><br />
+3 lines long.<br />
+<br />
+----: <strong>P</strong><br />
+0001: F<br />
+0002: DIRECTORY000<br />
+0003: D_DIRECTORY000<br />
+Bottom at line 3.<br />
+----: Q<br />
+&gt;</code></p>
+<p>Now enter the command:</p>
+<p><code>&gt;<strong>DELETE.FILE
+DIRECTORY.FILE.POINTER</strong><br />
+DELETEd "DIRECTORY000", Type 19.<br />
+DELETEd file "D_DIRECTORY000", Type 3, Modulo 1.<br />
+DELETEd file definition record "DIRECTORY.FILE.POINTER" in the VOC
+file.<br />
+&gt;</code></p>
+<p>You have been allowed to delete the file using the file pointer
+you only created as a synonym. While the VOC record
+<code>DIRECTORY.FILE.POINTER</code> has been deleted,
+<code>DIRECTORY.FILE</code> is still there, and now points to a
+non-existant path. You can demonstrate this to yourself by entering
+a command to count the number of records in
+<code>DIRECTORY.FILE</code>:</p>
+<p><code>&gt;<strong>COUNT DIRECTORY.FILE</strong><br />
+Unable to open "DIRECTORY.FILE" file.<br />
+&gt;</code></p>
+<p>A good principle to maintain, therefore, is that you should only
+have one file pointer to each file: which uniquely defines the
+file's 'real' name.</p>
+<p>There are legitimate reasons, though, why you might wish to
+create a synonym to a file name. You might, for instance, be
+working at a site where two or more languages are in common use:
+say English and Afrikaans in South Africa, or English and Spanish
+in the United States. Having created your files using names
+consistently selected from one language, you might wish to create
+synonyms for each filename in the second language.</p>
+<p>But perhaps the most common reason to create file synonyms is to
+allow a file which was created within one UniVerse account to be
+accessed from another. It was explained earlier in the course (see
+<span class="link" onclick="_goto('about-paradigm.html')">The
+UniVerse Paradigm</span> above) that UniVerse observed a strict and
+simple hierarchy: accounts contained files, files contained
+records, and so on. It was also explained that each account was an
+entirely independent entity, with it's own VOC file defining its
+own command environment. However, by using file synonyms, it is
+possible to access a file in one account from another.</p>
+<p>Both of these aims can best be achieved using a Q pointer. For
+the sake of our examples, we will create another new file:</p>
+<p><code>&gt;<strong>CREATE.FILE CUSTOMER.FILE
+DYNAMIC</strong><br />
+WARNING: An operating system file will be created with a truncated
+name.<br />
+Creating file "CUSTOMER.000" as Type 30.<br />
+Creating file "D_CUSTOMER.000" as Type 3, Modulo 1, Separation
+2.<br />
+Added "@ID", the default record for RetrieVe, to "D_CUSTOMER.000".
+&gt;</code></p>
+<p>To create a synonym in a second language is extremely simple.
+The example here is in Afrikaans:</p>
+<p><code>&gt;<strong>ED VOC KLANT.FILE</strong><br />
+New record.<br />
+<br />
+----: <strong>I</strong><br />
+0001= <strong>Q</strong><br />
+0002=</code> (Put in a space) <code><br />
+0003= <strong>CUSTOMERS.FILE</strong><br />
+0004=</code> (Press RETURN) <code><br />
+Bottom at line 3.<br />
+----: <strong>FI</strong><br />
+"KLANT.FILE" filed in file "VOC".<br />
+&gt;</code></p>
+<p>The first line of this VOC record, like the first line of
+<em>all</em> VOC records, indicates the type of the record. Q
+pointers carry, unsurprisingly (and for no particular reason) a
+<code>Q</code>. The second line contains the name of the UniVerse
+account in which the file lives. If it is left blank (as here),
+then the file is assumed to be in the same account as the Q pointer
+itself. The third line contains the name of the file: note that
+this is the UniVerse name, <em>not the UNIX name</em>. You can now
+use the name <code>KLANT.FILE</code> to refer to the file
+<code>CUSTOMER.FILE</code>. Try it:</p>
+<p><code>&gt;<strong>COUNT KLANT.FILE</strong><br />
+<br />
+0 records counted.<br />
+&gt;</code></p>
+<p>You can set up a Q pointer to a file in another account just as
+easily, though any example of this would depend on the names of the
+accounts as installed on your system. Suffice to say that an
+account name entered on line 2 of the Q pointer will refer the
+pointer to that account when seeking the file on line 3.</p>
+<p>Note that Q pointers contain no UNIX paths. The account name on
+line 2 is a UniVerse account name, and the file name on line 3 is a
+UniVerse file name. When you use the pointer, UniVerse consults
+it's internal list of account names to resolve the location of the
+account, and then looks in the VOC file of the account it finds to
+resolve the location of the file. This is a great strength. If a
+UniVerse account is moved, provided the UniVerse administrator
+updates the list of accounts within the UniVerse system
+administration menu, and external Q pointers pointing to a file in
+the moved account will continue to work: foreign file pointers,
+though, dependent on a particular UNIX path to access the file,
+will be broken. Equally, consider the situation if someone were to
+delete and then recreate the <code>CUSTOMER.FILE</code> file. The
+UNIX name of the file might well change (you'll remember that the
+three digits at the end of this name are essentially arbitary), but
+as long as the UniVerse file name is the same, any Q pointer will
+still work. A F type synonym, which relies on an absolute UNIX
+path, though, will break.</p>
+<p>But the <em>real</em> pay-off is that UniVerse 'knows' that a Q
+pointer is just a synonym, and not the real file name. Try the
+command:</p>
+<p><code>&gt;<strong>DELETE.FILE KLANT.FILE</strong><br />
+"KLANT.FILE" is already in your VOC file as a type "Q"
+record.<br />
+File name =</code>(just press RETURN) <code><br />
+&gt;</code></p>
+<p>The word 'already' in the error message is ridiculously
+misleading: the reason the file cannot be deleted is not because
+the VOC pointer is 'already' there, but because it is a Q pointer.
+However, the point is that the file cannot be deleted. By and
+large, you can access your file via a Q pointer exactly as you
+could via an F, but certain important functions are reserved for
+the 'real' F pointer.</p>
+<p>One final absurdity: in the same way that there is a
+<code>SETFILE</code> command to create F type pointers, there is a
+command to create Q pointers: it is called <code>SET.FILE</code>.
+That's right, the only difference between the two is the dot
+between <code>SET</code> and <code>FILE</code>. The reasons are
+historical: the <code>SETFILE</code> command came first, and
+preceded the invention of Q pointers. When Q pointers came along,
+it was realised that these provided a better way of creating
+synonyms, but to change the <code>SETFILE</code> command to create
+Q pointers might break existing applications. Therefore, a new
+command was commissioned, called <code>SET.FILE</code>. Go figure.
+I tend to avoid them both, as it's just as easy (and less prone to
+error) to set up such pointers by hand. For the sake of
+completeness, though, here is an example of <code>SET.FILE</code>
+being used to set up another Q pointer to the
+<code>CUSTOMER.FILE</code>:</p>
+<p><code><strong>SET.FILE</strong><br />
+Q name: <strong>CLIENT.FILE</strong><br />
+Account:</code> (press RETURN) <code><br />
+File: <strong>CUSTOMER.FILE</strong><br />
+Q-pointer written to VOC file.<br />
+&gt;</code></p>
+<p>Today's <em>main</em> message is, though: <strong>leave your
+default F type pointers as they are on file creation, and use only
+Q pointers to refer provide synonyms and access from other Universe
+accounts.</strong></p>
+
+</body>
+</html>

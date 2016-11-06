@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Editor
+Macros</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Editor Macros' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, editor, macros" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Editor Macros</h1>
+<p>In our discussion of the editor, we drew certain parallels
+between the editor command language and the UniVerse command
+system. Both had a <code>HELP</code> command you could use to
+consult an on-line user manual. Both allowed you to enter
+<code>.L</code> to list a history of previously used commands, and
+various other commands like <code>.X</code>, <code>.R</code> and
+<code>.C</code> to manipulate and re-execute them. One feature of
+the UniVerse command language wasn't compared: the way in which you
+could add commands to the UniVerse command language by adding
+records to the VOC file. Can you add commands to the editor's
+command language?</p>
+<p>Well, sort of. Every command in the UniVerse command language is
+defined by a record in the VOC file: change those records, and you
+change the language. The commands in the editor command language
+are all 'hard-coded' into the editor: you can't change them.
+Neither can you just add a new command called (say)
+<code>DOSOMETHING</code>.</p>
+<p>However, you can do something similar. Begin by starting the
+editor:</p>
+<p><code>ED VOC FLUFFY<br />
+4 lines long.<br />
+<br />
+----:</code></p>
+<p>The number of lines reported will depend on the state in which
+you left the <code>FLUFFY</code> record at the end of the last
+section: but its not important. However long the record is, display
+it using the <code>P</code> command:</p>
+<p><code>----: P<br />
+0001: PA<br />
+0002: DISPLAY You have just typed the command 'FLUFFY'.<br />
+0003: DISPLAY This command is not terribly useful.<br />
+0004: DISPLAY It just displays this message.<br />
+Bottom at line 4.<br />
+----:</code></p>
+<p>Now enter the <code>.L</code> command to list your command
+stack:</p>
+<p><code>----: .L<br />
+<br />
+01 P<br />
+<br />
+0004: DISPLAY It just displays this message.<br />
+Bottom at line 4.<br />
+----:</code></p>
+<p>From this you can see that you have a single command in you
+command stack: the <code>P</code> command.</p>
+<p>You can <em>save</em> this command, giving it a name of your own
+choosing so that you can use it again. To do this, use the
+<code>.S</code> command:</p>
+<p><code>----: .S1 MYCOMMAND<br />
+Creating file "&amp;ED&amp;" as Type 1.<br />
+Creating file "D_&amp;ED&amp;" as Type 3, Modulo 1, Separation
+2.<br />
+Added "@ID", the default record for RetrieVe, to
+"D_&amp;ED&amp;".<br />
+Saved "MYCOMMAND" in "&amp;ED&amp;".</code></p>
+<p>(If someone has used the <code>.S</code> command from the editor
+before in your directory, the <code>&amp;ED&amp;</code> file will
+already exist and you will not see the messages describing its
+creation.)</p>
+<p>The <code>&amp;ED&amp;</code> file is the closest equivalent the
+editor command language has to a <code>VOC</code> file. Each record
+in <code>&amp;ED&amp;</code> creates not a new command in the
+editor command language, but rather what is termed a
+<em>macro</em>. The idea, though, is similar.</p>
+<p>To execute your new macro, use the <code>.X</code> command: but
+instead of specifying a line number from the command stack to
+reexecute, specify the name of your macro:</p>
+<p><code>----: .X MYCOMMAND<br />
+0001: PA<br />
+0002: DISPLAY You have just typed the command 'FLUFFY'.<br />
+0003: DISPLAY This command is not terribly useful.<br />
+0004: DISPLAY It just displays this message.<br />
+Bottom at line 4.<br />
+<br />
+***** End of prestored command execution.<br />
+0004: DISPLAY It just displays this message.<br />
+Bottom at line 4.<br />
+----:</code></p>
+<p>So far, all I have demonstrated is a handy way to take a one
+letter command (<code>P</code>) and abbreviate it to 12 letters
+(<code>.X MYCOMMAND</code>): less than breathtaking. However, the
+principle applies, of course, to macros of any length: you can
+string together as many of these commands as you wish, and execute
+them with a single command. For instance, if your development team
+uses a standard header at the beginning of each UniVerse Basic
+program, you can create a macro to insert the template lines and
+call it <code>TEMPLATE</code> or somesuch.</p>
+<p>Ok, ok, I can tell you're still not impressed. To get a bit more
+impressive, create the following macro. Create the following record
+in the <code>&amp;ED&amp;</code> file with the editor:</p>
+<p><code>ED &amp;ED&amp; BASIC.RUN<br />
+New record.<br />
+<br />
+----: I<br />
+0001= E<br />
+0002= SAVE<br />
+0003= XEQ BASIC @FILE @ID<br />
+0004= XEQ RUN @FILE @ID<br />
+0005=</code> (Press ENTER) <code><br />
+Bottom at line 5.<br />
+----: FILE</code></p>
+<p>What's happening here? Well, the first line of each macro, like
+the first line of each <code>VOC</code> record, indicates the
+<em>type</em> of record it is: fairly pointless in practice, as all
+editor macros have an <code>E</code> on this line.</p>
+<p>The second line is the ordinary <code>SAVE</code> command: so
+when the macro executes, it will save the record currently being
+edited.</p>
+<p>The third line is the clever bit. It uses <code>XEQ</code> to
+invoke the UniVerse <code>BASIC</code> command. This is the command
+which compiles programs. It takes two parameters, the filename
+containing the program to be compiled, and the key of the program
+record.</p>
+<p>In these places, the macro passes <code>@FILE</code> and
+<code>@ID</code>. These are special values that are specially
+designed for use with <code>XEQ</code> commands from the editor.
+<code>@FILE</code> is automatically replaced with the name of the
+file which <code>ED</code> is currently editing, and
+<code>@ID</code> with the key of the record. So if you are editing
+<code>MYPROGRAM</code> in <code>BP</code>, the command actually
+executed by <code>XEQ</code> here is <code>BASIC BP
+MYPROGRAM</code> - the program you have just <code>SAVE</code>d.
+Clever, huh? The next line then runs the program for you in the
+same way.</p>
+<p>When the macro finishes, you are returned to the editor, where
+you can continue working on your program. In this way, you can
+edit, compile, run, edit, compile, run... all without ever leaving
+the editor!</p>
+<p>The UniVerse documentation on editor macros is a little odd, for
+two reasons:</p>
+<p>1. All their examples show macro commands being created using
+<code>.S</code> - as I showed in my first example: but for most
+macros, it's much each just to edit &amp;ED&amp;, and I'm not sure
+why the manual doesn't explain this.</p>
+<p>2. They explain two 'special' editor commands, <code>LOOP</code>
+and <code>PAUSE</code>, which they clearly feel are particularly
+useful in editor macros. They are both weird in syntax and
+implementation, and I don't fancy explaining either here. Their
+names sort of suggest their purposes, so if you're keen to look, go
+for it.</p>
+
+</body>
+</html>

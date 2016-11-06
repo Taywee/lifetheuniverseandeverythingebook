@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+
+  <head>
+    <meta name="dtb:uid" content="www.mannyneira.com/universe/index.html"/>
+    <meta name="dtb:depth" content="2"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
+  </head>
+
+  <docTitle>
+    <text>Life, The UniVerse, and Everything</text>
+  </docTitle>
+
+  <navMap>
+    <navPoint class="part" id="introduction" playOrder="1">
+      <navLabel><text>Introduction</text></navLabel>
+      <content src="introduction.xhtml" />
+      <navPoint class="chapter" id="introduction-acknowledgements" playOrder="2">
+        <navLabel><text>Acknowledgements</text></navLabel>
+        <content src="introduction-acknowledgements.xhtml" />
+      </navPoint>
+    </navPoint>
+    <navPoint class="part" id="about" playOrder="3">
+      <navLabel><text>About Universe</text></navLabel>
+      <content src="about.xhtml" />
+      <navPoint class="chapter" id="about-unix" playOrder="4">
+        <navLabel><text>UniVerse and UNIX</text></navLabel>
+        <content src="about-unix.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="about-paradigm" playOrder="5">
+        <navLabel><text>The UniVerse Paradigm</text></navLabel>
+        <content src="about-paradigm.xhtml" />
+      </navPoint>
+    </navPoint>
+    <navPoint class="part" id="prompt" playOrder="6">
+      <navLabel><text>The Command Prompt</text></navLabel>
+      <content src="prompt.xhtml" />
+      <navPoint class="chapter" id="prompt-stack" playOrder="7">
+        <navLabel><text>The Command Stack</text></navLabel>
+        <content src="prompt-stack.xhtml" />
+      </navPoint>
+    </navPoint>
+    <navPoint class="part" id="files" playOrder="8">
+      <navLabel><text>Universe Files</text></navLabel>
+      <content src="files.xhtml" />
+      <navPoint class="chapter" id="files-directory" playOrder="9">
+        <navLabel><text>Directory Files</text></navLabel>
+        <content src="files-directory.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="files-static" playOrder="10">
+        <navLabel><text>Static Files</text></navLabel>
+        <content src="files-static.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="files-dynamic" playOrder="11">
+        <navLabel><text>Dynamic Files</text></navLabel>
+        <content src="files-dynamic.xhtml" />
+      </navPoint>
+    </navPoint>
+    <navPoint class="part" id="records" playOrder="12">
+      <navLabel><text>Records</text></navLabel>
+      <content src="records.xhtml" />
+      <navPoint class="chapter" id="records-ed" playOrder="13">
+        <navLabel><text>The Editor - ED</text></navLabel>
+        <content src="records-ed.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="records-macros" playOrder="14">
+        <navLabel><text>Editor Macros</text></navLabel>
+        <content src="records-macros.xhtml" />
+      </navPoint>
+    </navPoint>
+    <navPoint class="part" id="voc" playOrder="15">
+      <navLabel><text>The VOC File</text></navLabel>
+      <content src="voc.xhtml" />
+      <navPoint class="chapter" id="voc-verbs" playOrder="16">
+        <navLabel><text>Verbs</text></navLabel>
+        <content src="voc-verbs.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="voc-keywords" playOrder="17">
+        <navLabel><text>Keywords</text></navLabel>
+        <content src="voc-keywords.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="voc-paragraphs" playOrder="18">
+        <navLabel><text>Paragraphs</text></navLabel>
+        <content src="voc-paragraphs.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="voc-sentences" playOrder="19">
+        <navLabel><text>Sentences</text></navLabel>
+        <content src="voc-sentences.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="voc-files" playOrder="20">
+        <navLabel><text>File Pointers</text></navLabel>
+        <content src="voc-files.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="voc-qpointers" playOrder="21">
+        <navLabel><text>Q Pointers</text></navLabel>
+        <content src="voc-qpointers.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="voc-remotes" playOrder="22">
+        <navLabel><text>Remote Commands</text></navLabel>
+        <content src="voc-remotes.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="voc-others" playOrder="23">
+        <navLabel><text>Other VOC Records</text></navLabel>
+        <content src="voc-others.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="voc-login" playOrder="24">
+        <navLabel><text>LOGIN, ON.EXIT and ON.ABORT</text></navLabel>
+        <content src="voc-login.xhtml" />
+      </navPoint>
+    </navPoint>
+    <navPoint class="part" id="dictionaries" playOrder="25">
+      <navLabel><text>Dictionaries</text></navLabel>
+      <content src="dictionaries.xhtml" />
+      <navPoint class="chapter" id="dictionaries-data" playOrder="26">
+        <navLabel><text>Data Fields</text></navLabel>
+        <content src="dictionaries-data.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="dictionaries-imaginaries" playOrder="27">
+        <navLabel><text>Imaginary Fields</text></navLabel>
+        <content src="dictionaries-imaginaries.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="dictionaries-phrases" playOrder="28">
+        <navLabel><text>Phrases</text></navLabel>
+        <content src="dictionaries-phrases.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="dictionaries-others" playOrder="29">
+        <navLabel><text>Other Dictionary Items</text></navLabel>
+        <content src="dictionaries-others.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="dictionaries-dictdict" playOrder="30">
+        <navLabel><text>The Dictonary Dictionary</text></navLabel>
+        <content src="dictionaries-dictdict.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="dictionaries-revise" playOrder="31">
+        <navLabel><text>The REVISE Command</text></navLabel>
+        <content src="dictionaries-revise.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="dictionaries-indexing" playOrder="32">
+        <navLabel><text>Indexing Fields</text></navLabel>
+        <content src="dictionaries-indexing.xhtml" />
+      </navPoint>
+    </navPoint>
+    <navPoint class="part" id="retrieve" playOrder="33">
+      <navLabel><text>The Retrieve Query Language</text></navLabel>
+      <content src="retrieve.xhtml" />
+      <navPoint class="chapter" id="retrieve-sql" playOrder="34">
+        <navLabel><text>A Note on SQL</text></navLabel>
+        <content src="retrieve-sql.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="retrieve-list" playOrder="35">
+        <navLabel><text>Listing Records</text></navLabel>
+        <content src="retrieve-list.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="retrieve-override" playOrder="36">
+        <navLabel><text>Overriding Dictionaries</text></navLabel>
+        <content src="retrieve-override.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="retrieve-select" playOrder="37">
+        <navLabel><text>Select lists</text></navLabel>
+        <content src="retrieve-select.xhtml" />
+      </navPoint>
+    </navPoint>
+    <navPoint class="part" id="tcl" playOrder="38">
+      <navLabel><text>The TCL Command Language</text></navLabel>
+      <content src="tcl.xhtml" />
+      <navPoint class="chapter" id="tcl-record" playOrder="39">
+        <navLabel><text>Record Commands</text></navLabel>
+        <content src="tcl-record.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="tcl-terminal" playOrder="40">
+        <navLabel><text>Terminal Commands</text></navLabel>
+        <content src="tcl-terminal.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="tcl-printer" playOrder="41">
+        <navLabel><text>Printer Commands</text></navLabel>
+        <content src="tcl-printer.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="tcl-menus" playOrder="42">
+        <navLabel><text>Menus of Commands</text></navLabel>
+        <content src="tcl-menus.xhtml" />
+      </navPoint>
+    </navPoint>
+    <navPoint class="part" id="basic" playOrder="43">
+      <navLabel><text>UniVerse Basic</text></navLabel>
+      <content src="basic.xhtml" />
+      <navPoint class="chapter" id="basic-build" playOrder="44">
+        <navLabel><text>The Build Cycle</text></navLabel>
+        <content src="basic-build.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="basic-syntax" playOrder="45">
+        <navLabel><text>Basic Syntax</text></navLabel>
+        <content src="basic-syntax.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="basic-types" playOrder="46">
+        <navLabel><text>Basic Types</text></navLabel>
+        <content src="basic-types.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="basic-operators" playOrder="47">
+        <navLabel><text>Basic Operators</text></navLabel>
+        <content src="basic-operators.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="basic-arrays" playOrder="48">
+        <navLabel><text>Basic Arrays</text></navLabel>
+        <content src="basic-arrays.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="basic-terminal" playOrder="49">
+        <navLabel><text>Basic Terminal I/O</text></navLabel>
+        <content src="basic-terminal.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="basic-conditions" playOrder="50">
+        <navLabel><text>Basic Conditions</text></navLabel>
+        <content src="basic-conditions.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="basic-loops" playOrder="51">
+        <navLabel><text>Basic Loops</text></navLabel>
+        <content src="basic-loops.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="basic-flow" playOrder="52">
+        <navLabel><text>Basic Flow Control</text></navLabel>
+        <content src="basic-flow.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="basic-file" playOrder="53">
+        <navLabel><text>Basic File I/O</text></navLabel>
+        <content src="basic-file.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="basic-subroutines" playOrder="54">
+        <navLabel><text>Basic External Subroutines</text></navLabel>
+        <content src="basic-subroutines.xhtml" />
+      </navPoint>
+      <navPoint class="chapter" id="basic-practice" playOrder="55">
+        <navLabel><text>Basic Good Practice</text></navLabel>
+        <content src="basic-practice.xhtml" />
+      </navPoint>
+    </navPoint>
+  </navMap>
+</ncx>

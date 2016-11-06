@@ -1,0 +1,354 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Basic File
+I/O</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Basic File I/O' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, basic, file, i/o" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Basic File I/O</h1>
+<h2>Opening a file: OPEN</h2>
+<p>Before you can read from or write to a UniVerse file, you must
+open it using the <code>OPEN</code> statement. This stores a kind
+of 'file handle' in a <em>file variable</em>, and you may then use
+the file variable in your <code>READ</code> and <code>WRITE</code>
+statements. An example of an <code>OPEN</code> statement runs:</p>
+<pre>
+OPEN 'VOC' TO VOC.FILE ELSE STOP "Sorry, can't open VOC."
+</pre>
+<p>Note the <code>ELSE</code> clause. Your <code>OPEN</code>
+statement must have an <code>ELSE</code> clause to tell it what to
+do if it can't open the file: for instance, if the file name you
+have provided does not exist. In this case, I've decided to simply
+stop the program if it cannot be found, but you must decide the
+best approach in each case.</p>
+<h2>Reading and writing records using dynamic arrays: READ and
+WRITE</h2>
+<p>To read a record from a file, you need a file variable for the
+file, and a key for the record. You can then store the contents of
+the record in a variable. An example follows:</p>
+<pre>
+READ VOC.RECORD FROM VOC.FILE, 'RELLEVEL' ELSE VOC.RECORD = ''
+PRINT VOC.RECORD ; * Prints something like X&thorn;9.4.1.1&thorn;INFORMATION...
+</pre>
+<p>The contents of the <code>RELLEVEL</code> record from the
+<code>VOC</code> file are loaded into <code>VOC.RECORD</code> as a
+dynamic array: the <code>PRINT</code> statement lets you take a
+look at what you've got. (You may remember that
+<code>RELLEVEL</code> is a standard VOC record which contains
+UniVerse release level information: see <span class="link" onclick=
+"_goto('voc-others.html')">Other VOC Records</span>).</p>
+<p>Note again the <code>ELSE</code> clause: this is executed if the
+record you are looking for does not exist. Again, I've chosen to
+simply use an empty string as the record value in this case, but it
+might be more appropriate for you to display an error message,
+assign some non-empty default value, or even offer to create the
+missing record: it depends, of course, on your application. Setting
+records to empty strings in <code>ELSE</code> clauses has become
+something of a knee-jerk coding reaction, and probably contributes
+to many obscure bugs in UniVerse applications, which would have
+been highlighted earlier if an <code>ELSE</code> clause somewhere
+actually reported a problem.</p>
+<p>To write your record, use <code>WRITE</code>:</p>
+<pre>
+WRITE VOC.RECORD TO VOC.FILE, 'TEST.WRITE'
+</pre>
+<p>Here, I have written the record back under a different key,
+effectively creating a new record. Note that <code>WRITE</code>
+will create new records if the key is not already on the file, or
+overwrite an existing record if it is, without a murmur. If either
+condition would constitute an error in your program, you must check
+for it using <code>READ</code> before writing.</p>
+<h2>Reading and writing records using dimensioned arrays: ,MATREAD
+and MATWRITE</h2>
+<p><code>MATREAD</code> and <code>MATWRITE</code> correspond
+exactly to <code>READ</code> and <code>WRITE</code>, except that
+instead of using a dynamic array as a record memory buffer, they
+use a dimensioned array. You must therefore declare a dimensioned
+array to act as a buffer:</p>
+<pre>
+DIM VOC.RECORD(10)
+MATREAD VOC.RECORD FROM VOC.FILE, 'RELLEVEL' ELSE MAT VOC.RECORD = ''
+FOR FIELD.NUMBER = 1 TO 10
+   PRINT VOC.RECORD(FIELD.NUMBER)
+NEXT FIELD.NUMBER
+</pre>
+<p>The VOC file is awkward to handle in this way because it's
+records contain different numbers of fields. The
+<code>RELLEVEL</code> record is only four lines long, but a
+paragraph could easily contain 50 lines.</p>
+<p><code>MATREAD</code> handles such variables as best it can. If
+the record contains fewer fields than there are elements in the
+array, the unused elements are assigned empty string values. If
+there are more fields than elements, the additional fields are put
+into the special element 0 as a dynamic array. This element can be
+accessed using the syntax <code>VOC.RECORD(0)</code> but its
+perhaps best not to rely on this kind of overflowing handling
+within your logic. Increase the size of your dimensioned array, or
+use a dynamic array, rather than habitually searching element 0.
+(Note that I am assuming here that you are using <em>Prime
+INFORMATION</em> or <em>IDEAL</em> flavoured UniVerse: the others
+store excess fields in the last element, but the same principles
+apply.)</p>
+<p>You can write the dimensioned array back to the file using
+<code>MATWRITE</code>:</p>
+<pre>
+MATWRITE VOC.RECORD TO VOC.FILE, 'TEST.WRITE'
+</pre>
+<p><code>MATWRITE</code> is as happy to overwrite existing records
+or create new ones as <code>WRITE</code>, so again, add whatever
+tests you need to to prevent behaviour which shouldn't be
+happening.</p>
+<h2>Reading a single field from a file: READV</h2>
+<p>Though it is far less commonly done, you can read and write
+individual fields rather than entire records. It generally isn't
+any faster than reading and writing entire records, but may be a
+neater implementation of your design. Fields are read using
+<code>READV</code>:</p>
+<pre>
+READV TYPE.DESC FROM VOC.FILE, 'RELLEVEL', 1 ELSE TYPE.DESC = ''
+</pre>
+<p>Note here the <code>1</code> after the key
+<code>'RELLEVEL'</code>. This tells <code>READV</code> which field
+number you wish to read. As usual, <code>READV</code> takes an
+<code>ELSE</code> clause: but note that it will only be executed if
+the record you are looking for does not exist, not merely if the
+field number you have requested is greater than the number of
+fields in the record: in that case it simply reads an empty
+string.</p>
+<p>Predictably, to write a single field to a record you use
+<code>WRITEV</code>:</p>
+<pre>
+WRITEV TYPE.DESC TO VOC.FILE, 'TEST.WRITE', 1
+</pre>
+<p>If the record you are writing to exists, only the field number
+you have specified will be overwritten: the others will retain
+their values. If it doesn't, it will be created, with sufficient
+field marks (and thus empty fields) to put the field you have
+written in at the appropriate position.</p>
+<h2>Deleting records: DELETE</h2>
+<p>To delete a record, use the <code>DELETE</code> statement:</p>
+<pre>
+DELETE VOC.FILE, 'RELLEVEL'
+</pre>
+<h2>Locking records for update: READU, MATREADU and READVU</h2>
+<p>UniVerse, like most of its predecessors, is primarily designed
+for the creation of <em>multiuser</em> systems: and you should bear
+this in mind in coding your file handling. If you use
+<code>READ</code> to read a record, modify it's contents in memory,
+and then <code>WRITE</code> it back, what is to say that some other
+user hasn't <code>READ</code> the same record just before you and
+written it back just after you? If they had, all the changes you
+made would be wiped out by the other users <code>WRITE</code>.</p>
+<p>To prevent this kind of problem, UniVerse provides alternatives
+to <code>READ</code>, <code>MATREAD</code> and <code>READV</code>
+called <code>READU</code>, <code>MATREADU</code> and
+<code>READVU</code> respectively. The 'U' stands for 'update': and
+if you are planning to update a record, you should read it with a
+<code>...U</code> read.</p>
+<p>The only difference this makes is that UniVerse will
+<em>lock</em> a record when you <code>READU</code> it, preventing
+any other user from using <code>READU</code> to read it. If you try
+to <code>READU</code> a locked record, what will happen will depend
+on your code. Consider the following <code>READU</code>.</p>
+<pre>
+READU VOC.RECORD FROM VOC.FILE, 'RELLEVEL' ELSE VOC.RECORD = ''
+</pre>
+<p>If <code>RELLEVEL</code> is already locked, this
+<code>READU</code> will simply wait until the lock is removed:
+effectively hanging your program. <em>It will not take the</em>
+<code>ELSE</code> <em>clause just because the record is locked:
+only if the record doesn't exist.</em>.</p>
+<p>Although simply waiting for the lock to become available may be
+a suitable strategy on occassion, sometimes you will need to take
+specific action on encountering a lock. To do this, add a
+<code>LOCKED</code> clause.</p>
+<pre>
+READU VOC.RECORD FROM VOC.FILE, 'RELLEVEL' LOCKED
+   STOP 'Sorry, the record is locked by another user. Try again later.'
+END ELSE
+   VOC.RECORD = '' ; * RELLEVEL doesn't exist
+END
+</pre>
+<p>The message in the <code>LOCKED</code> clause above is not
+strictly accurate, as the <code>RELLEVEL</code> record may not even
+exist: if you <code>READU</code> a key which doesn't exist, you
+<em>still</em> create a lock on that key, effectively reserving it
+for yourself. Anyone else trying to <code>READU</code> the same key
+will find it locked.</p>
+<p>A locked record (or a locked new key) will remain locked until
+one of four things happen:</p>
+<p>1. You write it: <code>WRITE VOC.RECORD TO VOC.FILE,
+'RELLEVEL'</code><br />
+2. You release it: <code>RELEASE VOC.FILE, 'RELLEVEL'</code><br />
+3. You program finishes running.</p>
+<p>Don't rely on the third route: some programs can keep records
+locked for long periods, causing serious disruption to other
+processes, and a program which loops (like a data entry screen
+looping through updates or a batch processing routine) can lock
+huge numbers of records. Also, what you write today as a 10 second
+utility to update 100 records may be extended by future programmers
+to update thousands of programs: a problem if it doesn't release
+it's record locks.</p>
+<p>The <code>RELEASE</code> statement can also be used to release
+all the locks held by a user on a particular file (<code>RELEASE
+VOC.FILE</code>, with no record key) or all the locks held by a
+user on any file (just <code>RELEASE</code>), but if you find
+yourself using either, it may be a sign that your program is
+holding locks unecessarily long. At some point, your program must
+decide whether or not to <code>WRITE</code> the record. It is at
+that point that you should <code>RELEASE</code> the individual
+record if you have decided not to <code>WRITE</code> it.</p>
+<h2>Locking records for reading: READL, MATREADL and READVL</h2>
+<p>It might be that you do not intend to update a record you have
+read, but wish nevertheless to ensure that noone else updates it
+while you are using it. To do this, use <code>READL</code>,
+<code>MATREADL</code> or <code>READVL</code>. These apply 'shared
+locks': UniVerse will prevent a user placing an update lock with
+<code>READU</code> on a record which has one or more shared locks
+applied by <code>READL</code>, and will prevent a
+<code>READL</code> placing a shared lock on a record which already
+has a <code>READU</code> update lock, but will allow many users to
+simultaneously apply <code>READL</code> shared locks.</p>
+<h2>A Locking Strategy</h2>
+<p>Bear in mind that neither <code>READL</code> nor
+<code>READU</code> will prevent a <code>READ</code>. The UniVerse
+locking system is cooperative rather than preemptive: which means
+that it relies on processes using the locking system to control
+their own behaviour rather than forcing a locking regime on them
+which they cannot avoid. This system works well if applied
+consistently, but will obviously fail wherever a programmer decides
+to <code>WRITE</code> a record for which he has never obtained
+<code>READU</code> lock.</p>
+<p>A comparison might be made with <code>C</code> memory handling.
+<code>C</code> provides all the functions which are needed to
+manage memory safely: provided that programmers are careful never
+to address memory that they haven't reserved or 'allocated', and
+provided that they release it one they've done with it. It doesn't,
+however, <em>enforce</em> good practice, and both through guile and
+error far too many <em>C</em> programs still write to memory they
+don't own.</p>
+<p>To safely manage multiuser access to your UniVerse System:</p>
+<p><em>1. Do not create, modify, or delete a record without first
+obtaining an update lock using <code>READU</code> (or
+equivalent).</em></p>
+<p><em>2. Do not assume that a record has remain unchanged since
+you read it unless you originally obtained a <code>READU</code> or
+<code>READL</code> lock on it which you have not yet
+released.</em></p>
+<h2>Processing select lists</h2>
+<p>Select lists, and some of their uses, were covered in an earlier
+section of this course (see <span class="link" onclick=
+"_goto('retrieve-select.html')">Select Lists</span>). These notes
+now discuss how such lists can be created and used within a
+UniVerse Basic program.</p>
+<p>One method involves introducing a new UniVerse Basic statement
+which has applications beyond the creation of select lists:
+<code>EXECUTE</code>. You may remember a similarly editor command
+called <code>XEQ</code> (see <span class="link" onclick=
+"_goto('records-ed.html')">The Editor - ED</span>) which allowed
+you to execute TCL commands without leaving the editor. The
+UniVerse Basic statement <code>XEQ</code> serves a similar purpose,
+allowing you to execute TCL commands from a program. The syntax is
+simple, as is shown in the example below:</p>
+<pre>
+PRINT 'Press RETURN to see a listing of the VOC file...':
+INPUT PAUSE
+EXECUTE 'LIST VOC'
+</pre>
+<p>Combining this command with a TCL <code>SELECT</code> command
+allows you to create your select list from your UniVerse Basic
+program, using any of <code>SELECT</code>'s usual parameters.</p>
+<pre>
+EXECUTE 'SELECT VOC WITH TYPE = "M"'
+</pre>
+<p>The second way to create a select list from your program is to
+use the UniVerse Basic <code>SELECT statement. This simply takes a
+file variable, created with <code>OPEN</code>, as a parameter. An
+example follows:</code></p>
+<pre>
+SELECT VOC.FILE
+</pre>
+<p>Please note the differences between these approaches:</p>
+<p>1. The TCL <code>SELECT</code> command can be used from the
+UniVerse command prompt. It can use WITH and BY clauses to modify
+the scope and sorting of its list. It accepts a filename as a
+parameter. It can only be used from a UniVerse Basic program via
+the <code>EXECUTE</code> statement.<br />
+2. The UniVerse Basic <code>SELECT</code> statement can only be
+used in a UniVerse Basic program. It cannot apply conditions or
+sorting to the lists it creates. It accepts a file
+<em>variable</em> as a parameter.</p>
+<p>From this description, it will seem that using <code>EXECUTE
+'SELECT...'</code> is far more flexible than using
+<code>SELECT</code>: and so it is. But the list of differences is
+not complete: the most important follows:</p>
+<p>3. Using the UniVerse Basic <code>SELECT</code> command is much,
+much faster than using <code>EXECUTE 'SELECT...'</code>.</p>
+<p>So, as always, it's up to you. If you cannot live without a
+sorted or scoped select list, you'll have to use <code>EXECUTE
+'SELECT filename parameters'</code>. If you can, you'll be able to
+use the much faster <code>SELECT filevariable</code>.</p>
+<p>Having created your select list, you must access the keys it
+contains from your program. To do this, UniVerse provides the
+<code>READNEXT</code> statement. By its nature, it is almost always
+written into a <code>LOOP</code>/<code>REPEAT</code> structure.</p>
+<pre>
+OPEN 'VOC' TO VOC.FILE ELSE STOP "Sorry, can't open VOC."
+EOF = 0
+SELECT VOC.FILE
+LOOP
+   READNEXT VOC.KEY ELSE EOF = 1
+UNTIL EOF
+   PRINT VOC.KEY
+REPEAT
+</pre>
+<p>The <code>READNEXT</code> statement simply reads one key from
+the select list each time it is executed, until it runs out of keys
+and executes its <code>ELSE</code> clause. The logic above is
+fairly cautious: it's not uncommon to see the <code>ELSE</code>
+clause setting the key to an empty string in its <code>ELSE</code>
+clause, and then exiting as soon as it encounters an empty string.
+The problem is, though it is not easy, it is possible to get keys
+with empty string keys into UniVerse files: I once spent a long
+time debugging a program until I realise that <code>READNEXT</code>
+was returning an empty string as a key <em>before it ran out of
+keys</em>, thus terminating the loop early and leaving half the
+file unprocessed. Setting the key to an exotic value (like '*** END
+OF FILE ***') is also sometimes used, but there is always the
+possibility, however weird your special value, that a record in the
+file will have it: most probably because during a test run your
+loop didn't terminate properly and you ended up writing your
+special value to the file. Using an entirely separate flag is the
+only completely safe method.</p>
+<p>Why is the UniVerse Basic <code>SELECT</code> statement so much
+faster than the equivalent TCL command? The reason is that the
+UniVerse Basic <code>SELECT</code> doesn't actually create a select
+list at all. It creates a kind of internal pointer to the first
+record in the the first group, and each time you
+<code>READNEXT</code> it merely reads the key pointed at and moves
+it along to the next key. Effectively, if you use <code>EXECUTE
+'SELECT...'</code> you end up traversing the file twice: once to
+select the keys, and again to process them. Using the UniVerse
+Basic <code>SELECT</code> with <code>READNEXT</code> means that you
+only traverse it once, during processing. It also explains,
+however, why you cannot sort or apply selection criteria to your
+list.</p>
+
+</body>
+</html>

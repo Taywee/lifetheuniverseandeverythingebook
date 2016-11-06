@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Basic Good
+Practice</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Basic Good Practice' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, basic, good, practice" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Basic Good Practice</h1>
+<h2>Efficiency</h2>
+<h3>'Go faster' operators</h3>
+<p>Always use <code>VAR1 += VAR2</code> in place of <code>VAR1 =
+VAR1 + VAR2</code>: it is appreciably faster. Favour
+<code>-=</code> and <code>:=</code> similarly.</p>
+<h3>For next loops</h3>
+<p>Don't use expressions as terminating values in
+<code>FOR/NEXT</code> loops: use only constants or variables. For
+instance, rewrite:</p>
+<pre>
+FOR RECORD.NUMBER = 1 TO DCOUNT(RECORD.LIST, @FM)
+   * Do something
+NEXT RECORD.NUMBER
+</pre>
+<p>...as...</p>
+<pre>
+NUMBER.OF.RECORDS = DCOUNT(RECORD.LIST, @FM)
+FOR RECORD.NUMBER = 1 TO NUMBER.OF.RECORDS
+   * Do something
+NEXT RECORD.NUMBER
+</pre>
+<p>This prevents UniVerse recalculating the terminating value every
+time round the loop. If you cannot restructure your
+<code>FOR</code>/<code>NEXT</code> loop because you are
+<em>relying</em> on the recalculation, replace the
+<code>FOR</code>/<code>NEXT</code> loop with a
+<code>LOOP</code>/<code>REPEAT</code> loop. It may be faster, but
+it will definitely be more readable.</p>
+<h3>CASE constructs</h3>
+<p>If your <code>CASE</code> conditions are mutually exclusive,
+their order will make no difference to the <em>behaviour</em> of
+your code, but may make a difference to its <em>performance</em>.
+Even where the conditions are not mutually exclusive, they can
+sometimes be rearranged without affecting the logic of the program,
+to increase its speed.</p>
+<p>This is because UniVerse evaluates each condition in turn until
+it encounters one which is true: the more often it finds that the
+<em>first</em> <code>CASE</code> is true, the fewer comparisons it
+need make in total. (See <span class="link" onclick=
+"_goto('basic-conditions.html')">Basic Conditions</span> for a
+detailed example).</p>
+<h3>Testing for existence</h3>
+<p>The quickest way to test a record for existence (assuming you
+don't need to read any of the information it contains) is to use
+<code>READV</code> to read field <code>0</code> thus:</p>
+<pre>
+READV DUMMY FROM VOC.FILE, 'RECORD.BEING.TESTED', 0 ELSE PRINT "It's missing!"
+</pre>
+<h3>Looping through dynamic arrays</h3>
+<p>Never loop through a dynamic array using a subscript to address
+each field. Addressing individual fields by subscript within a
+dynamic array takes time: the higher the subscript, the more time.
+Use <code>LOOP</code>/<code>REPEAT</code> around a
+<code>REMOVE</code> statement instead. <code>REMOVE</code> is
+specifically designed to remove consecutive dynamic array fields
+without searching from the beginning of an array to resolve a
+subscript each time.</p>
+<h3>Creating select lists</h3>
+<p>Use the UniVerse Basic <code>SELECT</code> statement instead of
+<code>EXECUTE 'SELECT...'</code> wherever possible. If the reason
+you did not use it originally is because you wanted a sorted list,
+ask yourself if your program really needs to sort the list: quite
+often batch programs which need not sort are given sorted lists
+merely because it makes the display of keys 'currently being
+processed' neater: this is an expensive luxury.</p>
+<p>If you already have a dynamic array, and you wish to turn it
+into a select list, you need <em>NOT</em> write it to
+<code>&amp;SAVEDLISTS&amp;</code> and then issue an <code>EXECUTE
+'GET.LIST...'</code>. You may sometimes find this approach taken in
+early UniVerse Basic (or PICK or INFO Basic) because it was at one
+time the only available method. You may now, though, simply say
+<code>SELECT DYNAMIC.ARRAY</code>: the select statement, when
+followed by a dynamic array, will turn the array into a select
+list, and save a great deal of time.</p>
+<h3>Arrays</h3>
+<p>Use dimensioned rather than dynamic arrays unless there is a
+good reason not to: the elements of a dimensioned array are far
+quicker to address than the fields of a dynamic array.</p>
+<p>If you need a dynamic array, keep it one-dimensional by using
+only field marks: not value or subvalue marks. Most of the things
+which dynamic arrays are good at (being searched, sorted, grown,
+shrunk and traversed) are made difficult or possible once it
+contains mixed markers. Think of dynamic arrays as a 'list'
+type.</p>
+<h3>Growing dynamic arrays</h3>
+<p>For some reason...</p>
+<pre>
+DYNAMIC.ARRAY := @FM : 'NEWFIELD'
+</pre>
+<p>...is generally considerably faster than...</p>
+<pre>
+DYNAMIC.ARRAY&lt;-1&gt; = 'NEWFIELD'
+</pre>
+<p>...despite the fact that they are nearly identical. Both add a
+field to a dynamic array. The <code>&lt;-1&gt;</code> syntax is
+slightly neater, as if DYNAMIC.ARRAY is empty above, the <code>:=
+@FM</code> syntax will add an empty field before the new field.
+However, this can easily be dealt with by writing...</p>
+<pre>
+DYNAMIC.ARRAY = DYNAMIC.ARRAY[2, LEN(DYNAMIC.ARRAY) - 1]
+</pre>
+<p>The time this takes to execute is usually far less than the time
+gained by using <code>:= @FM</code>, paricularly when building a
+long dynamic array in a loop. You need only trim the first
+character once.</p>
+<h3>Removing empty fields</h3>
+<p>The <code>CONVERT</code> statement changes all the occurences of
+a character in a string to another character. If the 'from' and
+'to' strings contain more than one character, the first character
+of the first string is converted to the first character of the
+second, and so on. The <code>TRIM</code> function not only trims
+leading and trailing spaces from a string, but replaces all
+multiply occurring spaces <em>within</em> the string with single
+spaces. You can use <code>CONVERT</code> and <code>TRIM</code>
+together to remove empty fields from a dynamic array as
+follows:</p>
+<pre>
+CONVERT @FM TO ' ' IN DYNAMIC.ARRAY
+DYNAMIC.ARRAY = TRIM(DYNAMIC.ARRAY)
+CONVERT ' ' TO @FM IN DYNAMIC.ARRAY
+</pre>
+<p>This relies on the fact that an empty field is represented by
+two field marks next to each other. When they are converted to
+spaces and trimmed, they are replaced with a single space.</p>
+<p>Note that this code assumes that your fields do not already
+contain spaces. If they do, you must find at least one character
+which your string could not contain (which we'll represent by the
+variable SAFE.CHARACTER) and safe gaurd the 'real' spaces as
+follows:</p>
+<pre>
+CONVERT ' ' : @FM TO SAFE.CHARACTER : ' ' IN DYNAMIC.ARRAY
+DYNAMIC.ARRAY = TRIM(DYNAMIC.ARRAY)
+CONVERT SAFE.CHARACTER : ' ' TO ' ' : @FM IN DYNAMIC.ARRAY
+</pre>
+<h3>Cleaning strings</h3>
+<p>To 'clean' a string of any characters which do not want, first
+define a variable which contains all the characters which you
+<em>do</em> want. For instance, if the surnames in your system must
+be purely alphabetic, try the following:</p>
+<pre>
+LEGAL.CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+JUNK.CHARACTERS = SURNAME
+CONVERT LEGAL.CHARACTERS TO '' IN JUNK.CHARACTERS ; * So anything left is junk...
+CONVERT JUNK.CHARACTERS TO '' IN SURNAME ; * ...which can be got rid of.
+</pre>
+<h2>Quality</h2>
+<h3>FOR/NEXT counter variables</h3>
+<p>Never rely on the value of a counter variable outside a
+<code>FOR</code>/<code>NEXT</code> loop. It is undefined. Even if
+you find that it reliably takes a particular and useful value, that
+could change with the next release of the UniVerse Basic
+compiler.</p>
+<h3>Subroutine parameters</h3>
+<p>Don't use subroutine parameters as 'working variables' within
+your subroutine. Assign them new values only if it is clearly the
+purpose of the subroutine to do so.</p>
+<p>When calling a subroutine, put brackets around naked variables
+if you do not wish them to be changed by the subroutine you are
+calling: this converts them to 'expressions' and is sufficient to
+prevent them being changed even if the subroutine you are calling
+attempts to change them.</p>
+<h3>Record locking</h3>
+<p>1. Never create, update, or delete a record without first
+obtaining an update lock with <code>READU</code>,
+<code>MATREADU</code> or <code>READVU</code>.</p>
+<p>2. Never assume that a record has remained unchanged since you
+read it unless you obtained an update lock (<code>READU</code>) or
+shared lock (<code>READL</code>) which you still hold.</p>
+<p>3. Never keep records locked longer than you have to.</p>
+
+</body>
+</html>

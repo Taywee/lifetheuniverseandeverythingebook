@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: LOGIN, ON.EXIT and
+ON.ABORT</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: LOGIN, ON.EXIT and ON.ABORT' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, login, on.exit, and, on.abort" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> LOGIN, ON.EXIT and ON.ABORT</h1>
+<p>Three VOC records define commands which are usually invoked by
+UniVerse itself rather than being entered from the
+<code>&gt;</code> prompt:</p>
+<h2>LOGIN</h2>
+<p>The <code>LOGIN</code> command is invoked whenever you enter a
+particular UniVerse account: either from UNIX using the
+<code>uv</code> command (see <span class="link" onclick=
+"_goto('about-unix.html')">Universe and UNIX</span>), or from
+another universe account by using the <code>LOGTO</code> command
+(see <span class="link" onclick="_goto('prompt.html')&quot;">The
+Command Prompt</span>).</p>
+<p><code>LOGIN</code> must be a command, and could theoretically
+therefore be a verb (see <span class="link" onclick=
+"_goto('voc-verbs.html')">Verbs</span>), a sentence (see
+<span class="link" onclick=
+"_goto('voc-sentences.html')">Sentences</span>), or even a keyword
+with a fourth field (see <span class="link" onclick=
+"_goto('voc-keywords.html')">Keywords</span>). however, it is
+almost always a paragraph (see <span class="link" onclick=
+"_goto('voc-paragraphs.html')&quot;">Paragraphs</span>): analogous
+perhaps to the UNIX <code>.profile</code> script (for those who
+know UNIX).</p>
+<p>The <code>LOGIN</code> command is useful for performing
+initialisation (such as setting the terminal type with
+<code>SET.TERM.TYPE</code>, see <span class="link" onclick=
+"_goto('prompt.html')">The Command Prompt</span>), and frequently
+invokes the main menu of an application as its last action.</p>
+<h2>ON.EXIT</h2>
+<p>Complementing <code>LOGIN</code> is the <code>ON.EXIT</code>
+command, which UniVerse invokes when a user uses the
+<code>QUIT</code> or <code>LO</code> commands to leave UniVerse
+(see <span class="link" onclick="_goto('prompt.html')">The Command
+Prompt</span>). Again, where it is defined at all it is usually
+defined as a paragraph, and is sometimes used for logging activity,
+displaying reminder messages, or, on friendly systems, simply
+saying goodbye.</p>
+<h2>ON.ABORT</h2>
+<p>Finally, the <code>ON.ABORT</code> command is invoked when a
+user uses the break key to break out of a process. It can be used
+to deny access to the UniVerse command prompt (which appears if the
+<code>ON.ABORT</code> paragraph is absent) or sometimes just to
+reset 'sensible' terminal parameters, which may have been changed
+by the program being broken out of.</p>
+
+</body>
+</html>

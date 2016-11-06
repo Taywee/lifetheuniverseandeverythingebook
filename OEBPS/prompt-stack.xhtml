@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: The Command
+Stack</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: The Command Stack' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, the, command, stack" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> The Command Stack</h1>
+<p>UniVerse keeps a 'history' of all the commands you have entered
+at the UniVerse command prompt. To demonstrate it, it is helpful to
+first enter a few commands. Try the following:</p>
+<p><code>DISPLAY This is my first command<br />
+DISPLAY This is my second command<br />
+DISPLAY This is my third command</code></p>
+<p>(The <code>DISPLAY</code> command is explained above: see
+<span class="link" onclick="_goto('prompt.html')">The Command
+Prompt</span> above.)</p>
+<p>To see you command history, enter <code>.L</code>, which will
+display a list something like this:</p>
+<p><code>03 DISPLAY This is my first command<br />
+02 DISPLAY This is my second command<br />
+01 DISPLAY This is my third command</code></p>
+<p>This is called your 'command stack', and all the commands to
+manipulate it, like the <code>,L</code> command above, begin with a
+dot.</p>
+<p>You can repeat your last command by entering <code>.X</code>, or
+indeed any command by entering <code>.Xn</code>, where n is the
+commands position in the stack, the most recent command always
+being 1. For instance, to repeat the command <code>DISPLAY This is
+my second command</code>, enter <code>.X2</code>. Try it.</p>
+<p>If you now enter <code>.L</code> again, you will see:</p>
+<p><code>04 DISPLAY This is my first command<br />
+03 DISPLAY This is my second command<br />
+02 DISPLAY This is my third command<br />
+01 DISPLAY This is my second command</code></p>
+<p>Notice that when you repeated the second command, it became the
+most recent command, and so appeared once more at position 1 in the
+stack. This is how the stack generally behaves: as you enter new
+commands, the older commands are each gradually shuffled down the
+command stack. Only when you enter <code>.X</code> does it not
+generate a new entry in the command stack, because you are merely
+repeating the last command, so UniVerse decides to ignore it.</p>
+<p>Take care. After a while you will find yourself 'remembering'
+where the commands will be and able to enter <code>.X3</code> to
+reexecute the command you issued three commands ago, but to begin
+with always enter <code>.L</code> to list the commands before
+reexecuting any but your last command: many an overconfident
+developer has deleted the source of the program he is working on,
+or cleared a file of carefully loaded data, by guessing the
+position of the command he wanted in the stack incorrectly.</p>
+<p>You can delete the most recent entry in the stack by entering
+<code>.D</code>, or indeed delete any entry by entering
+<code>,Dn</code> where n is the entry's number. Try entering
+<code>.D3</code> to delete entry three, and then <code>.L</code> to
+redisplay the stack:</p>
+<p><code>03 DISPLAY This is my first command<br />
+02 DISPLAY This is my third command<br />
+01 DISPLAY This is my second command</code></p>
+<p>To 'recall' an older command to the head of the stack, enter
+<code>.Rn</code>, where n is again the number of the stack entry to
+recall. Try recalling entry 2 with <code>.R2</code>, and relisting
+the stack with <code>.L</code>:</p>
+<p><code>03 DISPLAY This is my first command<br />
+02 DISPLAY This is my third command<br />
+01 DISPLAY This is my second command<br />
+02 DISPLAY This is my third command</code></p>
+<p>Like <code>.X</code>, <code>.R</code> brings an old command to
+the top of the stack: but it doesn't run it again. You would most
+often do this because you wished to change the command before
+running it again. To change the most recent command in the stack,
+enter <code>.C/oldstring/newstring</code>. For instance, you could
+change the word 'third' to '3rd' by entering
+<code>.C/third/3rd</code>. Try it, and redisplay the stack with
+<code>.L</code>:</p>
+<p><code>03 DISPLAY This is my first command<br />
+02 DISPLAY This is my third command<br />
+01 DISPLAY This is my second command<br />
+02 DISPLAY This is my 3rd command</code></p>
+<p>In principle, you could change any entry by using
+<code>.Cn</code> in place of <code>.C</code> to indicate it's
+number, but in practice its safer to use <code>.Rn</code> first to
+recall the entry, and then <code>.C</code>.</p>
+<p>If the command you wish to change contains the '/' character,
+then you can use a different delimiter in your change command: the
+command <code>.C!third!3rd</code> would have had exactly the same
+effect as the one you used above. In fact, you can use any of the
+following characters: !@#$%&amp;*/\:=+-?(){}[]`'.,|, so you can
+generally find one which doesn't appear in your command.</p>
+<p>If the same string appears more than once in your command, and
+you wish to change all the occurences in one go, append
+<code>/G</code>: the 'G' standing for 'global'. For instance, type
+<code>.C/m/!/g</code> and then <code>.L</code>:</p>
+<p><code>03 DISPLAY This is my first command<br />
+02 DISPLAY This is my third command<br />
+01 DISPLAY This is my second command<br />
+02 DISPLAY This is !y 3rd co!!and</code></p>
+<p>To add something to the end of a command, you can use <code>.A
+extrabit</code> (or <code>.An extrabit</code> to add something to
+command n in the stack); and finally, for UNIX programmers having
+trouble remembering to enter commands and filenames in upper case,
+you can use <code>.U</code> (or <code>.Un</code>) to convert an
+entire command to upper case.</p>
+<p>The number of commands kept in the stack is depends on the way
+your copy of UniVerse has been configured, but is usually about
+100. Entering <code>.L</code> will show you up to 20: to see more,
+enter <code>.Ln</code> where n is the number of commands you wish
+to see.</p>
+
+</body>
+</html>

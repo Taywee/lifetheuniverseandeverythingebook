@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Overriding
+Dictionaries</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Overriding Dictionaries' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, overriding, dictionaries" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Overriding Dictionaries</h1>
+<h2>RetrieVe and Dictionaries</h2>
+<p>You may have noticed during the last section (see <span class=
+"link" onclick="_goto('retrieve-list.html')">Listing
+Records</span>) that you have not had to specify any display
+specifications for the columns in your enquiries so far. For
+instance, when you listed the <code>TYPE</code> column, you did not
+need to specify that you wanted a four character wide field
+justified to the left and with a heading of 'TYPE': all this
+information was derived from the dictionary of the
+<code>COPY.OF.VOC</code> file.</p>
+<p>This is, of course, one of the strengths of UniVerse. The way in
+which a field is displayed depends above all on its contents: and
+of course its contents do not vary from enquiry to enquiry. It is
+therefore more efficient to define these details once in the
+dictionary of the file, and allow enquiries using the dictionary in
+question to 'inherit' the display details. This has the further
+advantage that if at some point in the future the contents and thus
+the display requirements of the field change, simply by changing
+the corresponding dictionary record all the enquiries using the
+record are updated.</p>
+<p>Sometimes, though, enquiries will vary in the way in which they
+present fields. Very commonly, one enquiry which lists only keys
+and descriptions will wish to allow a wider column width to the
+description than another which shows many columns from the same
+file, and cannot afford the column space.</p>
+<p>This problem, and one solution, have already been discussed (see
+<span class="link" onclick=
+"_goto('dictionaries.html')">Dictionaries</span>). The most common
+solution is to define a 'synonym' dictionary record, evaluating the
+same data but giving it different display characteristics: such as
+a different column width.</p>
+<h2>Overriding existing dictionary definitions</h2>
+<p>There is another technique, though, which can prove useful where
+you are confident that the change you wish to make to the display
+characteristics of a field is unique to the enquiry you are working
+on. For instance, if you are running a 'once off', 'ad hoc'
+enquiry, you may not wish to go to the trouble of creating a new
+dictionary record simply in order to give one column greater width.
+More importantly, you may wish to avoid cluttering up the
+dictionary file with records never likely to be used again.</p>
+<p>You can specify parameters which override specific dictionary
+parameters within your retrieve statement. This is perhaps easiest
+to illustrate by example. You may have noticed that in the sample
+enquiries run in the previous section, the <code>DESC</code>
+(description) frequently wrapped onto two or more lines within a
+fairly narrow column. You could avoid this by overriding the
+dictionary display width for the column like this:</p>
+<p><code>&gt;<strong>LIST COPY.OF.VOC DESC FMT
+"65T"</strong></code></p>
+<pre>
+LIST COPY.OF.VOC DESC FMT "65T" 13:04:39  08-19-99  PAGE 1
+VOC.........   DESC.............................................................
+
+F9             Data descriptor for Field 9 of any file
+PRINT.ADMIN    Paragraph
+TEST.PARAGRA   PA
+PH
+COMO           Verb - Control copying of command output to files
+NOHEAD         Keyword - Do not print a banner page
+LT             Keyword - "Less Than" operator
+BREAK.VERB     Verb - Enable or disable INTR, STOP, SUSP, and BRK keys.
+SUBO           Verb - Subtract OCTAL numbers
+ALL.MATCH      Keyword - Specify that ALL strings should match for
+               SEARCH/ESEARCH statement
+INQUIRING      Keyword - Prompt for record name
+LIST.ME        Sentence - Return status of all users with your login name
+IN             Keyword - The word "IN"; ignored by RetrieVe
+MAP.VERB       Verb - Display a MAP of the contents of the system CATALOG
+CONSYS.REPOR   F
+TS
+MAKE.DEMO.FI   Verb - Create demo files (8.3.3)
+LES
+STATS          Keyword - Synonym for STATISTICS
+Press any key to continue...
+</pre>
+<p>The <code>FMT</code> keyword following the <code>DESC</code>
+fieldname controls the format in which that field is displayed. It
+overrides the fifth line of the <code>DESC</code> dictionary
+record, which shows a format of <code>30T</code>.</p>
+<p>You can override most of the dictionary fields in this way:</p>
+<p><code>CONV</code> overrides the third dictionary record field:
+the conversion.<br />
+<code>COL.HDG</code> overrides the fourth dictionary record field:
+the column heading.<br />
+<code>FMT</code>, as we have seen, overrides the fifth dictionary
+record field: the format.<br />
+<code>SINGLE.VALUE</code> and <code>MULTI.VALUE</code> overwride
+the <code>S</code> or <code>M</code> in the sixth field of the
+dictionary record.</p>
+<h2>Columns without dictionary records</h2>
+<p>You can even list columns not connected to any dictionary record
+using the <code>EVAL</code> keyword. You can use the expression
+<code>EVAL "formula"</code> almost anywhere you can use a field
+name in a RetrieVe command. The formula works in precisely the same
+way as the formula found on the second line of an I-descriptor (see
+<span class="link" onclick=
+"_goto('dictionaries-imaginaries.html')">Imaginary Fields</span>),
+and effectively means you can avoid creating an I-descriptor if you
+are confident that you will not be using your formula anywhere
+except in the current enquiry. <code>EVAL</code> is particularly
+good for 'ad-hoc' enquiries.</p>
+<p>To take an example, imagine that you wished to include a column
+showing the length of the keys for all the <code>COPY.OF.VOC</code>
+records. You could create an I-descriptor to do this easily enough,
+but you've come to the conclusion that this information will never
+be needed again, so its best not to clog up the dictionary with the
+extra record. (Incidentally - I think you'd be right about this.
+It's difficult to think of a plausible reason why anyone should
+want such a bizarre statistic: but cut me some slack, it's not
+always easy writing training courses).</p>
+<p>Using <code>EVAL</code>, your enquiry would run:</p>
+<p><code>&gt;<strong>LIST COPY.OF.VOC EVAL
+"LEN(@ID)"</strong></code></p>
+<pre>
+LIST COPY.OF.VOC EVAL "LEN(@ID)" 13:22:58  08-19-99  PAGE 1
+VOC.........    LEN(@ID)..
+
+F9              2
+PRINT.ADMIN     11
+TEST.PARAGRA    14
+PH
+COMO            4
+NOHEAD          6
+LT              2
+BREAK.VERB      10
+SUBO            4
+ALL.MATCH       9
+INQUIRING       9
+LIST.ME         7
+IN              2
+MAP.VERB        8
+CONSYS.REPOR    14
+TS
+MAKE.DEMO.FI    15
+LES
+STATS           5
+PTIME           5
+Press any key to continue...
+</pre>
+<p>Ok, so it works, but its pretty untidy. The numbers are left
+justified, and the column title simply a restatement of the
+formula. This is because without a dictionary record, you RetieVe
+doesn't know how to format the information. But you can use any of
+the keywords listed earlier in this section, like <code>FMT</code>,
+to solve this problem:</p>
+<p><code>&gt;<strong>LIST COPY.OF.VOC EVAL "LEN(@ID)" COL.HDG 'Key
+length' FMT '10R'</strong></code></p>
+<pre>
+LIST COPY.OF.VOC EVAL "LEN(@ID)" COL.HDG "Key length" FMT "10R" 13:27:07  08-19-
+99  PAGE 1
+VOC.........    Key length
+
+F9                       2
+PRINT.ADMIN             11
+TEST.PARAGRA            14
+PH
+COMO                     4
+NOHEAD                   6
+LT                       2
+BREAK.VERB              10
+SUBO                     4
+ALL.MATCH                9
+INQUIRING                9
+LIST.ME                  7
+IN                       2
+MAP.VERB                 8
+CONSYS.REPOR            14
+TS
+MAKE.DEMO.FI            15
+LES
+STATS                    5
+Press any key to continue...
+</pre>
+<p>Isn't that better?</p>
+<p>What if you now wanted to sort the enquiry by the length of the
+key? (This example is getting weirder and weirder, but stick with
+it.) If you were sorting by a fieldname, you'd have to specify the
+fieldname twice: once in the list of fields, and again in a
+<code>BY</code> clause. Does this mean you have to type the
+<code>EVAL...</code> with all its accompanying nonsense twice?
+Well, you could, but there is a better way. You can use the keyword
+<code>AS</code> to give a 'name' to your <code>EVAL</code> column,
+and then use the name in the <code>BY</code> clause. It's done like
+this:</p>
+<p><code>&gt;<strong>LIST COPY.OF.VOC EVAL "LEN(@ID)" COL.HDG 'Key
+length' FMT '10R' AS LEN.KEY BY LEN.KEY</strong></code></p>
+<pre>
+LIST COPY.OF.VOC EVAL "LEN(@ID)" COL.HDG "Key length" FMT "10R" AS LEN.KEY BY LE
+N.KEY 13:42:12  08-19-99  PAGE 1
+VOC.........    Key length
+
+|                        1
+&lt;                        1
++                        1
+=                        1
+-                        1
+A                        1
+%                        1
+P                        1
+)                        1
+;                        1
+~                        1
+?                        1
+&amp;                        1
+*                        1
+Q                        1
+/                        1
+(                        1
+&gt;                        1
+,                        1
+Press any key to continue...
+</pre>
+<p>In fact, you can even use <code>AS</code> to provide a 'synonym'
+to an ordinary field too. Let's say someone took your formula and
+created a dictionary record called
+<code>THE.LENGTH.OF.THE.KEY</code>. Even to me (and I have always
+preferred long, descriptive and unabbreviated names for computer
+entities) this seems over the top. To avoid having to type it more
+than once, you could say:</p>
+<p><code>&gt;<strong>LIST COPY.OF.VOC THE.LENGTH.OF.THE.KEY AS
+LEN.KEY BY LEN.KEY</strong></code></p>
+
+</body>
+</html>

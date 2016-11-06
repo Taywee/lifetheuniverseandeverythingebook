@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Keywords</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Keywords' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, keywords" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Keywords</h1>
+<p><strong>Keywords</strong> are generally parameters or modifiers
+applied to verbs. We came across one when we examined the
+<code>CREATE.FILE filename DYNAMIC</code> command, as
+<code>DYNAMIC</code> is a keyword.</p>
+<p>Editing a keyword reveals the following:</p>
+<p><code>ED VOC DYNAMIC<br />
+2 lines long.<br />
+<br />
+----: P<br />
+0001: K<br />
+0002: 241<br />
+----:</code></p>
+<p>The number in the second field is provided to whichever verb is
+being run, which understands it and modifies its behaviour
+accordingly. As keywords work by numbers in this way, they are not
+terribly interesting to edit.</p>
+<p>One peculiarity, though, is that some words which are usually
+used as keywords may also be used as verbs in their own right. An
+example is the <code>DISPLAY</code> command we have used in many
+examples to date. The <code>VOC</code> record for
+<code>DISPLAY</code> looks like this:</p>
+<p><code>ED VOC DISPLAY<br />
+3 lines long.<br />
+<br />
+----: P<br />
+0001: K<br />
+0002: 258<br />
+0003: DISPLAY.VERB<br />
+----:</code></p>
+<p>This indicates that the word <code>DISPLAY</code> has two
+entirely separate uses. If used as a keyword following some other
+verb, it is keyword 258: and it is up to the verb in question what
+to do if this keyword is specified. On the other hand, if used as a
+command in its own right, as in <code>DISPLAY Hello mum!</code>,
+the UniVerse command on the third line is executed instead. Editing
+this in turn reveals an ordinary verb.</p>
+<p><code>ED VOC DISPLAY.VERB<br />
+4 lines long.<br />
+<br />
+----: P<br />
+0001: V<br />
+0002: DISPLAY<br />
+0003: I<br />
+0004: GHNK<br />
+----:</code></p>
+
+</body>
+</html>

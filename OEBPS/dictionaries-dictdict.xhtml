@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: The Dictionary
+Dictionary</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: The Dictionary Dictionary' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, the, dictionary, dictionary" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> The Dictionary Dictionary</h1>
+<p>I have already mentioned that you can apply most commands to
+dictionary files as easily as to data files. <code>LIST</code>
+itself is no exception. Try this:</p>
+<p><code>&gt;<strong>LIST DICT
+CUSTOMER.INVOICES</strong></code></p>
+<pre>
+DICT CUSTOMER.INVOICES    17:51:53  08-13-99  Page 1
+
+               Type &amp;
+Field......... Field. Field........ Conversion.. Column......... Output Depth &amp;
+Name.......... Number Definition... Code........ Heading........ Format Assoc..
+
+@ID            D    0                            InvNum          6R     S
+CUSTOMER.NAME  D    1                            Customer Name   15T    S
+WIDE.CUSTOMER. D    1                            Customer Name   50T    S
+NAME
+PRODUCT        D    2                            Product         20T    S
+UNIT.PRICE     D    3               MD20P        Unit Price      10R    S
+QUANTITY       D    4                            Quantity        10R    S
+VALUE          I      UNIT.PRICE *  MD20P        Value           10R    S
+                      QUANTITY
+
+7 records listed.
+</pre>
+<p>Here you can see, in a single enquiry, all the dictionary
+records you have defined. An interesting point, though, is that in
+order to format an enquiry like this, <code>LIST</code> requires a
+dictionary. After all, how does it know that the title of the first
+column is 'Field Name'? And indeed, how did it know which columns
+to display, given that you specified no field names after your
+<code>LIST</code> command?</p>
+<p>The answer to both questions is that every dictionary has a
+dictionary. But does this mean that that dictionary in turn must
+have a dictionary, and so on in an infinite series of dictionaries?
+No. The thing is, while the format of each data file is unique, and
+so must have a unique dictionary, the dictionary files themselves
+are all structured exactly the same way: and you've learnt this
+structure in the last few sections. This means that they can all
+share the same dictionary. It is called <code>DICT.DICT</code>.
+Take a look:</p>
+<p><code>&gt;<strong>LIST DICT.DICT</strong></code></p>
+<pre>
+DICT.DICT    18:00:34  08-13-99  Page 1
+
+               Type &amp;
+Field......... Field. Field........ Conversion.. Column......... Output Depth &amp;
+Name.......... Number Definition... Code........ Heading........ Format Assoc..
+
+@ID            D    0                            Field           14L    S
+                                                 Name
+FIELD          D    0                            Field           14L    S
+                                                 Name
+ID             D    0                                            15L    S
+ITEM.ID        D    0                                            10T    S
+KEYR           D    0                                            15R    S
+KEY            D    0                                            15L    S
+CODE           D    1                                            4L     S
+F1             D    1                                            35L    S
+EXP            D    2                            FIELD # or EXPR 30T    S
+                                                 ESSION
+A2             D    2                                            3R     S
+DATA.FILE      D    2                            DATA.FILE.NAME  30T    S
+LOC.           D    2                            LOC.            3T     S
+LOC.L          D    2                            LOCATION        40T    S
+LOC            D    2                            LOCATION        15T    S
+Press any key to continue...
+</pre>
+<p>This listing goes on for a number of pages, and is not as
+friendly as it might be, largely because UniVerse themselves do not
+follow the rule I recommended whereby each field is given a single
+<code>D</code> type entry to define it. Don't ask me why: I've told
+them often enough, but they've stopped answering my mail.</p>
+<p>But doesn't <code>DICT.DICT</code> also require a dictionary?
+Well, because it <em>is</em> a dictionary, it follows the same
+structure that any dictionary follows. And the dictionary of a
+dictionary is... <code>DICT.DICT</code>. In other words,
+<code>DICT.DICT</code> <em>is its own dictionary.</em> You can
+prove this curious fact to yourself by sneaking a look at its
+<code>VOC</code> record:</p>
+<p><code>&gt;<strong>ED VOC DICT.DICT</strong><br />
+3 lines long.<br />
+<br />
+----: <strong>P</strong><br />
+0001: F<br />
+0002: /work/universe/DICT.DICT<br />
+0003: /work/universe/DICT.DICT<br />
+Bottom at line 3.<br />
+----: <strong>Q</strong><br />
+&gt;</code></p>
+<p>And there it is: field 2 (which points to the data file) and
+field 3 (which points to the dictionary file) both point to the
+same file (see <span class="link" onclick=
+"_goto('voc-files.html')">File Pointers</span> for information
+about file pointers). This neat device precludes the need for an
+infinite series of dictionaries.</p>
+<p>To find out how <code>LIST</code> decides which fields to show
+when you enter a <code>LIST DICT filename</code> command
+<em>without</em> specifying field names (as you did above), check
+out the <code>@</code> record in <code>DICT.DICT</code> (for
+information about how the <code>@</code> phrase determines the
+default enquiry, see <span class="link" onclick=
+"_goto('dictionaries-phrases.html')">Phrases</span>):</p>
+<p><code>&gt;<strong>ED DICT CUSTOMER.INVOICES @</strong><br />
+The file "DICT.DICT" is read-only and cannot be updated.<br />
+3 lines long.<br />
+<br />
+----: <strong>P</strong><br />
+0001: PH<br />
+0002: BY FIELD.NO BY TYPE ID.SUP FIELD FIELD.TYPE FIELD.DEF
+FIELD.CONV FIELD.HE AD FIELD.FMT FIELD.ASSOC_<br />
+0003: HEADING "'F' 'T' Page 'PL'"<br />
+Bottom at line 3.<br />
+----: <strong>Q</strong><br />
+&gt;</code></p>
+<p>Several things to notice here.</p>
+<p>1. The field names, and the <code>BY</code> clauses, determine
+what you see when you type <code>LIST DICT filename...</code>.</p>
+<p>2. A trick I haven't mentioned before: the use of a
+<code>_</code> character at the end of line 2 to allow the phrase
+to continue on line 3: which you can use in any phrase which gets
+rather long.</p>
+<p>3. The <code>HEADING</code> clause, which puts a custom written
+heading at the top of your enquiry. I'll explain this, along with
+other clever things the query language can do, in the section on
+RetrieVe.</p>
+<p>4. The <code>...read-only...</code> message: as you can see from
+the paths on fields 2 and 3, <code>DICT.DICT</code> points to the
+central UniVerse directory. If you changed it, you'd change the way
+<em>every</em> dictionary is displayed, not just in this account,
+but in <em>every account on your system</em>. UniVerse only gives
+toys like this to the Unix system administrator <code>root</code>.
+If you don't fully understand what <code>DICT.DICT</code> does, you
+shouldn't edit it. If you do, you wont anyway.</p>
+
+</body>
+</html>

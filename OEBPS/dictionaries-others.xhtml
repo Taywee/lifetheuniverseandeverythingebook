@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: *: Other dictionary
+record types</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: *: Other dictionary record types' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, *, other, dictionary, record, types" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> *: Other dictionary record types</h1>
+<h2>A and S types</h2>
+<p>You may sometimes come across dictionary records with types of
+<code>A</code> or <code>S</code>. They play roles similar to
+<code>D</code> and <code>I</code> type dictionary records, but are
+supported largely for compatability reasons: some forms of PICK
+(see <span class="link" onclick="_goto('about.html')">About
+UniVerse</span> above) used these instead of <code>D</code> and
+<code>I</code>. If you come across them, you'll find their layout
+described in the UniVerse documentation: but they are both less
+friendly and less efficient than the types I have already
+described, and have no extra functionality. My advice would be that
+if you find yourself having to change one, do so by replacing it
+with a <code>D</code> or <code>I</code>.</p>
+<h2>X types</h2>
+<p>Like <code>X</code> type records in the <code>VOC</code> file,
+<code>X</code> type dictionary records are not designed to be used
+as words in commands. They are there to store data. For instance,
+many files have records keyed by sequential numbers. In order to
+add a new record to such a file, you must find the lowest unused
+number you can use as a key. You could do so by enquiring on the
+file itself, but this would add enormous overhead. Instead, most
+programmers add a record to the dictionary of the file, called (by
+convention) <code>&amp;NEXT.AVAILABLE&amp;</code>, which is a type
+X and carries the lowest unused number on its second field. This is
+locked, read, updated, and unlocked by every process which adds a
+record to the main file.</p>
+<p>One or two <code>X</code> types are harmless, but as with
+<code>X</code> type records in your VOC file, bear in mind that
+each one increases the size of a file crucial to the performance of
+your system, as well as 'taking up' a word which might otherwise be
+available as part of your command language. It is therefore
+advisable to use them sparingly. If you find yourself setting up
+ten <code>X</code> types on a dictionary, consider setting up a
+separate UniVerse file for the values, as it seems likely you will
+be dealing with a new form of 'entity' altogether, rather than
+merely a chance administrative detail of your main data file.</p>
+
+</body>
+</html>

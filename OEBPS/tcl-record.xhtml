@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Record
+Commands</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Record Commands' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, record, commands" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Record Commands</h1>
+<h2>COUNT</h2>
+<p><strong>Syntax: COUNT filename</strong></p>
+<p>Counts the records in <code>filename</code>.</p>
+<h2>CT</h2>
+<p><strong>Syntax: CT filename recordkey</strong></p>
+<p>Displays a record on the screen (stands for 'Copy to Terminal').
+If you don't want to actually change a record, saves you loading up
+the editor just to see what's in it: and eliminates the risk that
+you'll accidentally change it.</p>
+<h2>CP</h2>
+<p><strong>Syntax: CP filename recordkey</strong></p>
+<p>As <code>CT</code>, but sends the output to the default
+printer.</p>
+<h2>COPY</h2>
+<p><strong>Syntax: COPY FROM filename1 TO filename2 recordkey1
+recordkey2...<br />
+<em>or</em> COPY FROM filename1 TO filename2 ALL</strong></p>
+<p>The first syntax shown here copies <code>recordkey1</code> and
+<code>recordkey2</code> from <code>filename1</code> to
+<code>filename2</code>: unless, that is, records by these keys
+already exist on <code>filename2</code>, in which case they are not
+overwritten. The second command works the same way, but copies
+<em>all</em> of <code>filename1</code>'s records.</p>
+<p>To copy the records even if it means overwriting, add the word
+<code>OVERWRITING</code> to your command. To remove the records
+which get copied from <code>filename1</code> (effectively
+<em>moving</em> the records) add <code>DELETING</code>. Finally,
+copying a lot of records can take a while, and watching a flashing
+cursor for a minute or more makes me nervous. To get feedback of
+the record keys as they're copied, add <code>SQUAWK</code>.</p>
+<h2>CNAME</h2>
+<p><strong>Syntax: CNAME oldfilename TO newfilename<br />
+<em>or</em> CNAME filename oldrecordkey, newrecordkey</strong></p>
+<p>The first syntax changes the name of a file: changes both the
+key of the file pointer record in the <code>VOC</code> and the name
+of the corresponding UNIX files.</p>
+<p>The second syntax changes the key of a record in the file.</p>
+<h2>EXCHANGE</h2>
+<p><strong>Syntax: EXCHANGE filename recordkey1
+recordkey2</strong></p>
+<p>OK, so this is not a command you will use every day, but I like
+it. This record swaps the contents of two records.</p>
+<h2>DELETE</h2>
+<p><strong>Syntax: DELETE filename recordkey1
+recordkey2...</strong></p>
+<p>Deletes records from a file. Will also work with a select list:
+just build your list and type <code>DELETE filename</code>.</p>
+<h2>CLEAR.FILE</h2>
+<p><strong>Syntax: CLEAR.FILE filename</strong></p>
+<p>Removes all the records from a file. Better than deleting them
+all as it reinitialises the file, collecting all wasted space and
+so on. The command works from a select list: this is not a
+recommendation but a warning, for if you do a
+<code>CLEAR.FILE</code> with an active select list it will look for
+files with names like those in your list and clear them if it finds
+them.</p>
+
+</body>
+</html>

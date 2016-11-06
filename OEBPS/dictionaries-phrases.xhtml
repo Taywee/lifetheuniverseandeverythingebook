@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Phrases</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Phrases' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, phrases" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Phrases</h1>
+<p>Unless you don't get out often enough, once you've typed...</p>
+<p><code>LIST CUSTOMER.INVOICES CUSTOMER.NAME PRODUCT UNIT.PRICE
+QUANTITY VALUE</code></p>
+<p>...a few times (and most probably mistyped it a few more) it has
+lost its charm as a form of entertainment. If you find yourself
+displaying the same group of fields in the same order over and over
+again, it would be useful if you could define a single word which
+would automatically collect them all together for you.</p>
+<p>Well... you can't, so tough luck.</p>
+<p>Only kidding. In fact, its simple. You can create a
+<em>phrase</em> dictionary record which will do exactly this. To
+create one for <code>CUSTOMER.INVOICES</code>, enter the
+command:</p>
+<p><code>&gt;<strong>ED DICT CUSTOMER.INVOICES
+MAIN.FIELDS</strong><br />
+New record.<br />
+<br />
+----: <strong>I</strong><br />
+0001= <strong>PH Phrase including all the main
+fields</strong><br />
+0002= <strong>CUSTOMER.NAME PRODUCT UNIT.PRICE QUANTITY
+VALUE</strong><br />
+0003= <strong>(Press RETURN)</strong><br />
+Bottom at line 2.<br />
+----: <strong>FI</strong><br />
+"MAIN.FIELDS" filed in file "DICT CUSTOMER.INVOICES".<br />
+&gt;</code></p>
+<p>You may now enter the command:</p>
+<p><code>LIST CUSTOMER.INVOICES MAIN.FIELDS</code></p>
+<p>This will have exactly the same effect as the earlier command,
+and save your fingers.</p>
+<p>Phrases have other advantages. Let us say that your application
+produces the original enquiry in several places. If you add a new
+field you would like to include in each of these places, you need
+to modify each in turn. If, on the other hand, each time the
+enquiry is used it uses the phrase <code>MAIN.FIELDS</code>, simply
+changing the phrase is sufficient.</p>
+<p>If you create a phrase called <code>@</code> - that is, just
+using the 'at' symbol as its key - you need not even name the
+phrase with your enquiry. Simply typing the command:</p>
+<p><code>LIST CUSTOMER.INVOICES</code></p>
+<p>...has the same effect as typing...</p>
+<p><code>LIST CUSTOMER.INVOICES @</code></p>
+<p>It's good practice to define an <code>@</code> dictionary record
+for every file you create. In this way, someone can look at the
+most important fields in your file (which you decide in advance via
+your <code>@</code> dictionary record) simply by entering the
+command <code>LIST filename</code>, without first having to consult
+the dictionary.</p>
+<p>Similar to <code>@</code> is <code>@LPTR</code>, which is the
+'default phrase' used when you enter the command <code>LIST
+filename LPTR</code>: which sends the output to a 'line
+printer'.</p>
+<p>The <code>@</code> and <code>@LPTR</code> phrases are ignored if
+you enter any field names on your command line: UniVerse assumes
+you are then listing explicitly the fields you want, and does not
+alter this selection. If you want to list only record keys (which
+is what <code>LIST</code> displays in the absense of explicit field
+names if there is no <code>@</code> phrase), you can use the
+command <code>LIST filename ID.ONLY</code>.</p>
+<p>You can put other keywords in phrases besides field names. The
+subject of sorting your enquiry will be covered in more detail
+during the discussion of the RetrieVe query language, but for now
+note that you can sort your enquiry results by appending <code>BY
+fieldname</code> to your <code>LIST</code> command. If you put a
+<code>BY</code> clause in your phrase, even in your <code>@</code>
+phrase, it will apply the sort whenever the phrase is used. In
+short, you can put any valid Retrieve clause into a phrase.</p>
+
+</body>
+</html>

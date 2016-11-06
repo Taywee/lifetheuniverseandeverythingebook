@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Basic Terminal
+I/O</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Basic Terminal I/O' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, basic, terminal, i/o" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Basic Terminal I/O</h1>
+<h2>Terminal output: PRINT</h2>
+<p>The command used to display output to your terminal screen has
+appeared many times in the examples in this section, and takes the
+form:</p>
+<pre>
+PRINT something
+</pre>
+<p><code>someting</code> can be a constant, variable, or
+expression. <code>PRINT</code> evaluates <code>something</code> and
+displays the result on the screen. It begins from the cursor's
+current position (wherever it was left by the last
+<code>PRINT</code> statement) and, by default, leaves the cursor at
+the beginning of the next row.</p>
+<p>To suppress this default behaviour and leave the cursor at the
+end of the string it has just printed, add a trailing colon to the
+end of the <code>PRINT</code> statement, so:</p>
+<pre>
+PRINT something:
+</pre>
+<p>If you <code>PRINT</code> often enough, you will reach the point
+where your next <code>PRINT</code> will cause the screen to scroll
+up to make room for the new output. At this point, UniVerse will
+automatically display the prompt <code>Press RETURN to
+continue...</code>, so that information is not removed from the
+screen before the user has had a chance to read it. This is the
+same system which causes RetrieVe to pause at the end of each
+screenful: and as at the RetrieVe prompt, the user has the option
+of pressing RETURN, pressing Q to abandon the program, or pressing
+N to suppress further prompts.</p>
+<h2>Cursor positioning</h2>
+<p>To position the cursor to the point at which you wish your
+output to appear, use the function <code>@(column, row)</code>. The
+<code>column</code> is a number between 0 (the left of your screen)
+and the width of your screen (usually 80) less 1. Similarly, the
+row may range from 0 (the top of your screen) to the screen's depth
+less 1. The function evaluates to whichever escape sequence the
+user's terminal requires to position the cursor appropriately: so
+in order to work the terminal type must first have been selected
+using the <code>SET.TERM.TYPE</code> command (see <span class=
+"link" onclick="_goto('tcl-terminal.html')">Terminal
+Commands</span>).</p>
+<p>You will see the <code>@</code> function most commonly in
+statements like this one:</p>
+<pre>
+PRINT @(2,2) : INVOICE.VALUE :
+</pre>
+<p>However, <code>@</code> is not a part of the syntax of the
+<code>PRINT</code> statement, but an independent function. One
+advantage to this is that you can build a string which contains an
+entire screen image which you can then print, and reprint (after,
+say, displaying a help screen), using one command:</p>
+<pre>
+SCREEN = @(0, 0) : 'Invoice Screen'
+SCREEN := @(0, 1, bits_menu, computers_menu, universe_menu) : 'Number: ' : INVOICE.NUMBER
+SCREEN := @(0, 3) : 'Value : ' : INVOICE.VALUE
+* Further fields go here.
+PRINT SCREEN:
+</pre>
+<p>One side effect of using the <code>@</code> function is that
+UniVerse assumes that you are using a 'forms based' rather than a
+'scroll based' interface in your program, and the <code>Press
+RETURN to continue...</code> prompts are suppressed from the point
+it was first used. Even if you do not need the <code>@</code>
+function, you can achieve this effect by including a statement
+like:</p>
+<pre>
+DUMMY = @(0, 0)
+</pre>
+<p>The <code>@</code> function can also be used with a single
+coordinate to specify a column number of the current row.</p>
+<p>If the single parameter is negative, it takes on a special
+meaning according to its value:</p>
+<table>
+<tr>
+<td>
+<p>-1</p>
+</td>
+<td>
+<p>Clear screen</p>
+</td>
+<td>
+<p>-8</p>
+</td>
+<td>
+<p>End 'protect'</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>-2</p>
+</td>
+<td>
+<p>Cursor 'home'</p>
+</td>
+<td>
+<p>-9</p>
+</td>
+<td>
+<p>Backspace</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>-3</p>
+</td>
+<td>
+<p>Clear from cursor</p>
+</td>
+<td>
+<p>-10</p>
+</td>
+<td>
+<p>Move up a row</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>-4</p>
+</td>
+<td>
+<p>Clear rest of line</p>
+</td>
+<td>
+<p>-11</p>
+</td>
+<td>
+<p>Begin faded</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>-5</p>
+</td>
+<td>
+<p>Begin flashing</p>
+</td>
+<td>
+<p>-12</p>
+</td>
+<td>
+<p>End faded</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>-6</p>
+</td>
+<td>
+<p>End flashing</p>
+</td>
+<td>
+<p>-13</p>
+</td>
+<td>
+<p>Begin inverse</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>-7</p>
+</td>
+<td>
+<p>Begin 'protect'</p>
+</td>
+<td>
+<p>-14</p>
+</td>
+<td>
+<p>End inverse</p>
+</td>
+</tr>
+</table>
+<p>You can find the full list in the UniVerse documentation: it
+extends to about 70 items.</p>
+<h2>Reading the keyboard: INPUT</h2>
+<p>To capture input from the keyboard, use the <code>INPUT</code>
+statement, the simplest form of which is:</p>
+<pre>
+INPUT variable
+</pre>
+<p>This will read a character string from the keyboard until the
+user hits RETURN, and assign it to <code>variable</code>. To limit
+the number of characters accepted, you may add a maximum length of
+input, as in:</p>
+<pre>
+INPUT INVOICE.NUMBER, 10
+</pre>
+<p>This will assign a maximum of 10 characters to the variable
+<code>INVOICE.NUMBER</code>. The user may hit RETURN before
+entering his tenth character, but once he has entered the tenth
+character, the ten characters will be assigned to INVOICE.NUMBER
+automatically and the program will proceed to its next statement.
+To force the user to enter a RETURN even when the length of the
+input length is limited, add an underscore:</p>
+<pre>
+INPUT INVOICE.NUMBER, 10_
+</pre>
+<p>Normally, <code>INPUT</code> will echo the characters entered
+beginning at the current cursor position. You can position the
+cursor with a <code>PRINT @(X,Y):</code> type statement, or achieve
+the same effect by using an <code>@</code> clause in the input
+statement again, as in:</p>
+<pre>
+INPUT @(2,2): INVOICE.NUMBER, 10_
+</pre>
+
+</body>
+</html>

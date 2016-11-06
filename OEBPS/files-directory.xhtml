@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Directory
+Files</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Directory Files' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, directory, files" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Directory Files</h1>
+<p>To create a directory file, the command is:</p>
+<p><code>CREATE.FILE filename 1</code> <em>or</em><br />
+<code>CREATE.FILE filename 19</code></p>
+<p>Directory files gain their name from the fact that they are
+implemented as directories under UNIX: each record in the directory
+file being a simple ASCII file under UNIX.</p>
+<p>The different between type 1 and type 19 directory files is
+subtle. Type 1 files break up long record keys into sections not
+longer than 14 characters, and created a set of nested directories
+to store the entire name. This is a little difficult to explain
+except by example:</p>
+<p>If you save a record called <code>THISISAVERYLONGNAME</code> in
+a type 1 file called TYPE1, the path to the UNIX file created will
+run <code>.../TYPE1/THISISAVERYLON/GNAME</code>. Thus the file will
+be called <code>GNAME</code>, and it will be the only file in a
+directory called <code>THISISAVERYLON</code>. This mechanism is a
+historical throwback to operating systems such as MSDOS which
+cannot handle long file and directory names.</p>
+<p>In addition, keys to records in type 1 files are limited to 41
+characters in length. A key of
+<code>123456789-123456789-123456789-123456789-12</code> would be
+automatically truncated to
+<code>123456789-123456789-123456789-123456789-1</code>, and saved
+as
+<code>...TYPE1/123456789-1234/56789-12345678/9-123456789-1</code>.</p>
+<p>Unless, therefore, you have some reason to make your file
+structure, when viewed from UNIX, easily transportable to MSDOS,
+use type 19 files, which operate far more straightforwardly. The
+same record in a type 19 file is saved with a UNIX pathname of
+<code>...TYPE19/THISISAVERYLONGFILENAME</code>.</p>
+<p>Do not be confused by this into thinking that the key of a
+record in a type 1 file changes from the point of view in UniVerse:
+type 1 and type 19 files are indistinguishable from UniVerses point
+of view, and any UniVerse command or program would read the key
+<code>THISISALONGFILENAME</code> from either a type 1 or a type 19
+file. It is only when you look at the storage under UNIX that the
+difference becomes apparent.</p>
+<p>Directory files have a number of uses:</p>
+<p>1. Only type 1 and type 19 files make their records and
+individually readable to UNIX. They are therefore sometimes used to
+communicate with UNIX programs.</p>
+<p>2. The UniVerse Basic compiler will only compile records in a
+type 1 or type 19 file. All source code, therefore, has to be
+stored in such files.</p>
+<p>3. There are a few other UniVerse commands which will work only
+with type 1 or type 19 files, but these are much less important
+than the basic compiler.</p>
+<p>4. UniVerse Basic provides a group of statements for 'sequential
+file I/O', in which the fields of records are read or written in
+sequence. These only work on records in type 1 or type 19
+files.</p>
+<p>As can be seen, the uses of directory files are very specific,
+and unless you have a specific reason to use a directory file, do
+not create one. Above all, do not use them to contain randomly
+accessed application data (such as customer or invoice records), as
+they are extremely inefficient in this role.</p>
+
+</body>
+</html>

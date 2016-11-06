@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Basic Flow
+Control</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Basic Flow Control' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, basic, flow, control" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Basic Flow Control</h1>
+<h2>Flow control</h2>
+<p>Usually, each statement in your program is executed in turn
+until the final <code>END</code> statement is reached. Any
+divergence from this 'flow' must be deliberately engineered, and
+you have already seen two ways in which this can be done: by making
+statements conditional (see <span class="link" onclick=
+"_goto('basic-conditions.html')">Basic Conditions</span>) and by
+looping (see <span class="link" onclick=
+"_goto('basic-loops.html')">Loops</span>). UniVerse Basic provides
+two further statements which you can use to control the order in
+which your statements run:</p>
+<h2>The unconditional jump: GOTO</h2>
+<p>To use <code>GOTO</code>, you must add two lines to your
+program. The first is a 'label', which serves as a kind of place
+marker. It can be just a number at the beginning of a line, but
+usually some kind of descriptive name is chosen. A name must be
+followed by a colon, like this <code>SKIP.MESSAGE:</code>. The
+second is the <code>GOTO</code> itself, which must be followed by
+the label to which control should be transferred:</p>
+<pre>
+PRINT 'Invoice entry complete.'
+IF VALUE # 0 THEN GOTO SKIP.MESSAGE
+PRINT 'Error! Value is 0!'
+SKIP.MESSAGE:
+* Continue with program...
+</pre>
+<p>This will work, but it's poor code. It's difficult to think of
+uses of <code>GOTO</code> which aren't: almost any use of
+<code>GOTO</code> can be better written using loops and conditions.
+For example, the code above could have been written:</p>
+<pre>
+PRINT 'Invoice entry complete.'
+IF VALUE = 0 THEN PRINT 'Error! Value is 0!'
+* Continue with program...
+</pre>
+<p>I would not advise someone never to use a <code>GOTO</code>,
+because all such arbitrary prohibitions eventually fall foul of
+some very particular circumstance where the the thing prohibited is
+found to be the most efficient, readable, and natural way to solve
+a problem, but I would suggest that <code>GOTO</code> will be so
+favoured very rarely, and you should try applying a loop or
+condition before employing it. If these prove complicated to
+implement, it may even be a sign that the overall structure of your
+program could be confused and could benefit from a clearer
+structure.</p>
+<h2>Internal subroutines: GOSUB</h2>
+<p>GOSUB is similar to GOTO in that it transfers control to a label
+somewhere in your code. The difference is that UniVerse Basic makes
+a note in memory of the point at which the <code>GOSUB</code>
+appeared, and as soon as it encounters a <code>RETURN</code>
+statement, it transfers control back to the line following the
+<code>GOSUB</code>. The net effect is to allow you to create
+'subroutines' which allow complex tasks to appear in your 'main
+logic' as a single <code>GOSUB</code> statement, while their
+detailed implementation is tucked away lower in the program. For
+instance, consider the following:</p>
+<pre>
+GOSUB SELECT.INVOICES
+LOOP
+   GOSUB GET.INVOICE.NUMBER
+UNTIL NO.MORE.INVOICES
+   GOSUB PROCESS.INVOICE
+REPEAT
+STOP 'Invoice processing complete'
+
+* Select the invoices.
+
+SELECT.INVOICES:
+   * Code to select invoices
+   RETURN
+
+* etc.
+</pre>
+<p>The beauty of this code is that its overall structure is almost
+impossible to miss from the 'main' loop at the head of the program.
+Future maintenance programmers may therefore turn their attention
+to discrete routines which handle the individual tasks: which may
+themselves (if they are complex) be broken down into further
+routines.</p>
+<p>Breaking an alogorithm into logically distinct functions is
+recommended by almost all coding gurus, and so I need not bang on
+about its advantages to long. In UniVerse Basic, this practise can
+take two forms: the use of 'internal' subroutines via
+<code>GOSUB</code>, or the use of 'external' or 'shared'
+subroutines accessed via <code>CALL</code> (see<br />
+<span class="link" onclick="_goto('basic-subroutines.html')">Basic
+External Subroutines</span> later). As a general rule, I would
+suggest using <code>GOSUB</code> when the subroutines are genuinely
+specific to the current program, and using external subroutines
+only when they might genuinely be of use to other programs too. It
+is true that internal subroutines are not as discrete as many
+structured programming advocates would like - they have, for
+instance, access to all the variables in the same source file - but
+it is as well not to clutter your shared routine libraries with
+lots of routines other programmers will find useless. If you're
+keen on using an external subroutine, think carefully about how the
+task you have in mind might be 'generalised' to make it genuinely
+useful outside your current program, write and share the
+generalised version, and then call this from your program. For
+instance, perhaps <code>GOSUB SELECT.INVOICES</code> could be
+replaced with <code>CALL SELECT.FILE('INVOICES',
+CRITERIA)</code>.</p>
+
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Remote
+Commands</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Remote Commands' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, remote, commands" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Remote Commands</h1>
+<p>A remote command is a pointer in the VOC file to a command
+record stored in <em>another</em> file. Typing in the name of the
+remote command record causes the command pointed to to execute.</p>
+<p>The first line of a remote command carries its type (as do all
+VOC records): in this case, an <code>R</code>.</p>
+<p>The second line contains the name of the file which contains the
+command record to be executed.</p>
+<p>The third line contains the key to the command record to be
+executed.</p>
+<p>An example follows:</p>
+<p><code>&gt;<strong>ED VOC DO.SOMETHING</strong><br />
+New record.<br />
+<br />
+----: I<br />
+0001= <strong>R</strong><br />
+0002= <strong>VOCLIB</strong><br />
+0003= <strong>SOMETHING</strong><br />
+0004= <strong>(Press RETURN)</strong><br />
+Bottom at line 3.<br />
+----: <strong>FI</strong><br />
+"DO.SOMETHING" filed in file "VOC".<br />
+&gt;</code></p>
+<p>The command record pointed to by this record might run as
+follows:</p>
+<p><code>&gt;<strong>ED VOCLIB SOMETHING</strong><br />
+New record.<br />
+<br />
+----: <strong>I</strong><br />
+0001= <strong>PA</strong><br />
+0002= <strong>DISPLAY What would you like me to do? Go
+away.</strong><br />
+0003= <strong>(Press RETURN)</strong><br />
+Bottom at line 2.<br />
+----: <strong>FI</strong><br />
+"SOMETHING" filed in file "VOCLIB".<br />
+&gt;</code></p>
+<p>Testing this example of a remote command produces the
+result:</p>
+<p><code>&gt;<strong>DO.SOMETHING</strong><br />
+What would you like me to do? Go away.</code></p>
+<p>Remote commands have two main uses:</p>
+<p>1. Some commands, particularly long paragraphs, can be extremely
+large records. Large records can damage the performance of static
+files by causing overflow (see above, <span class="link" onclick=
+"_goto('files-static.html')">Static Files</span>): and the voc is a
+static file. as every command, every parameter and every filename
+referenced by a universe application must be read from the voc
+before it can be interpreted, an overflowed voc file can cause an
+entire application to perform badly. by using a remote control,
+large voc records can be moved into another file, and replaced with
+small remote control records which point to them. in principle and
+file can be used to store the command, but he file
+<code>voclib</code> (short for 'voc library') is provided
+specifically for this purpose, and rather than allowing commands to
+be stored in many different files, it is probably better to keep
+them solely to the VOC and VOCLIB files. Note that in the example
+above I called the remote command <code>DO.SOMETHING</code> and the
+command itself <code>SOMETHING</code>, to minimise the danger that
+they would be confused. However, most commonly remote commands
+point to commands with the <em>same name</em> in the
+<code>VOCLIB</code> file: and this is good practice to follow.</p>
+<p>2. Remote commands can carry an extra, fourth field, which is
+the name of a <em>globally cataloged UniVerse Basic
+subroutine</em>. Unless you have previous knowledge of UniVerse,
+this phrase will not mean much to you yet: but by the end of the
+section on UniVerse Basic you will know how to create these. They
+are simply a particular kind of program. If the name of such a
+program is included on the fourth line of a remote control, the
+program is run before the command is executed. If the program
+returns a '0' value in its final parameter, the command is not
+executed, and a security violation message is displayed. In this
+way, it is possible to apply security control to individual
+commands in the UniVerse command language: and this is the main
+purpose of this feature. However, it can also be used to log
+activity, provide help, or indeed anything that can be achieved
+using UniVerse Basic.</p>
+<p>The program named on the fourth line of a remote control record
+accepts and returns certain <em>parameters</em>, another term which
+may be familiar to you from other programming languages, but will
+be covered in depth later. For now, it is worth recording the names
+of these parameters, so that you can return to this section once
+you're writing such programs:</p>
+<table>
+<tr>
+<td>
+<p><code>REMOTE.COMMAND</code></p>
+</td>
+<td>
+<p>The remote command VOC record itself</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>COMMAND</code></p>
+</td>
+<td>
+<p>The command the user typed in, complete with parameters</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>LEVEL</code></p>
+</td>
+<td>
+<p>0=Command typed in at UniVerse prompt, 1=Command invoked by
+another command, or 2=Command invoked by a command invoked by a
+command (or even more layered)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>PORT</code></p>
+</td>
+<td>
+<p>User's port number</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>ACCOUNT</code></p>
+</td>
+<td>
+<p>The name of the account the user is in</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>USER</code></p>
+</td>
+<td>
+<p>The user's login name</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>FLAG</code></p>
+</td>
+<td>
+<p>Value returned by the program, 1 allowing the command to
+execute, 0 preventing it</p>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

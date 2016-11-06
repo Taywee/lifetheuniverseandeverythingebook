@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux (vers 25 March 2009), see www.w3.org" />
+<title>www.mannyneira.com: Computers: Universe: Basic Types</title>
+<meta name="author" content="Manny Neira" />
+<meta name="description" content=
+"'Computers: Universe: Basic Types' - a page from www.mannyneira.com (the mysterious utility wizard), Manny Neira's personal website." />
+<meta name="keywords" content=
+"manny, neira, personal, website, the, mysterious, utility, wizard, computers, universe, basic, types" />
+
+
+
+
+
+
+</head>
+<body>
+
+<h1><span class="path">Computers:
+Universe:</span> Basic Types</h1>
+<h2>Typelessness</h2>
+<p>All values in a UniVerse Basic program, whether they represent
+words, numbers, 'true/false' flags, or dates in the real world, are
+stored as strings of characters. This is what was meant by the
+assertion in the introduction to this course that UniVerse is
+'typeless' (see <span class="link" onclick=
+"_goto('about-paradigm.html')">The UniVerse Paradigm</span>).</p>
+<p>Whether a value is deemed to represent a piece of text, a
+number, a flag or a date depends entirely on the logic of your
+program and on the UniVerse Basic functions and operators you use.
+The following examples demonstrates a single value being treated
+first as if it represented a string, then a number, then a flag,
+and finally a date:</p>
+<pre>
+VALUE = 3479
+* Concatenation assumes the value to represent a string
+PRINT (VALUE : '2') ; * Prints 34792
+* Addition assumes the value to represent a number
+PRINT (VALUE + 2) ; * Prints 3481
+* The IF statement assumes the value to represent a 'true' or 'false' flag
+IF VALUE THEN PRINT 'TRUE' ELSE PRINT 'FALSE' ; * Prints TRUE
+* This function assumes the value represents a date
+PRINT (OCONV(VALUE, 'D')) ; * Prints 10 JUL 1977
+</pre>
+<p>Some operators and functions, like <code>:</code> (concatenation
+operator), obviously assume that your values represent strings.
+Others, like <code>+</code> (addition operator), obviously assume
+that they represent numbers. When using such operators it's not
+usually difficult to work out what UniVerse Basic will do. However,
+some are less obvious. Consider the following example. If the
+values are deemed to represent strings, they are clearly different.
+On the other hand, if they are deemed to represent numbers, they
+are the same. Which does UniVerse Basic do?</p>
+<pre>
+VALUE1 = 3479
+VALUE2 = '03479'
+IF VALUE1 = VALUE2 THEN PRINT 'SAME' ELSE PRINT 'DIFFERENT'
+</pre>
+<p>In fact, it prints <code>SAME</code>: thus demonstrating that,
+for the purposes of the comparison, the program assumed that both
+values represented numbers, and so concentrated on the value of the
+numbers they represented.</p>
+<p>Stricty speaking, it would be more consistent for UniVerse Basic
+to support <em>two</em> operators, one doing a string comparison
+(say. <code>=</code>, and the other doing a numeric comparison
+(say, <code>==</code>). After all, this is how it gets round the
+problem of addition: to add strings you use <code>:</code>, to add
+numbers <code>+</code>. However, this would seem odd, and UniVerse
+in general takes a very pragmatic view of such issues, preferring
+intuitiveness to mathematical consistency. It would also lead to
+errors. It would be annoying if your program reported a discrepancy
+between the total as printed on your invoice (say,
+<code>1000.00</code>) and the sum of your net amount and your sales
+tax (say, <code>900+100</code> yielding <code>1000</code>), just
+because you forgot to use <code>==</code> instead of
+<code>=</code>. It therefore decides for itself which you are
+likely to mean.</p>
+<p>If you are ever in doubt about how an expression will be
+evaluated, you can test it without having to write, compile and run
+a test program. Use a RetrieVe enquiry like:</p>
+<p><code>&gt;<strong>LIST VOC SAMPLE 1 ID.SUP EVAL "IF 123='0123'
+THEN 'SAME' ELSE 'DIFFERENT'"</strong></code></p>
+<pre>
+LIST VOC SAMPLE 1 ID.SUP EVAL "IF 123="0123" THEN "SAME" ELSE "DIFFERENT"" 12:08
+:39  08-23-99  PAGE 1
+IF 123='0123' THEN '
+SAME' ELSE 'DIFFEREN
+T'..................
+
+SAME
+
+Sample of 1 records listed.
+&gt;
+</pre>
+<p>This uses the <code>EVAL</code> keyword to test your expression:
+Handily, the expression itself appears as the column heading, and
+the value underneath it. (For information about <code>EVAL</code>,
+see <span class="link" onclick=
+"_goto('retrieve-override.html')">Overriding
+Dictionaries</span>).</p>
+<h2>Strings</h2>
+<p>If a value is deemed to represent a string, all its characters
+are significant. For instance:</p>
+<pre>
+VALUE1 = 'ABC'
+VALUE2 = 'abc'
+VALUE3 = ' ABC'
+IF VALUE1 = VALUE2 THEN PRINT 'SAME' ELSE PRINT 'DIFFERENT' ; * Prints 'DIFFERENT'
+IF VALUE1 = VALUE3 THEN PRINT 'SAME' ELSE PRINT 'DIFFERENT' ; * Prints 'DIFFERENT'
+IF VALUE2 = VALUE3 THEN PRINT 'SAME' ELSE PRINT 'DIFFERENT' ; * Prints 'DIFFERENT'
+</pre>
+<h2>Numbers</h2>
+<p>If a value represents a number, the form of the number is
+immaterial as long as UniVerse recognises it as being number. For
+instance:</p>
+<pre>
+VALUE1 = '12.3'
+VALUE2 = '012.30'
+VALUE3 = ' 1.23E1'
+IF VALUE1 = VALUE2 THEN PRINT 'SAME' ELSE PRINT 'DIFFERENT' ; * Prints 'SAME'
+IF VALUE1 = VALUE3 THEN PRINT 'SAME' ELSE PRINT 'DIFFERENT' ; * Prints 'SAME'
+IF VALUE2 = VALUE3 THEN PRINT 'SAME' ELSE PRINT 'DIFFERENT' ; * Prints 'SAME'
+</pre>
+<h2>Dates</h2>
+<p>A value can represent a date if it can also represent an
+integer, because it is then taken to be the number of days since
+the 31st of December 1967. For instance, the value 4, if deemed to
+represent a date, represents the 4th of January 1967. The date on
+which these notes were written (the 23rd of August, 1999) would be
+represented by the value 11558.</p>
+<p>The rules for comparing dates are therefore the same as the
+rules for comparing numbers. If two values represent the same
+integer, they also represent the same date.</p>
+<p>Clearly, it is no use printing the value <code>11558</code> on a
+screen or a report and expecting the user to understand it. A
+function called <code>OCONV</code> is therefore provided to
+'convert for output'. The first parameter is the value to convert,
+and the second value the 'conversion specification'. The conversion
+specification for dates is <code>D</code>.</p>
+<pre>
+PRINT OCONV(11558, 'D') ; * Prints 23 AUG 1999
+</pre>
+<p>If you wish, you can be more specific in your 'conversion
+specification'.</p>
+<pre>
+PRINT OCONV(11558, 'D-DMY[2,2,2]') ; * Prints 23-08-99
+PRINT OCONV(11558, 'D/MDY[2,2,4]') ; * Prints 08/23/1999
+PRINT OCONV(11558, 'D DMY[2,A,4]') ; * Prints 23 AUGUST 1999
+</pre>
+<p>The conversion specification for dates runs as follows:<br />
+<code>D</code> for date<br />
+the character to separate the elements of the date (<code>-</code>,
+<code>/</code> and a space are used above)<br />
+the letters <code>DMY</code> arranged as you would like the day,
+month and year arranged<br />
+in square brackets, the number of digits in the date month and
+year: note the use of <code>A</code> for the alpha month.</p>
+<p>The function <code>ICONV()</code> (convert from input) does the
+reverse:</p>
+<pre>
+PRINT ICONV('23 AUGUST 1999', 'D') ; * Prints 11558
+</pre>
+<p>Storing dates in this way makes date arithemetic extremely
+simple.</p>
+<pre>
+BASE.DATE = ICONV('23 AUG 1999', 'D')
+WEEK.LATER = BASE.DATE + 7
+PRINT OCONV(WEEK.LATER, 'D') ; * Prints 30 AUG 1999
+WEEK.EARLIER = BASE.DATE - 7
+PRINT OCONV(WEEK.EARLIER, 'D') ; * Prints 16 AUG 1999
+DATE.OF.MILLENIUM = ICONV('01 JAN 2000', 'D')
+PRINT DATE.OF.MILLENIUM - BASE.DATE : ' days till millenium' ; * Prints 131 days till millenium
+</pre>
+<p>Most applications store dates in fields in this way, using the
+third 'conversion' field of the corresponding dictionary record to
+ensure that a 'human readable' date is displayed in any column
+including the date. (See <span class="link" onclick=
+"_goto('dictionaries-data.html')">Data fields</span>.)</p>
+<h2>True and false: 'boolean' flags</h2>
+<p>Any value can be deemed to represent truth or falsity. If it is
+numerically equal to zero or is an empty string, it represents
+false: if anything else, it represents truth.</p>
+<pre>
+IF '' THEN PRINT 'TRUE' ELSE PRINT 'FALSE' ; * Prints FALSE
+IF ' ' THEN PRINT 'TRUE' ELSE PRINT 'FALSE' ; * Prints TRUE
+IF 0 THEN PRINT 'TRUE' ELSE PRINT 'FALSE' ; * Prints FALSE
+IF 1 THEN PRINT 'TRUE' ELSE PRINT 'FALSE' ; * Prints TRUE
+IF 0.5 THEN PRINT 'TRUE' ELSE PRINT 'FALSE' ; * Prints TRUE
+IF 0.0 THEN PRINT 'TRUE' ELSE PRINT 'FALSE' ; * Prints FALSE
+</pre>
+<p>The <code>IF</code> statements above may look a little odd, as
+you will more commonly see comparisons provided as conditions, such
+as:</p>
+<pre>
+IF 1 &gt; 2 THEN PRINT '1 is bigger than 2' ELSE PRINT '1 is not bigger than 2'
+</pre>
+<p>But comparison operators like <code>=</code>, <code>&gt;</code>,
+<code>&lt;</code> work by evaluating to a '1' if the condition they
+represent is true, or a '0' if it is false. In the example above,
+the expression <code>1 &gt; 2</code> is false, and so evaluates to
+<code>0</code>, and therefore has the same effect as the statement
+<code>IF 0 THEN...</code> in the earlier example.</p>
+
+</body>
+</html>
